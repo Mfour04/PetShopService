@@ -1,0 +1,576 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<!-- Mirrored from softivuslab.com/html/petpath/main/service-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Sep 2024 11:44:56 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PetPath HTML</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+
+    <script defer src="/js/main.js"></script>
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- preloader -->
+    <!-- preloader  -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader-square"></div>
+            <div class="loader-square"></div>
+            <div class="loader-square"></div>
+            <div class="loader-square"></div>
+            <div class="loader-square"></div>
+            <div class="loader-square"></div>
+            <div class="loader-square"></div>
+        </div>
+    </div>
+    <!-- back to top -->
+    <button class="back-to-top position-fixed end-0 bottom-0 d-center me-5">
+        <span class="text-h4">
+            <i class="ph ph-arrow-up"></i>
+        </span>
+    </button>
+    <!-- header -->
+    <!-- header section start -->
+    <header class="header-section position-fixed top-0 start-50 translate-middle-x" data-lenis-prevent>
+        <div class="container px-0">
+            <!-- navbar area -->
+            <div class="d-flex align-items-center justify-content-between px-lg-0 px-4 py-lg-5 py-3">
+                <div class="logo">
+                    <a href="index.html">
+                        <img class="w-100 d-block d-sm-none" src="/images/favicon.png" alt="logo">
+                        <img class="w-100 d-none d-sm-block" src="/images/logo.png" alt="logo">
+                    </a>
+                </div>
+                <nav class="navbar-area">
+                    <ul class="nav-menu-items d-lg-flex d-grid gap-3xl-8 gap-xxl-6 gap-4">
+                        <li class="menu-link">
+                            <a href="index.html" class="slide-vertical" data-splitting>Home</a>
+                        </li>
+                        <li class="menu-link">
+                            <a href="about-us.html" class="slide-vertical" data-splitting>About</a>
+                        </li>
+                        <li class="menu-item">
+                            <button class="slide-vertical" data-splitting>
+                                Pages
+                                <span class="lh-0"><i class="ph ph-plus"></i></span>
+                            </button>
+                            <ul class="sub-menu">
+                                <li class="menu-item">
+                                    <button class="slide-vertical" data-splitting>
+                                        Services
+                                        <span class="lh-0"><i class="ph ph-plus"></i></span>
+                                    </button>
+                                    <ul class="sub-menu">
+                                        <li class="menu-link">
+                                            <a href="services.html" class="slide-horizontal" data-splitting>Services</a>
+                                        </li>
+                                        <li class="menu-link">
+                                            <a href="service-details.html" class="slide-horizontal" data-splitting>
+                                                Service
+                                                Details
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item">
+                                    <button class="slide-vertical" data-splitting>
+                                        Blogs
+                                        <span class="lh-0"><i class="ph ph-plus"></i></span>
+                                    </button>
+                                    <ul class="sub-menu">
+                                        <li class="menu-link">
+                                            <a href="blogs.html" class="slide-horizontal" data-splitting>Blogs</a>
+                                        </li>
+                                        <li class="menu-link">
+                                            <a href="blog-details.html" class="slide-horizontal" data-splitting>
+                                                Blogs
+                                                Details
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-item">
+                            <button class="slide-vertical" data-splitting>
+                                Shop
+                                <span class="lh-0"><i class="ph ph-plus"></i></span>
+                            </button>
+                            <ul class="sub-menu">
+                                <li class="menu-link">
+                                    <a href="shop.html" class="slide-horizontal" data-splitting>Shop</a>
+                                </li>
+                                <li class="menu-link">
+                                    <a href="shop-details.html" class="slide-horizontal" data-splitting>
+                                        Shop
+                                        Details
+                                    </a>
+                                </li>
+                                <li class="menu-link">
+                                    <a href="cart.html" class="slide-horizontal" data-splitting>Cart</a>
+                                </li>
+                                <li class="menu-link">
+                                    <a href="checkout.html" class="slide-horizontal" data-splitting>Checkout</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-link">
+                            <a href="contact-us.html" class="slide-vertical" data-splitting>Contact</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="nav-btns d-flex align-items-center gap-lg-5 gap-3">
+
+                    <!-- search icon -->
+                    <button class="search-btn text-2xl font-semibold text-n20">
+                        <i class="ph ph-magnifying-glass"></i>
+                    </button>
+
+                    <button class="cart-btn icon-48px position-relative border n20-border text-n20 hover-bg-primary hover-text-n0">
+                        <span class="badge radius-pill text-n0 text-sm fw-medium bg-n20 position-absolute top-50 start-100 translate-middle z-1 mt-n3">0</span>
+                        <span class="text-xl font-semibold">
+                            <i class="ph-fill ph-shopping-cart"></i>
+                        </span>
+                    </button>
+
+                    <a href="#" class="btn-primary text-nowrap">Book Now</a>
+
+                    <button class="menu-toggle-btn text-2xl">
+                        <i class="ph ph-list"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header section end -->
+    <!-- search form -->
+    <div class="search-form-wrapper position-fixed top-0 start-0 w-100 vh-100 d-flex align-items-center justify-content-center bg-n10">
+        <button class="search-close-btn position-absolute top-0 end-0 text-2xl text-n0 mt-5 me-5">
+            <i class="ph ph-x"></i>
+        </button>
+        <div class="search-form">
+            <form class="d-flex align-items-center gap-4 border n10-border p-2">
+                <input type="text" placeholder="Search ..." class="w-100 p-2">
+                <button type="submit" class="text-2xl text-n0">
+                    <i class="ph ph-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- main start -->
+    <main>
+
+        <!-- inner hero section start -->
+        <section class="inner-hero-section pt-xxl-0 pt-md-15 pt-20 pt-120 bg-primary2">
+            <div class="container position-relative">
+                <div class="row g-6 justify-content-between align-items-center">
+                    <div class="col-sm-6">
+                        <span class="mb-3 text-h1 text-n20">Pet Grooming</span>
+                        <ul class="breadcrumb d-inline-flex align-items-center justify-content-center gap-lg-2 gap-1">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active"><a href="#">Pet Grooming</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xl-5 col-sm-6 me-auto d-none d-sm-block">
+                        <div class="reveal-bottom inner-hero-banner">
+                            <img class="w-100" src="/images/inner-hero-banner.png" alt="inner hero banner">
+                        </div>
+                    </div>
+                </div>
+                <div class="pows position-absolute top-60 right-n10 translate-middle-y z-n1 d-none d-sm-block">
+                    <img class="w-100" src="/images/pows.png" alt="pow">
+                </div>
+            </div>
+        </section>
+        <!-- inner hero section end -->
+        <!-- service details section start -->
+        <section class="service-details-section pt-120 pb-120">
+            <div class="container">
+                <div class="row g-6">
+                    <div class="col-lg-8">
+                        <div class="mb-lg-15 mb-md-10 mb-8">
+                            <div class="service-details-banner mb-lg-10 mb-md-8 mb-6">
+                                <img class="w-100 radius-16" src="/images/service-details-banner.png"
+                                     alt="service details banner">
+                            </div>
+                            <div class="service-details-content d-grid gap-lg-6 gap-4 mb-lg-10 mb-md-8 mb-6">
+                                <h1>Pet Grooming</h1>
+                                <p class="text-n10 font-instrument fw-normal">
+                                    At PetPath, our expert groomers provide top-quality grooming services to keep your
+                                    pets
+                                    looking and feeling their best. Our full-service grooming includes a soothing bath,
+                                    thorough brush-out, stylish haircut, nail trimming, ear cleaning, and teeth
+                                    brushing. We
+                                    use only the best products tailored to your pet’s specific needs to ensure a
+                                    comfortable
+                                    and enjoyable experience. Whether your pet needs a quick touch-up or a complete
+                                    makeover, our experienced team is dedicated to delivering personalized care with
+                                    love
+                                    and attention to detail.
+                                </p>
+                                <p class="text-n10 font-instrument fw-normal">
+                                    Our grooming services cater to all breeds and sizes, and we take special care with
+                                    pets
+                                    that may be anxious or have special requirements. Whether your pet needs a quick
+                                    touch-up or a complete makeover, our experienced team is dedicated to delivering
+                                    personalized care with love and attention to detail.
+                                </p>
+                            </div>
+                            <div class="service-details-content d-grid gap-lg-6 gap-4 mb-lg-10 mb-md-8 mb-6">
+                                <h2>Process</h2>
+                                <p class="text-n10 font-instrument fw-normal">
+                                    At PetPath, our grooming process starts with a thorough consultation to understand
+                                    your
+                                    pet's needs. We then perform a pre-grooming check to identify any sensitivities.
+                                    Your
+                                    pet receives a gentle brushing and de-matting before a soothing bath with
+                                    high-quality
+                                    products. After drying, we provide a stylish haircut, nail trimming, ear cleaning,
+                                    and
+                                    teeth brushing, ensuring your pet leaves looking and feeling their best.
+                                </p>
+                                <ul class="d-grid gap-lg-4 gap-2">
+                                    <li class="d-flex gap-2">
+                                        <span class="text-secondary"><i class="ph ph-check"></i></span>
+                                        Our experienced groomers are dedicated to delivering personalized care with love
+                                        and
+                                        attention to detail.
+                                    </li>
+                                    <li class="d-flex gap-2">
+                                        <span class="text-secondary"><i class="ph ph-check"></i></span>
+                                        Our goal is to make sure every pet leaves our salon feeling pampered
+                                    </li>
+                                    <li class="d-flex gap-2">
+                                        <span class="text-secondary"><i class="ph ph-check"></i></span>
+                                        We use only the best products tailored to your pet’s specific needs to ensure a
+                                        comfortable.
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="service-details-post-banner d-xs-flex d-grid align-items-center gap-lg-6 gap-4">
+                                <div class="w-100">
+                                    <img class="w-100 radius-16" src="/images/service-details-post-1.png"
+                                         alt="service details post banner">
+                                </div>
+                                <div class="w-100">
+                                    <img class="w-100 radius-16" src="/images/service-details-post-2.png"
+                                         alt="service details post banner">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- accordion area -->
+                        <h3 class="text-n20 font-otomanopee mb-lg-10 mb-md-8 mb-6">
+                            Frequently Asked
+                            Questions
+                        </h3>
+                        <div class="accordion-area d-grid gap-lg-6 gap-4">
+                            <div class="accordion-item border-bottom pb-lg-6 pb-4 show">
+                                <div class="accordion-header d-flex align-items-center justify-content-between text-h4 fw-normal">
+                                    <button class="accordion-button">
+                                        What types of hair treatments do you offer?
+                                    </button>
+                                    <span class="accordion-icon text-lg"></span>
+                                </div>
+                                <div class="accordion-content">
+                                    <p class="text-n600 text-base">
+                                        We offer a variety of hair treatments, including deep conditioning, scalp
+                                        revitalization, keratin smoothing, hair growth therapy, and color protection.
+                                        Each treatment is customized to address specific hair concerns and improve
+                                        overall hair health, shine, and manageability
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-bottom pb-lg-6 pb-4">
+                                <div class="accordion-header d-flex align-items-center justify-content-between text-h4 fw-normal">
+                                    <button class="accordion-button">
+                                        What types of hair treatments do you offer?
+                                    </button>
+                                    <span class="accordion-icon text-lg"></span>
+                                </div>
+                                <div class="accordion-content">
+                                    <p class="text-n600 text-base">
+                                        We offer a variety of hair treatments, including deep conditioning, scalp
+                                        revitalization, keratin smoothing, hair growth therapy, and color protection.
+                                        Each treatment is customized to address specific hair concerns and improve
+                                        overall hair health, shine, and manageability
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-bottom pb-lg-6 pb-4">
+                                <div class="accordion-header d-flex align-items-center justify-content-between text-h4 fw-normal">
+                                    <button class="accordion-button">
+                                        How do I book an appointment?
+                                    </button>
+                                    <span class="accordion-icon text-lg"></span>
+                                </div>
+                                <div class="accordion-content">
+                                    <p class="text-n600 text-base">
+                                        We offer a variety of hair treatments, including deep conditioning, scalp
+                                        revitalization, keratin smoothing, hair growth therapy, and color protection.
+                                        Each treatment is customized to address specific hair concerns and improve
+                                        overall hair health, shine, and manageability
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-bottom pb-lg-6 pb-4">
+                                <div class="accordion-header d-flex align-items-center justify-content-between text-h4 fw-normal">
+                                    <button class="accordion-button">
+                                        What products do you use in your treatments?
+                                    </button>
+                                    <span class="accordion-icon text-lg"></span>
+                                </div>
+                                <div class="accordion-content">
+                                    <p class="text-n600 text-base">
+                                        We offer a variety of hair treatments, including deep conditioning, scalp
+                                        revitalization, keratin smoothing, hair growth therapy, and color protection.
+                                        Each treatment is customized to address specific hair concerns and improve
+                                        overall hair health, shine, and manageability
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <!-- service list -->
+                        <div class="service-list p-xl-8 p-md-6 p-4 bg-white border n20-1-border radius-16 mb-lg-10 mb-md-8 mb-6">
+                            <div class="mb-lg-6 mb-4">
+                                <h4 class="font-otomanopee fw-normal mb-3">Our Services</h4>
+                                <span class="d-block hr-line-72px radius-pill bg-primary"></span>
+                            </div>
+                            <ul class="d-grid gap-lg-4 gap-3">
+                                <li>
+                                    <a href="#"
+                                       class="service-list-item d-flex align-items-center justify-content-between text-n20 font-instrument py-lg-3 py-2 px-lg-6 px-4 border n20-1-border radius-16 transition hover-bg-primary hover-text-n0">
+                                        Dog Care
+                                        <span><i class="ph ph-arrow-up-right"></i></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                       class="service-list-item d-flex align-items-center justify-content-between text-n20 font-instrument py-lg-3 py-2 px-lg-6 px-4 border n20-1-border radius-16 transition hover-bg-primary hover-text-n0">
+                                        Pet Grooming
+                                        <span><i class="ph ph-arrow-up-right"></i></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                       class="service-list-item d-flex align-items-center justify-content-between text-n20 font-instrument py-lg-3 py-2 px-lg-6 px-4 border n20-1-border radius-16 transition hover-bg-primary hover-text-n0">
+                                        Cat Care
+                                        <span><i class="ph ph-arrow-up-right"></i></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                       class="service-list-item d-flex align-items-center justify-content-between text-n20 font-instrument py-lg-3 py-2 px-lg-6 px-4 border n20-1-border radius-16 transition hover-bg-primary hover-text-n0">
+                                        Veterinary Care
+                                        <span><i class="ph ph-arrow-up-right"></i></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                       class="service-list-item d-flex align-items-center justify-content-between text-n20 font-instrument py-lg-3 py-2 px-lg-6 px-4 border n20-1-border radius-16 transition hover-bg-primary hover-text-n0">
+                                        Health & Treatment
+                                        <span><i class="ph ph-arrow-up-right"></i></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                       class="service-list-item d-flex align-items-center justify-content-between text-n20 font-instrument py-lg-3 py-2 px-lg-6 px-4 border n20-1-border radius-16 transition hover-bg-primary hover-text-n0">
+                                        Pet Boarding
+                                        <span><i class="ph ph-arrow-up-right"></i></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- newsletter card -->
+                        <div class="newsletter-card px-xl-10 px-md-8 px-sm-6 px-4 py-lg-20 py-md-15 py-10 radius-16 position-relative overflow-hidden z-1">
+                            <span class="icon-80px mx-auto mb-lg-6 mb-4 text-h1 bg-primary text-n0">
+                                <i class="ph ph-envelope-open"></i>
+                            </span>
+                            <h3 class="text-n0 fw-normal mb-lg-3 mb-2 text-center">Subscribe to Our Newsletter</h3>
+                            <a href="tel:(808)555-0111"
+                               class="d-flex align-items-center justify-content-center gap-lg-2 text-n0 fw-normal mb-lg-8 mb-6">
+                                <span class="text-lg"><i class="ph ph-phone-call"></i></span>
+                                (808) 555-0111
+                            </a>
+                            <div class="text-center">
+                                <a href="contact-us.html" class="btn-primary text-xl n0-border">
+                                    Contact Us Now
+                                    <span><i class="ph ph-arrow-up-right"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- service details section end -->
+    </main>
+    <!-- main end -->
+    <!-- footer -->
+    <!-- footer section start -->
+    <footer class="footer-section pt-120">
+        <div class="bg-banner position-absolute bottom-0 start-0 w-100 h-100 z-n1 d-none d-sm-block">
+            <img class="w-100 h-100" src="/images/footer-bg.png" alt="bg banner">
+        </div>
+        <div class="position-absolute top-40 left-0 translate-middle-y z-n1 d-none d-lg-block">
+            <img class="max-w-200px w-100" src="/images/cat-vector-2.png" alt="footer vector">
+        </div>
+        <div class="position-absolute top-15 right-0 z-n1 d-none d-lg-block">
+            <img class="max-w-300px w-100" src="/images/dog-vector.png" alt="footer vector">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center mb-lg-20 mb-md-15 mb-10 pt-10 pt-md-0">
+                <div class="col-xl-7 col-lg-9 text-center">
+                    <div class=" mb-lg-6 mb-4">
+                        <span class="text-h1 fw-normal mb-lg-3 mb-2">Subscribe Our Newsletter</span>
+                        <span class="text-n20">Get the latest deals and offers right to your inbox.</span>
+                    </div>
+                    <form action="#" class="px-xl-15 px-lg-10 px-md-8 px-md-6">
+                        <div class="d-flex align-items-center justify-content-center gap-3 border n20-border bg-n0 radius-pill p-lg-2 p-1 ps-lg-6 ps-4">
+                            <input type="email" placeholder="Enter your email..."
+                                   class="w-100 bg-transparent border-0 outline-0">
+                            <button type="submit"
+                                    class="btn-secondary border-0 text-n20 fw-semibold text-uppercase font-instrument">
+                                Subscribe
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row justify-content-between g-6 pb-lg-20 pb-md-15 pb-10">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <div class="footer-logo mb-lg-6 mb-4">
+                        <a href="index.html">
+                            <img class="w-100" src="/images/logo.png" alt="footer logo">
+                        </a>
+                    </div>
+                    <p class="text-n20 fw-normal mb-lg-6 mb-4">
+                        PetPath offers exceptional pet care services including grooming, boarding, and Our dedicated
+                        team.
+                    </p>
+                    <ul class="d-flex align-items-center gap-lg-2 gap-1">
+                        <li>
+                            <a href="#" class="icon-40px border n20-border text-xl box-style box-secondary">
+                                <i class="ph-fill ph-facebook-logo"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="icon-40px border n20-border text-xl box-style box-secondary">
+                                <i class="ph-fill ph-twitter-logo"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="icon-40px border n20-border text-xl box-style box-secondary">
+                                <i class="ph-fill ph-instagram-logo"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="icon-40px border n20-border text-xl box-style box-secondary">
+                                <i class="ph-fill ph-youtube-logo"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-auto">
+                    <div class="footer-menu">
+                        <h5 class="text-n20 fw-normal mb-lg-6 mb-4">Pages</h5>
+                        <ul class="d-grid gap-lg-4 gap-2">
+                            <li>
+                                <a href="index.html"
+                                   class="text-n20 fw-normal hover-text-secondary hover-underline">Home</a>
+                            </li>
+                            <li>
+                                <a href="about-us.html"
+                                   class="text-n20 fw-normal hover-text-secondary hover-underline">About </a>
+                            </li>
+                            <li>
+                                <a href="services.html"
+                                   class="text-n20 fw-normal hover-text-secondary hover-underline">Services</a>
+                            </li>
+                            <li>
+                                <a href="team.html" class="text-n20 fw-normal hover-text-secondary hover-underline">Team</a>
+                            </li>
+                            <li>
+                                <a href="blogs.html"
+                                   class="text-n20 fw-normal hover-text-secondary hover-underline">Blog</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="footer-menu">
+                        <h5 class="text-n20 fw-normal mb-lg-6 mb-4">Contact Info</h5>
+                        <ul class="d-grid gap-lg-4 gap-2">
+                            <li>
+                                <a href="#"
+                                   class="d-flex align-items-center gap-2 text-n20 fw-normal hover-text-secondary hover-underline">
+                                    <span class="text-xl"><i class="ph ph-map-pin"></i></span>
+                                    California L.A 57867
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   class="d-flex align-items-center gap-2 text-n20 fw-normal hover-text-secondary hover-underline">
+                                    <span class="text-xl"><i class="ph ph-phone-call"></i></span>
+                                    (808) 555-0111
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   class="d-flex align-items-center gap-2 text-n20 fw-normal hover-text-secondary hover-underline">
+                                    <span class="text-xl"><i class="ph ph-envelope-open"></i></span>
+                                    0Vw5f@example.com
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <div class="working-time-card p-xl-10 p-lg-8 p-md-6 p-4 radius-20 bg-secondary border n20-border">
+                        <h5 class="text-n20 fw-normal mb-lg-6 mb-4">Working Hours</h5>
+                        <ul class="d-grid gap-lg-4 gap-2">
+                            <li class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="text-n20 fw-normal">Mon - Fri:</span>
+                                <span class="text-n20 fw-medium">7am - 6pm</span>
+                            </li>
+                            <li class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="text-n20 fw-normal">Saturday:</span>
+                                <span class="text-n20 fw-medium">9am - 4pm</span>
+                            </li>
+                            <li class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="text-n20 fw-normal">Sunday:</span>
+                                <span class="text-n20 fw-medium text-primary">Closed</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <span class="d-block border-bottom n100-border1"></span>
+            <div class="py-lg-6 py-4 text-center">
+                <span class="text-n20 fw-normal">
+                    © 2022 - <span class="currentYear"></span> | Allrights reserved by
+                    <a href="https://themeforest.net/user/uiaxis"
+                       class="fw-semibold text-decoration-underline hover-text-secondary">uiaxis</a>
+                </span>
+            </div>
+        </div>
+    </footer>
+    <!-- footer section end -->
+
+</body>
+
+
+<!-- Mirrored from softivuslab.com/html/petpath/main/service-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Sep 2024 11:44:58 GMT -->
+</html>
