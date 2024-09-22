@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{77EEFD87-7A88-4C8B-AF2E-18A040C1E097}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{77EEFD87-7A88-4C8B-AF2E-18A040C1E097}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{D54232F5-03B8-47C3-B1F7-97033027424B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{D54232F5-03B8-47C3-B1F7-97033027424B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebRazor", "WebRazor\WebRazor.csproj", "{5A4EE147-20C4-4AB4-95F6-2E36A36D0F11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebRazor", "WebRazor\WebRazor.csproj", "{5A4EE147-20C4-4AB4-95F6-2E36A36D0F11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
