@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.Implements
+namespace Repositories.Dtos
 {
-    internal class InitRepository
+    internal class Demo
     {
-        private int id;
     }
 }
