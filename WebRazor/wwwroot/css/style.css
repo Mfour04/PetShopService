@@ -860,6 +860,17 @@ progress {
   }
 }
 
+.container {
+    width: auto !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    max-width: none !important;
+}
+
+
+
 :root {
   --bs-breakpoint-xxs: 0;
   --bs-breakpoint-xs: 480px;
