@@ -130,7 +130,7 @@
                     </button>
 
                     <button class="cart-btn icon-48px position-relative border n20-border text-n20 hover-bg-primary hover-text-n0">
-                        <span class="badge radius-pill text-n0 text-sm fw-medium bg-n20 position-absolute top-50 start-100 translate-middle z-1 mt-n3">0</span>
+                        <span id="cart-count" class="badge radius-pill text-n0 text-sm fw-medium bg-n20 position-absolute top-50 start-100 translate-middle z-1 mt-n3">0</span>
                         <span class="text-xl font-semibold">
                             <i class="ph-fill ph-shopping-cart"></i>
                         </span>
@@ -221,7 +221,12 @@
                                             <button class="wishlist-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary">
                                                 <i class="ph-fill ph-heart"></i>
                                             </button>
-                                            <button class="cart-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary">
+                                            <button class="cart-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary"
+                                                    onclick="addToCart(this)"
+                                                    data-id="1"
+                                                    data-name="Pet Shampoos"
+                                                    data-price="35.00"
+                                                    data-quantity="1">
                                                 <i class="ph-fill ph-shopping-cart"></i>
                                             </button>
                                         </div>
@@ -229,8 +234,7 @@
                                     <div class="product-info p-lg-6 p-4 text-center">
                                         <a href="shop-details.html"
                                            class="text-h6 text-n20 font-otomanopee fw-normal hover-text-primary hover-underline mb-2">
-                                            Pet
-                                            Shampoos
+                                            Pet Shampoos
                                         </a>
                                         <ul class="d-flex align-items-center justify-content-center gap-1 mb-lg-4 mb-2">
                                             <li>
@@ -1215,5 +1219,7 @@
         </div>
     </footer>
     <!-- footer section end -->
-
+    @section Scripts {
+        <script src="~/js/add-to-cart.js" asp-append-version="true"></script>
+    }
 </body>
