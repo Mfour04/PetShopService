@@ -1,6 +1,11 @@
+﻿using Microsoft.EntityFrameworkCore;
+using PetShopLibrary.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<PetShopContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Thêm dòng này để đăng ký PetShopContext
+																						   // Add services to the container.
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
