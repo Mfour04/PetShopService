@@ -130,7 +130,7 @@
                     </button>
 
                     <button class="cart-btn icon-48px position-relative border n20-border text-n20 hover-bg-primary hover-text-n0">
-                        <span class="badge radius-pill text-n0 text-sm fw-medium bg-n20 position-absolute top-50 start-100 translate-middle z-1 mt-n3">0</span>
+                        <span id="cart-count" class="badge radius-pill text-n0 text-sm fw-medium bg-n20 position-absolute top-50 start-100 translate-middle z-1 mt-n3">0</span>
                         <span class="text-xl font-semibold">
                             <i class="ph-fill ph-shopping-cart"></i>
                         </span>
@@ -213,6 +213,36 @@
 
                         <!-- product list start -->
                         <div class="row g-6 mb-lg-10 mb-md-8 mb-6">
+                            <div class="row">
+                                @foreach (var product in Model.Products)
+                                {
+                                    <div class="col-md-4 col-xs-6">
+                                        <div class="product-card border n20-1-border radius-16 overflow-hidden hover-primary-border">
+                                            <div class="product-thumb scale-animation position-relative">
+                                                <img class="w-100" src="@Url.Content("~/images/product-2.png")" alt="@product.ProductName">
+                                                <span class="seal-tag py-1 px-lg-4 px-2 bg-primary text-n0 radius-pill position-absolute top-0 left-0 mt-lg-6 mt-4 ms-lg-6 ms-4">Sale!</span>
+                                                <div class="product-btns d-grid gap-1 position-absolute top-0 right-0 mt-xxl-6 mt-4 me-xxl-6 me-4">
+                                                    <button class="wishlist-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary">
+                                                        <i class="ph-fill ph-heart"></i>
+                                                    </button>
+                                                    <button class="cart-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary">
+                                                        <i class="ph-fill ph-shopping-cart"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="product-info p-lg-6 p-4 text-center">
+                                                <a href="@Url.Page("/Shop-details", new { id = product.ProductId })"
+                                                   class="text-h6 text-n20 font-otomanopee fw-normal hover-text-primary hover-underline mb-2">
+                                                    @product.ProductName
+                                                </a>
+                                                <span class="text-primary font-instrument fw-semibold">
+                                                    $@product.Price
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
                             <div class="col-md-4 col-xs-6">
                                 <div class="product-card border n20-1-border radius-16 overflow-hidden hover-primary-border">
                                     <div class="product-thumb scale-animation position-relative">
@@ -221,7 +251,12 @@
                                             <button class="wishlist-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary">
                                                 <i class="ph-fill ph-heart"></i>
                                             </button>
-                                            <button class="cart-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary">
+                                            <button class="cart-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary"
+                                                    onclick="addToCart(this)"
+                                                    data-id="1"
+                                                    data-name="Pet Shampoos"
+                                                    data-price="35.00"
+                                                    data-quantity="1">
                                                 <i class="ph-fill ph-shopping-cart"></i>
                                             </button>
                                         </div>
@@ -229,8 +264,7 @@
                                     <div class="product-info p-lg-6 p-4 text-center">
                                         <a href="shop-details.html"
                                            class="text-h6 text-n20 font-otomanopee fw-normal hover-text-primary hover-underline mb-2">
-                                            Pet
-                                            Shampoos
+                                            Pet Shampoos
                                         </a>
                                         <ul class="d-flex align-items-center justify-content-center gap-1 mb-lg-4 mb-2">
                                             <li>
@@ -1215,5 +1249,7 @@
         </div>
     </footer>
     <!-- footer section end -->
-
+    @section Scripts {
+        <script src="~/js/add-to-cart.js" asp-append-version="true"></script>
+    }
 </body>
