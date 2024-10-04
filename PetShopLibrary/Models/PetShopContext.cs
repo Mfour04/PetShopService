@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace PetShopLibrary.Models;
 
@@ -32,14 +33,17 @@ public partial class PetShopContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=ADMIN\\MINHTAI;Initial Catalog=PetShop;User ID=root;Password=abc123;Trust Server Certificate=True");
+    {
+		var config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+
+		optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnect"));
+	}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6ED5C6225EE");
+            entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6ED20AA969B");
 
             entity.ToTable("Product");
 
@@ -56,7 +60,7 @@ public partial class PetShopContext : DbContext
 
         modelBuilder.Entity<ProductCategory>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__ProductC__19093A2BEFCD3C68");
+            entity.HasKey(e => e.CategoryId).HasName("PK__ProductC__19093A2BAFAF2E98");
 
             entity.ToTable("ProductCategory");
 
@@ -68,7 +72,7 @@ public partial class PetShopContext : DbContext
 
         modelBuilder.Entity<ProductOrder>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__ProductO__C3905BAF844BF981");
+            entity.HasKey(e => e.OrderId).HasName("PK__ProductO__C3905BAF9FBCF325");
 
             entity.ToTable("ProductOrder");
 
@@ -83,7 +87,7 @@ public partial class PetShopContext : DbContext
 
         modelBuilder.Entity<ProductOrderDetail>(entity =>
         {
-            entity.HasKey(e => e.OrderDetailId).HasName("PK__ProductO__D3B9D30C33E5E144");
+            entity.HasKey(e => e.OrderDetailId).HasName("PK__ProductO__D3B9D30C2815AA98");
 
             entity.ToTable("ProductOrderDetail");
 
@@ -102,7 +106,7 @@ public partial class PetShopContext : DbContext
 
         modelBuilder.Entity<ServiceSchedule>(entity =>
         {
-            entity.HasKey(e => e.ScheduleId).HasName("PK__ServiceS__9C8A5B6946211E06");
+            entity.HasKey(e => e.ScheduleId).HasName("PK__ServiceS__9C8A5B69EB7725F2");
 
             entity.ToTable("ServiceSchedule");
 
@@ -122,7 +126,7 @@ public partial class PetShopContext : DbContext
 
         modelBuilder.Entity<ShopService>(entity =>
         {
-            entity.HasKey(e => e.ServiceId).HasName("PK__ShopServ__C51BB0EA0002A39C");
+            entity.HasKey(e => e.ServiceId).HasName("PK__ShopServ__C51BB0EAB047049E");
 
             entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
             entity.Property(e => e.ServiceName)
@@ -132,7 +136,7 @@ public partial class PetShopContext : DbContext
 
         modelBuilder.Entity<Transaction>(entity =>
         {
-            entity.HasKey(e => e.TransactionId).HasName("PK__Transact__55433A4BD5E8C2DE");
+            entity.HasKey(e => e.TransactionId).HasName("PK__Transact__55433A4BB2D8B1C2");
 
             entity.ToTable("Transaction");
 
@@ -147,7 +151,7 @@ public partial class PetShopContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCACE7837EA0");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCAC2D51969B");
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Address)

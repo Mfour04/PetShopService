@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using PetShopLibrary.Models;
+using Microsoft.EntityFrameworkCore;
 using Net.payOS;
 using PetShopLibrary.Models;
 using PetShopLibrary.Repository.Implements;
@@ -13,10 +15,11 @@ PayOS payOS = new PayOS(configuration["Environment:PAYOS_CLIENT_ID"] ?? throw ne
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton(payOS);
-
 builder.Services.AddDbContext<PetShopContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Thêm dòng này để đăng ký PetShopContext
+																						   // Add services to the container.
+// Add services to the container.
+builder.Services.AddSingleton(payOS);
 //Config Repository
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
