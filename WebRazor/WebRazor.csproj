@@ -10,4 +10,8 @@
 		<Folder Include="wwwroot\lib\bootstrap\dist\" />
 		<PackageReference Include="payOS" Version="1.0.6" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\PetShopLibrary\PetShopLibrary.csproj" />
+	</ItemGroup>
 </Project>

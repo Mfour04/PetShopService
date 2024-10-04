@@ -1,4 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Net.payOS;
+using PetShopLibrary.Models;
+using PetShopLibrary.Repository.Implements;
+using PetShopLibrary.Repository.Interfaces;
+using PetShopLibrary.Service;
 
 IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
@@ -9,6 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton(payOS);
+
+builder.Services.AddDbContext<PetShopContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection")));
+//Config Repository
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+//Config Service
+builder.Services.AddScoped<ProductService>();
 
 builder.Services.AddRazorPages();
 var app = builder.Build();
