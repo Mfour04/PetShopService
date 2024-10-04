@@ -48,7 +48,7 @@ public partial class PetShopContext : DbContext
             entity.ToTable("Product");
 
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
-            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
+            entity.Property(e => e.CategoryId).HasColumnName("CategoryID"); 
             entity.Property(e => e.ProductName)
                 .HasMaxLength(255)
                 .IsUnicode(false);
