@@ -58,7 +58,8 @@ public class LoginModel : PageModel
 		{
 			Subject = new ClaimsIdentity(new[] {
 				new Claim(ClaimTypes.Name, user.Email),
-				new Claim(ClaimTypes.Role, user.RoleId) // Đảm bảo RoleId là role trong User model
+				new Claim(ClaimTypes.Role, user.RoleId), // Đảm bảo RoleId là role trong User model
+				new Claim("userId", user.UserId.ToString()), // Thêm claim userId
 			}),
 			Expires = DateTime.UtcNow.AddHours(1),
 			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

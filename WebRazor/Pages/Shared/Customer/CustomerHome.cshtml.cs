@@ -17,6 +17,8 @@ namespace WebRazor.Pages.Shared.Customer
 
 		public string Email { get; set; }
 
+		public string UserId { get; set; }
+
 		public void OnGet()
 		{
 			// Lấy JWT token từ Cookie
@@ -35,9 +37,18 @@ namespace WebRazor.Pages.Shared.Customer
 
 				// Lấy email từ token
 				var emailClaim = token.Claims.FirstOrDefault(c => c.Type == "unique_name");
+
+				// Lấy userId từ token
+				var userIdClaim = token.Claims.FirstOrDefault(c => c.Type == "userId");
+
 				if (emailClaim != null)
 				{
 					Email = emailClaim.Value;
+				}
+
+				if (userIdClaim != null)
+				{
+					UserId = userIdClaim.Value;
 				}
 			}
 			else
