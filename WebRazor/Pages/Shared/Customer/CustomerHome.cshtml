@@ -1,0 +1,46 @@
+﻿@page
+@model CustomerHomeModel
+@{
+	ViewData["Title"] = "CustomerHome";
+}
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PetPath HTML</title>
+	<link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+
+	<script defer src="/js/main.js"></script>
+	<link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+@Html.Partial("PageCommon/PreLoad")
+@Html.Partial("PageCommon/PageHeader")
+@Html.Partial("PageCommon/PageSearchForm")
+
+<main>
+	<section class="choose-us-section pt-120 pb-120" style="padding: 50px 100px 0px 100px;">
+		<div class="container">
+			<div class="row justify-content-center mb-lg-15 mb-md-10 mb-8 position-relative">
+				<div class="col-xl-6 col-lg-8 text-center px-lg-0">
+					<span class="d-block text-primary text-uppercase mb-lg-4 mb-3">CUSTOMER PAGE</span>
+					<h2 class="text-h1 text-center font-otomanopee text-n20 fw-normal">WELCOME CUSTOMER PAGE</h2>
+				</div>
+			</div>
+
+		</div>
+	</section>
+	
+	<!-- Hiển thị email của người dùng -->
+	<h3>@Model.Email</h3>
+
+</main>
+
+@Html.Partial("PageCommon/PageFooter")
+
+</body>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
