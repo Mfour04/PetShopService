@@ -51,21 +51,8 @@ public class LoginModel : PageModel
 			return Page();
 		}
 
-		// Tạo JWT Token
-		var tokenHandler = new JwtSecurityTokenHandler();
-		var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? string.Empty); // Lấy key từ appsettings.json
-		var tokenDescriptor = new SecurityTokenDescriptor
-		{
-			Subject = new ClaimsIdentity(new[] {
-				new Claim(ClaimTypes.Name, user.Email),
-				new Claim(ClaimTypes.Role, user.RoleId), // Đảm bảo RoleId là role trong User model
-				new Claim("userId", user.UserId.ToString()), // Thêm claim userId
-			}),
-			Expires = DateTime.UtcNow.AddHours(1),
-			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-		};
-		var token = tokenHandler.CreateToken(tokenDescriptor);
-		var jwtToken = tokenHandler.WriteToken(token);
+		// Tạo JWT Token sử dụng JwtTokenHelper
+		var jwtToken = JwtTokenHelper.GenerateJwtToken(user, _configuration);
 
 		// Lưu token vào Cookie
 		HttpContext.Response.Cookies.Append("jwtToken", jwtToken, new CookieOptions

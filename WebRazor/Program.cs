@@ -31,6 +31,8 @@ builder.Services.AddScoped<ProductService>();
 
 builder.Services.AddRazorPages();
 
+builder.Services.AddHttpContextAccessor();
+
 // Cấu hình JWT
 var key = Encoding.ASCII.GetBytes("UKlgtQBwfAyxUEE6JusllbQqo44K3gBAZWeT6d4U");
 
