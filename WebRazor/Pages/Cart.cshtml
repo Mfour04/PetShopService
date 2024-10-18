@@ -203,95 +203,35 @@
                                     <th class="p-xxl-6 p-lg-4 p-2 text-center w-100px">Remove</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="align-items-center border-bottom n20-1-border">
-                                    <td class="p-xxl-6 p-lg-4 p-2">
-                                        <a href="shop-details.html" class="d-flex align-items-center gap-3">
-                                            <img class="w-100 icon-80px radius-unset" src="/images/product-1.png"
-                                                 alt="product image">
-                                            <span class="text-n20 fw-medium font-instrument">Pet Shampoos</span>
-                                        </a>
-                                    </td>
-                                    <td class="p-xxl-6 p-lg-4 p-2 fw-medium font-instrument text-center">$35.00</td>
-                                    <td class="p-xxl-6 p-lg-4 p-2 text-center">
-                                        <div class="quantity d-inline-flex align-items-center justify-content-center gap-2 py-lg-3 py-2 px-4 border n20-1-border radius-pill">
-                                            <button class="quantityDecrement text-primary">
-                                                <i class="ph-fill ph-minus"></i>
-                                            </button>
-                                            <input type="text" value="1" class="quantityValue border-0 p-0 outline-0">
-                                            <button class="quantityIncrement text-primary">
-                                                <i class="ph-fill ph-plus"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td class="p-xxl-6 p-lg-4 p-2 fw-medium font-instrument text-center">$35.00</td>
-                                    <td class="p-xxl-6 p-lg-4 p-2 text-center w-100px">
-                                        <button class="cart-prod-remove-btn fw-medium font-instrument">
-                                            <i class="ph ph-x"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="align-items-center border-bottom n20-1-border">
-                                    <td class="p-xxl-6 p-lg-4 p-2">
-                                        <a href="shop-details.html" class="d-flex align-items-center gap-3">
-                                            <img class="w-100 icon-80px radius-unset" src="/images/product-2.png"
-                                                 alt="product image">
-                                            <span class="text-n20 fw-medium font-instrument">Pet Brushes</span>
-                                        </a>
-                                    </td>
-                                    <td class="p-xxl-6 p-lg-4 p-2 fw-medium font-instrument text-center">$30.00</td>
-                                    <td class="p-xxl-6 p-lg-4 p-2 text-center">
-                                        <div class="quantity d-inline-flex align-items-center justify-content-center gap-2 py-lg-3 py-2 px-4 border n20-1-border radius-pill">
-                                            <button class="quantityDecrement text-primary">
-                                                <i class="ph-fill ph-minus"></i>
-                                            </button>
-                                            <input type="text" value="1" class="quantityValue border-0 p-0 outline-0">
-                                            <button class="quantityIncrement text-primary">
-                                                <i class="ph-fill ph-plus"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td class="p-xxl-6 p-lg-4 p-2 fw-medium font-instrument text-center">$30.00</td>
-                                    <td class="p-xxl-6 p-lg-4 p-2 text-center w-100px">
-                                        <button class="cart-prod-remove-btn fw-medium font-instrument">
-                                            <i class="ph ph-x"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tbody id="cartList">
                             </tbody>
                         </table>
-                    </div>
-                    <div class="d-flex align-items-center justify-content-between gap-4 flex-wrap">
-                        <div class="d-flex justify-content-between align-items-center gap-4">
-                            <input type="text" placeholder="Enter coupon code"
-                                   class="w-100 py-lg-3 py-2 px-lg-6 px-4 border n20-1-border radius-pill">
-                            <div>
-                                <button class="btn-primary text-nowrap">Apply Coupon</button>
-                            </div>
-                        </div>
-                        <button class="btn-primary disabled">Update Cart</button>
                     </div>
                 </div>
 
                 <div class="pt-md-10">
-                    <span class="text-h1 fw-normal font-otomanopee mb-lg-8 mb-md-6 mb-4">Cart totals</span>
-                    <ul class="cart-totals-list d-grid gap-lg-8 gap-md-6 gap-4 mb-lg-8 mb-md-6 mb-4">
-                        <li class="border-bottom n20-1-border pb-lg-6 pb-4">
-                            <span class="d-flex align-items-center justify-content-between text-n20 fw-medium font-instrument w-xl-20 w-lg-40 w-md-60">
-                                <span>Subtotal</span> <span>$60.00</span>
-                            </span>
-                        </li>
-                        <li class="border-bottom n20-1-border pb-lg-6 pb-4">
-                            <span class="d-flex align-items-center justify-content-between text-n20 fw-medium font-instrument w-xl-20 w-lg-40 w-md-60">
-                                <span>Total</span> <span>$60.00</span>
-                            </span>
-                        </li>
-                    </ul>
                     <form method="post" asp-page-handler="CreatePaymentLink">
-                        <!-- Các trường nhập cho việc tạo đơn hàng -->
-                        <input type="text" name="productName" placeholder="Tên sản phẩm" />
-                        <input type="number" name="price" placeholder="Giá" />
-                        <input type="text" name="description" placeholder="Mô tả" />
+                        <span class="text-h1 fw-normal font-otomanopee mb-lg-8 mb-md-6 mb-4">Cart totals</span>
+                        <ul class="cart-totals-list d-grid gap-lg-8 gap-md-6 gap-4 mb-lg-8 mb-md-6 mb-4">
+                            <li class="border-bottom n20-1-border pb-lg-6 pb-4">
+                                <span class="d-flex align-items-center justify-content-between text-n20 fw-medium font-instrument w-xl-20 w-lg-40 w-md-60">
+                                    <span>Title</span>
+                                    <input type="text" readonly value="Thanh Toán đơn Hàng của Tài" name="orderName" />
+                                </span>
+                            </li>
+                            <li class="border-bottom n20-1-border pb-lg-6 pb-4">
+                                <span class="d-flex align-items-center justify-content-between text-n20 fw-medium font-instrument w-xl-20 w-lg-40 w-md-60">
+                                    <span>Total</span>
+                                    <input type="text" id="totalSubtotalInput" value="0" readonly name="totalPrice">
+                                </span>
+                            </li>
+                            <li class="border-bottom n20-1-border pb-lg-6 pb-4">
+                                <span class="d-flex align-items-center justify-content-between text-n20 fw-medium font-instrument w-xl-20 w-lg-40 w-md-60">
+                                    <span>Description</span>
+                                    <input type="text" value="Thanh toán" readonly name="description">
+                                </span>
+                            </li>
+                        </ul>
                         <button type="submit">Tạo Payment Link</button>
                     </form>
                 </div>
@@ -452,5 +392,7 @@
         </div>
     </footer>
     <!-- footer section end -->
-
+    @section Scripts {
+        <script src="~/js/cart.js" asp-append-version="true"></script>
+    }
 </body>

@@ -25,10 +25,10 @@ builder.Services.AddDbContext<PetShopContext>(options =>
 builder.Services.AddSingleton(payOS);
 //Config Repository
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
+builder.Services.AddScoped<IProductOrderRepository, ProductOrderRepository>();
 //Config Service
 builder.Services.AddScoped<ProductService>();
-
+builder.Services.AddScoped<ProductOrderService>();
 builder.Services.AddRazorPages();
 
 builder.Services.AddHttpContextAccessor();

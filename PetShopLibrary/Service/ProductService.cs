@@ -21,7 +21,7 @@ namespace PetShopLibrary.Service
         {
             return _productRepository.GetAllProducts();
         }
-        public Product? GetProductById(int id)
+        public Product? GetProductById(long id)
         {
             return _productRepository.GetProductById(id);
         }
