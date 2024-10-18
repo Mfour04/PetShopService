@@ -24,9 +24,9 @@ namespace WebRazor.Pages
             try
             {
                 int orderCode = int.Parse(DateTimeOffset.Now.ToString("ffffff"));
-                ItemData item = new ItemData(body.productName, 1, body.price);
+                ItemData item = new ItemData(body.OrderName, 1, (int)body.TotalPrice);
                 List<ItemData> items = new List<ItemData> { item };
-                PaymentData paymentData = new PaymentData(orderCode, body.price, body.description, items, body.cancelUrl, body.returnUrl);
+                PaymentData paymentData = new PaymentData(orderCode, (int)body.TotalPrice, body.Description, items, body.cancelUrl, body.returnUrl);
 
                 CreatePaymentResult paymentResult = await _payOS.createPaymentLink(paymentData);
 
