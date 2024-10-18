@@ -10,6 +10,7 @@ using System.Text;
 using WebRazor.Models.AuthenticationModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication;
 
 public class LoginModel : PageModel
 {
@@ -50,6 +51,21 @@ public class LoginModel : PageModel
 			ErrorMessage = "Invalid login attempt.";
 			return Page();
 		}
+
+		// Tạo danh sách các claim
+		var claims = new List<Claim>
+		{
+			new Claim(ClaimTypes.Name, user.Email),
+			new Claim(ClaimTypes.Role, user.RoleId), // Gán role từ cơ sở dữ liệu vào claim
+			new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
+		};
+
+		// Tạo identity và principal từ các claim
+		var claimsIdentity = new ClaimsIdentity(claims, "Login");
+		var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+		// Đăng nhập người dùng
+		await HttpContext.SignInAsync(claimsPrincipal);
 
 		// Tạo JWT Token sử dụng JwtTokenHelper
 		var jwtToken = JwtTokenHelper.GenerateJwtToken(user, _configuration);
