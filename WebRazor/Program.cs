@@ -9,6 +9,7 @@ using PetShopLibrary.Service;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
@@ -34,34 +35,41 @@ builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 
 // Cấu hình JWT
-var key = Encoding.ASCII.GetBytes("UKlgtQBwfAyxUEE6JusllbQqo44K3gBAZWeT6d4U");
-
 builder.Services.AddAuthentication(options =>
-	{
-		options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-		options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-	})
-	.AddJwtBearer(options =>
-	{
-		options.RequireHttpsMetadata = false;
-		options.SaveToken = true;
-		options.TokenValidationParameters = new TokenValidationParameters
-		{
-			ValidateIssuerSigningKey = true,
-			IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
-			ValidateIssuer = false,
-			ValidateAudience = false,
-			ValidateLifetime = true,
-			ClockSkew = TimeSpan.Zero // Để token hết hạn chính xác
-		};
-	});
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero // Để token hết hạn chính xác
+        };
+    });
+
+// Cấu hình Cookie Authentication cho Razor Pages
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login";
+        options.AccessDeniedPath = "/AccessDenied";
+    });
 
 builder.Services.AddAuthorization(options =>
 {
 	// Cấu hình phân quyền theo Role
-	options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
-	options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
+	options.AddPolicy("AdminOnly", policy => policy.RequireRole("admin"));
+	options.AddPolicy("UserOnly", policy => policy.RequireRole("user"));
 });
+
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

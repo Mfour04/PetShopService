@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebRazor.Pages
@@ -12,13 +14,14 @@ namespace WebRazor.Pages
 			_logger = logger;
 		}
 
-		public IActionResult OnGet()
+		public async Task<IActionResult> OnGet() // should convert to OnPost
 		{
 			// Xóa cookie chứa token
 			HttpContext.Response.Cookies.Delete("jwtToken");
 
 			_logger.LogInformation("User logged out.");
 
+			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 			// Chuyển hướng về trang đăng nhập sau khi logout
 			return RedirectToPage("/Login");
 		}
