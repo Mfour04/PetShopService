@@ -11,6 +11,7 @@ using WebRazor.Models.AuthenticationModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 public class LoginModel : PageModel
 {
@@ -60,15 +61,22 @@ public class LoginModel : PageModel
 			new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
 		};
 
-		// Tạo identity và principal từ các claim
-		var claimsIdentity = new ClaimsIdentity(claims, "Login");
-		var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+        // Tạo identity và principal từ các claim
+        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-		// Đăng nhập người dùng
-		await HttpContext.SignInAsync(claimsPrincipal);
+        // Đăng nhập người dùng
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
 
-		// Tạo JWT Token sử dụng JwtTokenHelper
-		var jwtToken = JwtTokenHelper.GenerateJwtToken(user, _configuration);
+        _logger.LogInformation("Claims: " + string.Join(", ", claims.Select(c => $"{c.Type}: {c.Value}")));
+
+        // Log kiểm tra claims sau khi đăng nhập
+        var loggedInUser = HttpContext.User;
+        _logger.LogInformation("Is User Authenticated After Login: " + loggedInUser.Identity.IsAuthenticated);
+        _logger.LogInformation("Claims Count After Login: " + loggedInUser.Claims.Count());
+
+        // Tạo JWT Token sử dụng JwtTokenHelper
+        var jwtToken = JwtTokenHelper.GenerateJwtToken(user, _configuration);
 
 		// Lưu token vào Cookie
 		HttpContext.Response.Cookies.Append("jwtToken", jwtToken, new CookieOptions
@@ -77,20 +85,10 @@ public class LoginModel : PageModel
 			Expires = DateTime.UtcNow.AddHours(1) // Token hết hạn sau 1 giờ
 		});
 
-		// Kiểm tra role của người dùng
-		if (user.RoleId == "admin")
-		{
-			return RedirectToPage("/Shared/Admin/AdminHome"); // Chuyển hướng đến trang AdminHome nếu là admin
-		}
-		else if (user.RoleId == "user")
-		{
-			return RedirectToPage("/Shared/Customer/CustomerHome"); // Chuyển hướng đến trang CustomerHome nếu là user
-		}
-
-		// Nếu không xác định được role, trả về trang hiện tại với lỗi
-		ErrorMessage = "User role not recognized.";
-		return Page();
-	}
+        return user.RoleId == "admin"
+            ? RedirectToPage("/Shared/Admin/AdminHome")
+            : RedirectToPage("/Shared/Customer/CustomerHome");
+    }
 }
 
 
