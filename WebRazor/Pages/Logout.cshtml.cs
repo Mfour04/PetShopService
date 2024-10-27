@@ -16,9 +16,6 @@ namespace WebRazor.Pages
 
 		public async Task<IActionResult> OnGet() // should convert to OnPost
 		{
-			// Xóa cookie chứa token
-			HttpContext.Response.Cookies.Delete("jwtToken");
-
 			_logger.LogInformation("User logged out.");
 
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

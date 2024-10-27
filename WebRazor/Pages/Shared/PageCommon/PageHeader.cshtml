@@ -1,9 +1,8 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
-	// Kiểm tra xem có cookie JWT không
-	var jwtToken = HttpContextAccessor.HttpContext.Request.Cookies["jwtToken"];
-	bool isLoggedIn = !string.IsNullOrEmpty(jwtToken);
+	// Kiểm tra xem người dùng đã đăng nhập hay chưa bằng cookie authentication
+	bool isLoggedIn = User.Identity.IsAuthenticated;
 }
 
 <header class="header-section position-fixed top-0 start-50 translate-middle-x" style="padding: 0px 20px 0px 20px; background-color: bisque;" data-lenis-prevent>

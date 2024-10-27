@@ -65,25 +65,19 @@ public class LoginModel : PageModel
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-        // Đăng nhập người dùng
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+        // Đăng nhập người dùng qua Cookie Authentication
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
+        {
+            IsPersistent = true, // Giữ cookie khi đóng trình duyệt nếu cần
+            ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30) // Thời gian hết hạn của cookie
+        });
 
-        _logger.LogInformation("Claims: " + string.Join(", ", claims.Select(c => $"{c.Type}: {c.Value}")));
+        _logger.LogInformation("User logged in with claims: " + string.Join(", ", claims.Select(c => $"{c.Type}: {c.Value}")));
 
         // Log kiểm tra claims sau khi đăng nhập
         var loggedInUser = HttpContext.User;
         _logger.LogInformation("Is User Authenticated After Login: " + loggedInUser.Identity.IsAuthenticated);
         _logger.LogInformation("Claims Count After Login: " + loggedInUser.Claims.Count());
-
-        // Tạo JWT Token sử dụng JwtTokenHelper
-        var jwtToken = JwtTokenHelper.GenerateJwtToken(user, _configuration);
-
-		// Lưu token vào Cookie
-		HttpContext.Response.Cookies.Append("jwtToken", jwtToken, new CookieOptions
-		{
-			HttpOnly = true, // Bảo mật chống lại JavaScript
-			Expires = DateTime.UtcNow.AddHours(1) // Token hết hạn sau 1 giờ
-		});
 
         return user.RoleId == "admin"
             ? RedirectToPage("/Shared/Admin/AdminHome")

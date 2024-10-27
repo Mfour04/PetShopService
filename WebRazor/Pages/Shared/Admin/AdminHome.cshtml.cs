@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace WebRazor.Pages.Shared.Admin
 {
     [Authorize(Roles = "admin")]  // Chỉ cho phép admin truy cập
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class AdminHomeModel : PageModel
     {
 		private readonly ILogger<AdminHomeModel> _logger; // Tạo biến logger
