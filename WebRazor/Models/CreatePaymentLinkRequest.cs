@@ -2,10 +2,10 @@
 {
     public class CreatePaymentLinkRequest
     {
-        public string productName {  get; set; }
+        public string OrderName {  get; set; }
         //show about "userName" payment
-        public string description {  get; set; }
-        public int price {  get; set; }
+        public string Description {  get; set; }
+        public long TotalPrice {  get; set; }
         public string returnUrl { get; set; } = "https://localhost:44376/Index";
         public string cancelUrl { get; set; } = "https://localhost:44376/Shop";
     }

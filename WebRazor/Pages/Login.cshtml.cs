@@ -10,6 +10,8 @@ using System.Text;
 using WebRazor.Models.AuthenticationModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 public class LoginModel : PageModel
 {
@@ -51,43 +53,36 @@ public class LoginModel : PageModel
 			return Page();
 		}
 
-		// Tạo JWT Token
-		var tokenHandler = new JwtSecurityTokenHandler();
-		var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"] ?? string.Empty); // Lấy key từ appsettings.json
-		var tokenDescriptor = new SecurityTokenDescriptor
+		// Tạo danh sách các claim
+		var claims = new List<Claim>
 		{
-			Subject = new ClaimsIdentity(new[] {
-				new Claim(ClaimTypes.Name, user.Email),
-				new Claim(ClaimTypes.Role, user.RoleId), // Đảm bảo RoleId là role trong User model
-				new Claim("userId", user.UserId.ToString()), // Thêm claim userId
-			}),
-			Expires = DateTime.UtcNow.AddHours(1),
-			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+			new Claim(ClaimTypes.Name, user.Email),
+			new Claim(ClaimTypes.Role, user.RoleId), // Gán role từ cơ sở dữ liệu vào claim
+			new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
 		};
-		var token = tokenHandler.CreateToken(tokenDescriptor);
-		var jwtToken = tokenHandler.WriteToken(token);
 
-		// Lưu token vào Cookie
-		HttpContext.Response.Cookies.Append("jwtToken", jwtToken, new CookieOptions
-		{
-			HttpOnly = true, // Bảo mật chống lại JavaScript
-			Expires = DateTime.UtcNow.AddHours(1) // Token hết hạn sau 1 giờ
-		});
+        // Tạo identity và principal từ các claim
+        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-		// Kiểm tra role của người dùng
-		if (user.RoleId == "admin")
-		{
-			return RedirectToPage("/Shared/Admin/AdminHome"); // Chuyển hướng đến trang AdminHome nếu là admin
-		}
-		else if (user.RoleId == "user")
-		{
-			return RedirectToPage("/Shared/Customer/CustomerHome"); // Chuyển hướng đến trang CustomerHome nếu là user
-		}
+        // Đăng nhập người dùng qua Cookie Authentication
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
+        {
+            IsPersistent = true, // Giữ cookie khi đóng trình duyệt nếu cần
+            ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30) // Thời gian hết hạn của cookie
+        });
 
-		// Nếu không xác định được role, trả về trang hiện tại với lỗi
-		ErrorMessage = "User role not recognized.";
-		return Page();
-	}
+        _logger.LogInformation("User logged in with claims: " + string.Join(", ", claims.Select(c => $"{c.Type}: {c.Value}")));
+
+        // Log kiểm tra claims sau khi đăng nhập
+        var loggedInUser = HttpContext.User;
+        _logger.LogInformation("Is User Authenticated After Login: " + loggedInUser.Identity.IsAuthenticated);
+        _logger.LogInformation("Claims Count After Login: " + loggedInUser.Claims.Count());
+
+        return user.RoleId == "admin"
+            ? RedirectToPage("/Shared/Admin/AdminHome")
+            : RedirectToPage("/Shared/Customer/CustomerHome");
+    }
 }
 
 

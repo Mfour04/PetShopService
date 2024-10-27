@@ -1,5 +1,10 @@
-﻿<!-- header -->
-<!-- header section start -->
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+	// Kiểm tra xem người dùng đã đăng nhập hay chưa bằng cookie authentication
+	bool isLoggedIn = User.Identity.IsAuthenticated;
+}
+
 <header class="header-section position-fixed top-0 start-50 translate-middle-x" style="padding: 0px 20px 0px 20px; background-color: bisque;" data-lenis-prevent>
 	<div class="container px-0" style="padding: 0px 20px 0px 20px;">
 		<!-- navbar area -->
@@ -89,6 +94,35 @@
 				</ul>
 			</nav>
 			<div class="nav-btns d-flex align-items-center gap-lg-5 gap-3">
+
+				<!-- search icon -->
+				<button class="search-btn text-2xl font-semibold text-n20">
+					<i class="ph ph-magnifying-glass"></i>
+				</button>
+
+				<button class="cart-btn icon-48px position-relative border n20-border text-n20 hover-bg-primary hover-text-n0">
+					<span class="badge radius-pill text-n0 text-sm fw-medium bg-n20 position-absolute top-50 start-100 translate-middle z-1 mt-n3">0</span>
+					<span class="text-xl font-semibold">
+						<i class="ph-fill ph-shopping-cart"></i>
+					</span>
+				</button>
+
+				<a href="#" class="btn-primary text-nowrap">Book</a>
+
+				<!-- Nút Login/Logout -->
+				<div class="header-buttons">
+					@if (isLoggedIn)
+					{
+						<!-- Nút Logout khi đã đăng nhập -->
+						<a href="/Logout" class="btn-primary text-nowrap">Logout</a>
+					}
+					else
+					{
+						<!-- Nút Login khi chưa đăng nhập -->
+						<a href="/Login" class="btn-primary text-nowrap">Login</a>
+					}
+				</div>
+
 				<button class="menu-toggle-btn text-2xl">
 					<i class="ph ph-list"></i>
 				</button>
@@ -96,3 +130,7 @@
 		</div>
 	</div>
 </header>
+
+
+
+
