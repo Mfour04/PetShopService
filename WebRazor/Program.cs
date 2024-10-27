@@ -16,25 +16,30 @@ IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettin
 PayOS payOS = new PayOS(configuration["Environment:PAYOS_CLIENT_ID"] ?? throw new Exception("Cannot find environment"),
                     configuration["Environment:PAYOS_API_KEY"] ?? throw new Exception("Cannot find environment"),
                     configuration["Environment:PAYOS_CHECKSUM_KEY"] ?? throw new Exception("Cannot find environment"));
+
+// define builder to manage service
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<PetShopContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Thêm dòng này để đăng ký PetShopContext
-																						   // Add services to the container.
+																						   
 // Add services to the container.
 builder.Services.AddSingleton(payOS);
+
 //Config Repository
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductOrderRepository, ProductOrderRepository>();
+
 //Config Service
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ProductOrderService>();
 builder.Services.AddRazorPages();
 
+// lấy thông tin HTTP request ở những lớp không thuộc controller
 builder.Services.AddHttpContextAccessor();
 
-// Cấu hình JWT
+// Cấu Authentication JWT
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
