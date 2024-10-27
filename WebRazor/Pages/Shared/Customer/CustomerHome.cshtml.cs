@@ -3,10 +3,13 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt; // Cần thêm namespace này để làm việc với JWT
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebRazor.Pages.Shared.Customer
 {
-	public class CustomerHomeModel : PageModel
+    [Authorize]
+    public class CustomerHomeModel : PageModel
 	{
 		private readonly ILogger<CustomerHomeModel> _logger; // Khai báo biến logger
 
@@ -21,40 +24,29 @@ namespace WebRazor.Pages.Shared.Customer
 
 		public void OnGet()
 		{
-			// Lấy JWT token từ Cookie
-			var jwtToken = Request.Cookies["jwtToken"];
+            // Lấy thông tin từ các claim đã được lưu trữ trong Cookie Authentication
+            var emailClaim = User.FindFirst(ClaimTypes.Name);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
 
-			if (!string.IsNullOrEmpty(jwtToken))
-			{
-				// Log JWT token
-				_logger.LogInformation($"JWT Token: {jwtToken}");
+            if (emailClaim != null)
+            {
+                Email = emailClaim.Value;
+                _logger.LogInformation($"Email: {Email}");
+            }
+            else
+            {
+                _logger.LogWarning("Email claim is not available.");
+            }
 
-				// Giải mã token để lấy email
-				var handler = new JwtSecurityTokenHandler();
-				var token = handler.ReadJwtToken(jwtToken);
-
-				_logger.LogInformation($"Token: {token}");
-
-				// Lấy email từ token
-				var emailClaim = token.Claims.FirstOrDefault(c => c.Type == "unique_name");
-
-				// Lấy userId từ token
-				var userIdClaim = token.Claims.FirstOrDefault(c => c.Type == "userId");
-
-				if (emailClaim != null)
-				{
-					Email = emailClaim.Value;
-				}
-
-				if (userIdClaim != null)
-				{
-					UserId = userIdClaim.Value;
-				}
-			}
-			else
-			{
-				_logger.LogWarning("JWT Token is not available in the cookies.");
-			}
-		}
+            if (userIdClaim != null)
+            {
+                UserId = userIdClaim.Value;
+                _logger.LogInformation($"UserId: {UserId}");
+            }
+            else
+            {
+                _logger.LogWarning("UserId claim is not available.");
+            }
+        }
 	}
 }
