@@ -152,8 +152,8 @@
             <i class="ph ph-x"></i>
         </button>
         <div class="search-form">
-            <form class="d-flex align-items-center gap-4 border n10-border p-2">
-                <input type="text" placeholder="Search ..." class="w-100 p-2">
+            <form method="get" class="d-flex align-items-center gap-4 border n10-border p-2">
+                <input type="text" name="searchText" placeholder="Search ..." class="w-100 p-2">
                 <button type="submit" class="text-2xl text-n0">
                     <i class="ph ph-magnifying-glass"></i>
                 </button>
@@ -223,7 +223,7 @@
                                                 <span class="seal-tag py-1 px-lg-4 px-2 bg-primary text-n0 radius-pill position-absolute top-0 left-0 mt-lg-6 mt-4 ms-lg-6 ms-4">Sale!</span>
                                                 <div class="product-btns d-grid gap-1 position-absolute top-0 right-0 mt-xxl-6 mt-4 me-xxl-6 me-4">
                                                     <button class="cart-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary"
-                                                            onclick="handleClickAddToCart({ ProductId: '@product.ProductId', ProductName: '@product.ProductName', Price: @product.Price, Quantity: 1 })">
+                                                            onclick="handleClickAddToCart({ ProductId: '@product.ProductId', ProductName: '@product.ProductName', Price: @product.Price, Quantity: 1})">
                                                         <i class="ph-fill ph-shopping-cart"></i>
                                                     </button>
                                                 </div>
@@ -270,7 +270,7 @@
                                 </h5>
                                 <form action="#"
                                       class="d-flex align-items-center border n20-1-border radius-8 focus-primary overflow-hidden">
-                                    <input type="text" placeholder="Search"
+                                    <input type="text" placeholder="Search" name="searchText"
                                            class="w-100 font-instrument border-0 outline-0 p-3">
                                     <button class="btn-primary border-0 text-n0 text-2xl p-3 radius-8">
                                         <span><i class="ph ph-magnifying-glass"></i></span>
@@ -291,8 +291,8 @@
                                             <span class="slider-range"></span>
                                         </div>
                                         <div class="range-input">
-                                            <input type="range" class="min" min="0" max="500" value="10" step="10">
-                                            <input type="range" class="max" min="0" max="500" value="500" step="10">
+                                            <input type="range" class="min" min="0" max="5000000" value="0" step="100000">
+                                            <input type="range" class="max" min="0" max="5000000" value="500" step="100000">
                                         </div>
                                     </div>
 
@@ -300,7 +300,7 @@
                                         <button class="btn-primary border-0 text-n0 text-xl py-3 px-lg-6 px-4 fw-normal font-instrument">
                                             Filter
                                         </button>
-                                        <span class="price-value text-n20 font-instrument fw-normal">
+                                        <span class="price-valueƯ text-n20 font-instrument fw-normal">
                                             Price: $
                                             <span class="min-label">10</span>
                                             - $
@@ -308,7 +308,6 @@
                                         </span>
                                     </div>
                                 </form>
-
                             </div>
 
                             <!-- top products list start -->

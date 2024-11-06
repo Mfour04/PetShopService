@@ -239,22 +239,17 @@
                         <div class="d-grid gap-lg-6 gap-4">
                             <div>
                                 <h1 class="text-animation-word text-h1 font-otomanopee text-n20 fw-normal mb-lg-4 mb-2">
-                                    Pet Brushes
+                                    @* show name *@
+                                    @Html.DisplayFor(model => model.Product.ProductName)
                                 </h1>
                                 <span class="text-primary text-xl fw-semibold font-instrument">
-                                    $60.00
+                                    @* show price *@
+                                    @Html.DisplayFor(model => model.Product.Price)$
                                 </span>
                             </div>
                             <p class="text-n10 fw-normal">
-                                At PetPath, we offer brushes for all coat types, from short-haired breeds to long, thick
-                                fur. Our collection includes slicker brushes, bristle brushes, and de-shedding tools to
-                                reduce shedding and prevent mats and tangles. Regular brushing not only enhances your
-                                pet's appearance but also promotes healthy skin by stimulating natural oil production.
-                                Whether you have a dog or a cat, our pet brushes.
-                            </p>
-                            <p class="text-n10 fw-normal">
-                                Keep your pet's coat healthy and shiny with our range of high-quality pet brushes. At
-                                PetPath, we offer brushes for all coat types, from short-
+                                @* show description *@
+                                @Html.DisplayFor(model => model.Product.Description)
                             </p>
                         </div>
                         <div class="d-flex align-items-center gap-lg-3 gap-2 flex-wrap flex-xs-nowrap mt-lg-8 mt-6 mb-lg-10 mb-8">
@@ -270,14 +265,14 @@
                         </div>
                         <ul class="d-grid gap-lg-4 gap-2">
                             <li class="d-flex align-items-center gap-1">
-                                <span class="text-base fw-medium font-instrument text-n20">Category: </span><span class="text-base fw-normal font-instrument text-n10">Pet Brushes</span>
+                                <span class="text-base fw-medium font-instrument text-n20">Category: </span><span class="text-base fw-normal font-instrument text-n10">@Html.DisplayFor(model => model.Product.Category.CategoryName)</span>
                             </li>
                             <li class="d-flex align-items-center gap-1">
                                 <span class="text-base fw-medium font-instrument text-n20">Tags: </span><span class="text-base fw-normal font-instrument text-n10">#Walking,#Training,#Puppy,</span>
                             </li>
-                            <li class="d-flex align-items-center gap-1">
-                                <span class="text-base fw-medium font-instrument text-n20">Product ID: </span><span class="text-base fw-normal font-instrument text-n10">19241</span>
-                            </li>
+                           @*  <li class="d-flex align-items-center gap-1">
+                                <span class="text-base fw-medium font-instrument text-n20">Product ID: </span><span class="text-base fw-normal font-instrument text-n10">@Html.DisplayFor(model => model.Product.ProductId)</span>
+                            </li> *@
                         </ul>
                     </div>
                 </div>

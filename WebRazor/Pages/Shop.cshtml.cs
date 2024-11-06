@@ -17,9 +17,12 @@ namespace WebRazor.Pages
 
         public IEnumerable<Product> Products { get; set; }
 
-        public void OnGet()
+        public void OnGet(string? searchText)
         {
-            Products = _productService.GetAllProducts();
+            Products = _productService.GetAllProducts()
+                                      .Where(it =>
+                                      string.IsNullOrEmpty(searchText) ||
+                                      it.ProductName.Contains(searchText, StringComparison.OrdinalIgnoreCase));
         }
         public JsonResult OnPostGetProductById(long productId)
         {
