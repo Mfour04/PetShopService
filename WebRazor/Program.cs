@@ -30,10 +30,12 @@ builder.Services.AddSingleton(payOS);
 //Config Repository
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductOrderRepository, ProductOrderRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 //Config Service
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ProductOrderService>();
+builder.Services.AddScoped<UserService>();
 builder.Services.AddRazorPages();
 
 // lấy thông tin HTTP request ở những lớp không thuộc controller
