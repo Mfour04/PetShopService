@@ -16,16 +16,23 @@ namespace WebRazor.Pages.Shared.Admin
 		private readonly ILogger<AdminHomeModel> _logger; // Tạo biến logger
         private readonly IUserRepository _userRepository;
 		private readonly IProductRepository _productRepository;
+		private readonly IShopServiceRepository _shopServiceRepository;
 		// Inject ILogger vào thông qua constructor
-		public AdminHomeModel(ILogger<AdminHomeModel> logger, IUserRepository userRepository, IProductRepository productRepository)
+		public AdminHomeModel(ILogger<AdminHomeModel> logger,
+			IUserRepository userRepository,
+			IProductRepository productRepository,
+			IShopServiceRepository shopServiceRepository)
 		{
 			_logger = logger; // Gán logger
             _userRepository = userRepository;
 			_productRepository = productRepository;
+			_shopServiceRepository = shopServiceRepository;
 		}
 
         public IEnumerable<User> Users { get; set; }
 		public IEnumerable<Product> Products { get; set; }
+
+		public IEnumerable<ShopService> ShopServices { get; set; }
 
 		public async Task<IActionResult> OnGet()
         {
@@ -33,6 +40,7 @@ namespace WebRazor.Pages.Shared.Admin
             var userClaims = User.Claims.ToList();
 			Users = _userRepository.GetUsers();
 			Products = _productRepository.GetAllProducts();
+			ShopServices = _shopServiceRepository.GetShopServices();
             // Ghi log khi người dùng truy cập AdminHome
             _logger.LogInformation("User attempting to access AdminHome");
             _logger.LogInformation("Is User Authenticated: " + User.Identity.IsAuthenticated);
@@ -57,6 +65,12 @@ namespace WebRazor.Pages.Shared.Admin
 		{
 			var products = _productRepository.GetAllProducts();
 			return new JsonResult(products);
+		}
+
+		public JsonResult OnGetShopServices()
+		{
+			var services = _shopServiceRepository.GetShopServices();
+			return new JsonResult(services);
 		}
 
 		public async Task<IActionResult> OnPostUpdateUserAsync(User user)

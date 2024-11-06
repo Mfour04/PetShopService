@@ -44,13 +44,15 @@ async function loadTable(page) {
             const productsResponse = await fetch('/Shared/Admin/AdminHome?handler=Products');
             const products = await productsResponse.json();
             tableContent = `
-                    <h3>User Data</h3>
+                    <h3>Product Data</h3>
+                    <a href="/Shared/Admin/Products/Create">New Product</a>
                     <table class="table table-bordered">
                         <thead>
                                 <tr class="bg-primary2 border n20-1-border radius-8">
                                     <th class="p-xxl-6 p-lg-4 p-2">ID</th>
                                     <th class="p-xxl-6 p-lg-4 p-2 text-center">Name</th>
                                     <th class="p-xxl-6 p-lg-4 p-2 text-center">Price</th>
+                                    <th class="p-xxl-6 p-lg-4 p-2 text-center">Action</th>
                                 </tr>
                         </thead>
                         <tbody>
@@ -62,6 +64,37 @@ async function loadTable(page) {
                         <td>${product.productId}</td>
                         <td>${product.productName}</td>
                         <td>${product.price}</td>
+                         <td>
+                            <a href="/Shared/Admin/Products/Edit?id=${product.productId}">Edit</a> |
+                            <a href="/Shared/Admin/Products/Delete?id=${product.productId}">Delete</a>
+                        </td>
+                    </tr>
+                `
+            })
+            tableContent += `</tbody></table>`
+            break;
+        case "services":
+            const serviceResponse = await fetch('/Shared/Admin/AdminHome?handler=ShopServices');
+            const services = await serviceResponse.json();
+            tableContent = `
+                    <h3>Service Data</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                                <tr class="bg-primary2 border n20-1-border radius-8">
+                                    <th class="p-xxl-6 p-lg-4 p-2">ID</th>
+                                    <th class="p-xxl-6 p-lg-4 p-2 text-center">Service Name</th>
+                                    <th class="p-xxl-6 p-lg-4 p-2 text-center">Price</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                `;
+            services.forEach(service => {
+                tableContent +=
+                    `
+                    <tr>
+                        <td>${service.serviceId}</td>
+                        <td>${service.serviceName}</td>
+                        <td>${service.price}</td>
                     </tr>
                 `
             })

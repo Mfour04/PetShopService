@@ -31,6 +31,7 @@ builder.Services.AddSingleton(payOS);
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductOrderRepository, ProductOrderRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IShopServiceRepository, ShopServiceRepository>();
 
 //Config Service
 builder.Services.AddScoped<ProductService>();
