@@ -58,5 +58,16 @@ namespace PetShopLibrary.Repository.Implements
             _context.Products.Update(product);
             _context.SaveChanges();
         }
+
+        public async Task<PagedResult<Product>> GetProductsPagedAsync(int pageIndex, int pageSize)
+        {
+            var totalCount = await _context.Products.CountAsync();
+            var products = await _context.Products
+                                         .Skip((pageIndex - 1) * pageSize)
+                                         .Take(pageSize)
+                                         .ToListAsync();
+
+            return new PagedResult<Product>(products, totalCount, pageIndex, pageSize);
+        }
     }
 }

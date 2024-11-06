@@ -214,7 +214,7 @@
                         <!-- product list start -->
                         <div class="row g-6 mb-lg-10 mb-md-8 mb-6">
                             <div class="row">
-                                @foreach (var product in Model.Products)
+                                @foreach (var product in Model.PagedProducts.Items)
                                 {
                                     <div class="col-md-4 col-xs-6">
                                         <div class="product-card border n20-1-border radius-16 overflow-hidden hover-primary-border">
@@ -244,21 +244,30 @@
                         </div>
 
                         <!-- pagination -->
-                        <ul class="pagination justify-content-center gap-lg-5 gap-3">
-                            <li class="pagination-item">
-                                <a class="pagination-link" href="#">
-                                    <i class="ph ph-arrow-left"></i>
-                                </a>
-                            </li>
-                            <li class="pagination-item"><a class="pagination-link active" href="#">1</a></li>
-                            <li class="pagination-item"><a class="pagination-link" href="#">2</a></li>
-                            <li class="pagination-item"><a class="pagination-link" href="#">3</a></li>
-                            <li class="pagination-item">
-                                <a class="pagination-link" href="#">
-                                    <i class="ph ph-arrow-right"></i>
-                                </a>
-                            </li>
-                        </ul>
+                        <div>
+                            @if (Model.PagedProducts.CurrentPage > 1)
+                            {
+                                <a asp-page="./Shop" asp-route-pageIndex="@(Model.PagedProducts.CurrentPage - 1)">Previous</a>
+                            }
+
+                            @for (int i = Math.Max(1, Model.PagedProducts.CurrentPage - 5);
+                            i <= Math.Min(Model.PagedProducts.TotalPages, Model.PagedProducts.CurrentPage + 4); i++)
+                            {
+                                if (i == Model.PagedProducts.CurrentPage)
+                                {
+                                    <span class="current-page">@i</span>
+                                }
+                                else
+                                {
+                                    <a asp-page="./Shop" asp-route-pageIndex="@(i)">@i</a>
+                                }
+                            }
+
+                            @if (Model.PagedProducts.CurrentPage < Model.PagedProducts.TotalPages)
+                            {
+                                <a asp-page="./Shop" asp-route-pageIndex="@(Model.PagedProducts.CurrentPage + 1)">Next</a>
+                            }
+                        </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="shop-sidebar">

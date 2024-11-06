@@ -14,5 +14,6 @@ namespace PetShopLibrary.Repository.Interfaces
         void AddProduct(Product product);
         void UpdateProduct(Product product);
         void DeleteProduct(long productId);
+        Task<PagedResult<Product>> GetProductsPagedAsync(int pageIndex, int pageSize);
     }
 }
