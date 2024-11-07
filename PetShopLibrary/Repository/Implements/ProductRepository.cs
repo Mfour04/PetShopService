@@ -20,12 +20,22 @@ namespace PetShopLibrary.Repository.Implements
 
         public IEnumerable<Product> GetAllProducts()
         {
-            return _context.Products.ToList();
+            return _context.Products
+                  .Select(p => new Product
+                  {
+                      ProductId = p.ProductId,
+                      ProductName = p.ProductName,
+                      Price = p.Price,
+                      Description = p.Description
+                  })
+                  .ToList();
         }
 
         public Product? GetProductById(long productId)
         {
-            return _context.Products.FirstOrDefault(p => p.ProductId == productId);
+            return _context.Products
+                .Include(p => p.Category)
+                .FirstOrDefault(p => p.ProductId == productId);
         }
         public void AddProduct(Product product)
         {

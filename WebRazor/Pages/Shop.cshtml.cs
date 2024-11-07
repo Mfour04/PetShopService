@@ -14,12 +14,18 @@ namespace WebRazor.Pages
         public ShopModel(ProductService productService)
         {
             _productService = productService;
+            _orderService = orderService;
         }
 
         public IEnumerable<Product> Products { get; set; }
 
         public async Task OnGetAsync(int pageIndex = 1)
+        public void OnGet(string? searchText)
         {
+            Products = _productService.GetAllProducts()
+                                      .Where(it =>
+                                      string.IsNullOrEmpty(searchText) ||
+                                      it.ProductName.Contains(searchText, StringComparison.OrdinalIgnoreCase));
             PagedProducts = await _productService.GetPagedProductsAsync(pageIndex, PageSize);
         }
         public JsonResult OnPostGetProductById(long productId)
