@@ -81,7 +81,7 @@ public class LoginModel : PageModel
 
         return user.RoleId == "admin"
             ? RedirectToPage("/Shared/Admin/AdminHome")
-            : RedirectToPage("/Shared/Customer/CustomerHome");
+            : RedirectToPage("/Index");
     }
 }
 
