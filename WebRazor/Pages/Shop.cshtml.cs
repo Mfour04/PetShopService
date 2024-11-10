@@ -8,25 +8,22 @@ namespace WebRazor.Pages
     public class ShopModel : PageModel
     {
         private readonly ProductService _productService;
-        public PagedResult<Product> PagedProducts { get; set; }
-        public int PageSize { get; set; } = 10;
-
         public ShopModel(ProductService productService)
         {
             _productService = productService;
-            _orderService = orderService;
         }
-
+        public PagedResult<Product> PagedProducts { get; set; }
+        public int PageSize { get; set; } = 10;
+        [BindProperty]
+        public long MinPrice { get; set; } = 0;
+        [BindProperty]
+        public long MaxPrice { get; set; } = 5000000;
+        public List<Product> FilteredProducts { get; set; }
         public IEnumerable<Product> Products { get; set; }
 
-        public async Task OnGetAsync(int pageIndex = 1)
-        public void OnGet(string? searchText)
+        public async Task OnGetAsync(string? searchText, int pageIndex = 1, decimal minPrice = 0, decimal maxPrice = 5000000)
         {
-            Products = _productService.GetAllProducts()
-                                      .Where(it =>
-                                      string.IsNullOrEmpty(searchText) ||
-                                      it.ProductName.Contains(searchText, StringComparison.OrdinalIgnoreCase));
-            PagedProducts = await _productService.GetPagedProductsAsync(pageIndex, PageSize);
+            PagedProducts = await _productService.GetPagedProductsAsync(pageIndex, PageSize, searchText, minPrice, maxPrice);
         }
         public JsonResult OnPostGetProductById(long productId)
         {

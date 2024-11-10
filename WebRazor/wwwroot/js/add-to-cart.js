@@ -39,3 +39,8 @@ window.addEventListener('load', () => {
     updateCartCount();  
 });
 
+function updatePriceLabels() {
+    document.querySelector('.min-label').textContent = document.querySelector('input[type="range"].min').value;
+    document.querySelector('.max-label').textContent = document.querySelector('input[type="range"].max').value;
+}
+

@@ -244,30 +244,35 @@
                         </div>
 
                         <!-- pagination -->
-                        <div>
-                            @if (Model.PagedProducts.CurrentPage > 1)
-                            {
-                                <a asp-page="./Shop" asp-route-pageIndex="@(Model.PagedProducts.CurrentPage - 1)">Previous</a>
-                            }
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center gap-lg-5 gap-3">
+                                <!-- Previous Button -->
+                                <li class="pagination-item @(Model.PagedProducts.CurrentPage == 1 ? "disabled" : "")">
+                                    <a class="pagination-link" asp-page="./Shop" asp-route-pageIndex="@(Model.PagedProducts.CurrentPage - 1)">
+                                        <i class="ph ph-arrow-left"></i>
+                                    </a>
+                                </li>
 
-                            @for (int i = Math.Max(1, Model.PagedProducts.CurrentPage - 5);
-                            i <= Math.Min(Model.PagedProducts.TotalPages, Model.PagedProducts.CurrentPage + 4); i++)
-                            {
-                                if (i == Model.PagedProducts.CurrentPage)
+                                <!-- Page Numbers -->
+                                @for (int i = Math.Max(1, Model.PagedProducts.CurrentPage - 2);
+                                i <= Math.Min(Model.PagedProducts.TotalPages, Model.PagedProducts.CurrentPage + 2); i++)
                                 {
-                                    <span class="current-page">@i</span>
+                                    <li class="pagination-item">
+                                        <a class="pagination-link @(i == Model.PagedProducts.CurrentPage ? "active" : "")"
+                                           asp-page="./Shop" asp-route-pageIndex="@(i)">@i</a>
+                                    </li>
                                 }
-                                else
-                                {
-                                    <a asp-page="./Shop" asp-route-pageIndex="@(i)">@i</a>
-                                }
-                            }
 
-                            @if (Model.PagedProducts.CurrentPage < Model.PagedProducts.TotalPages)
-                            {
-                                <a asp-page="./Shop" asp-route-pageIndex="@(Model.PagedProducts.CurrentPage + 1)">Next</a>
-                            }
-                        </div>
+                                <!-- Next Button -->
+                                <li class="pagination-item @(Model.PagedProducts.CurrentPage == Model.PagedProducts.TotalPages ? "disabled" : "")">
+                                    <a class="pagination-link" asp-page="./Shop" asp-route-pageIndex="@(Model.PagedProducts.CurrentPage + 1)">
+                                        <i class="ph ph-arrow-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </nav>
+
                     </div>
                     <div class="col-lg-3">
                         <div class="shop-sidebar">
@@ -293,15 +298,15 @@
                                     <span class="text-primary"><i class="ph-fill ph-paw-print"></i></span>
                                     Filter by price
                                 </h5>
-                                <form action="#" class="d-grid gap-lg-5 gap-3">
+                                <form method="get" class="d-grid gap-lg-5 gap-3">
 
                                     <div class="range-container">
                                         <div class="range-track">
                                             <span class="slider-range"></span>
                                         </div>
                                         <div class="range-input">
-                                            <input type="range" class="min" min="0" max="5000000" value="0" step="100000">
-                                            <input type="range" class="max" min="0" max="5000000" value="500" step="100000">
+                                            <input type="range" asp-for="MinPrice" class="min" min="0" max="5000000" value="0" step="100000">
+                                            <input type="range" asp-for="MaxPrice" class="max" min="0" max="5000000" value="500" step="100000">
                                         </div>
                                     </div>
 
@@ -311,9 +316,9 @@
                                         </button>
                                         <span class="price-valueƯ text-n20 font-instrument fw-normal">
                                             Price: $
-                                            <span class="min-label">10</span>
+                                            <span class="min-label">@Model.MinPrice</span>
                                             - $
-                                            <span class="max-label">75</span>
+                                            <span class="max-label">@Model.MaxPrice</span>
                                         </span>
                                     </div>
                                 </form>
