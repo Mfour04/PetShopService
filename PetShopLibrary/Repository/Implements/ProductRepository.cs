@@ -59,13 +59,23 @@ namespace PetShopLibrary.Repository.Implements
             _context.SaveChanges();
         }
 
-        public async Task<PagedResult<Product>> GetProductsPagedAsync(int pageIndex, int pageSize)
+        public async Task<PagedResult<Product>> GetProductsPagedAsync(int pageIndex, int pageSize, string searchText, decimal minPrice, decimal maxPrice)
         {
-            var totalCount = await _context.Products.CountAsync();
-            var products = await _context.Products
-                                         .Skip((pageIndex - 1) * pageSize)
-                                         .Take(pageSize)
-                                         .ToListAsync();
+            var query = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                query = query.Where(it => it.ProductName.Contains(searchText.ToLower()));
+            }
+
+            query = query.Where(it => it.Price >= minPrice && it.Price <= maxPrice);
+
+            var totalCount = await query.CountAsync();
+
+            var products = await query
+                                  .Skip((pageIndex - 1) * pageSize)
+                                  .Take(pageSize)
+                                  .ToListAsync();
 
             return new PagedResult<Product>(products, totalCount, pageIndex, pageSize);
         }

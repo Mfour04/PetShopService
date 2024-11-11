@@ -37,9 +37,10 @@ namespace PetShopLibrary.Service
         {
             _productRepository.DeleteProduct(productId);
         }
-        public async Task<PagedResult<Product>> GetPagedProductsAsync(int pageIndex, int pageSize)
+        public async Task<PagedResult<Product>> GetPagedProductsAsync(int pageIndex, int pageSize, string searchText, decimal minPrice, decimal maxPrice)
         {
-            return await _productRepository.GetProductsPagedAsync(pageIndex, pageSize);
+            return await _productRepository.GetProductsPagedAsync(pageIndex, pageSize, searchText, minPrice, maxPrice);
         }
+
     }
 }
