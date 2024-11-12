@@ -106,8 +106,10 @@
 						<i class="ph-fill ph-shopping-cart"></i>
 					</span>
 				</button>
-
-				<a href="#" class="btn-primary text-nowrap">Book</a>
+				@if (isLoggedIn)
+				{
+					<a href="/ViewBooking" class="btn-primary text-nowrap">Book</a>
+				}
 
 				<!-- Nút Login/Logout -->
 				<div class="header-buttons">

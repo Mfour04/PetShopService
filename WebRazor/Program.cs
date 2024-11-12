@@ -22,7 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<PetShopContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Thêm dòng này để đăng ký PetShopContext
+	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnect"))); // Thêm dòng này để đăng ký PetShopContext
 																						   
 // Add services to the container.
 builder.Services.AddSingleton(payOS);
@@ -30,12 +30,16 @@ builder.Services.AddSingleton(payOS);
 //Config Repository
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductOrderRepository, ProductOrderRepository>();
+builder.Services.AddScoped<IServiceScheduleRepository, ServiceScheduleRepository>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IShopServiceRepository, ShopServiceRepository>();
 
 //Config Service
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ProductOrderService>();
+builder.Services.AddScoped<ServiceScheduleService>();
+builder.Services.AddScoped<ShopServiceService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddRazorPages();
 
