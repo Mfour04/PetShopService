@@ -19,9 +19,9 @@ public partial class User
 
     public bool? Gender { get; set; }
 
-    public virtual ICollection<ProductOrder> ProductOrders { get; set; } = new List<ProductOrder>();
+    public virtual ICollection<ProductOrder>? ProductOrders { get; set; } = new List<ProductOrder>();
 
-    public virtual ICollection<ServiceSchedule> ServiceSchedules { get; set; } = new List<ServiceSchedule>();
+    public virtual ICollection<ServiceSchedule>? ServiceSchedules { get; set; } = new List<ServiceSchedule>();
 
-    public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
+    public virtual ICollection<Transaction>? Transactions { get; set; } = new List<Transaction>();
 }
