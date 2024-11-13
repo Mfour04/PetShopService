@@ -87,7 +87,7 @@ public class LoginModel : PageModel
         _logger.LogInformation("Claims Count After Login: " + loggedInUser.Claims.Count());
 
         return user.RoleId == "admin"
-            ? RedirectToPage("/Shared/Admin/AdminHome")
+            ? RedirectToPage("/Admin/Dashboard")
             : RedirectToPage("/Shared/Customer/CustomerHome");
     }
 }

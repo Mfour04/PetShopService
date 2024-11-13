@@ -42,7 +42,16 @@ namespace PetShopLibrary.Repository.Implements
 			return _context.Users.ToList();
 		}
 
-		public void UpdateUser(User user)
+        public IEnumerable<User> SearchUser(string keyword)
+        {
+			return _context.Users
+				.Where(u => u.Address.Contains(keyword) ||
+				u.Email.Contains(keyword) ||
+				u.Phone.Contains(keyword))
+				.ToList();
+        }
+
+        public void UpdateUser(User user)
 		{
 			_context.Users.Update(user);
 			_context.SaveChanges();
