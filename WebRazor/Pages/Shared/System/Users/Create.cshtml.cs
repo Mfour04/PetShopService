@@ -4,6 +4,7 @@ using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PetShopLibrary.Models;
+using WebRazor.Models.Services;
 
 namespace WebRazor.Pages.Shared.System.Users
 {
@@ -43,22 +44,15 @@ namespace WebRazor.Pages.Shared.System.Users
             await _context.SaveChangesAsync();
 
             // Tạo liên kết xác thực
-            var verificationLink = Url.Page("/Shared/System/VerifyEmail", null, new { token = User.EmailVerificationToken }, Request.Scheme);
+            var verificationLink = Url.Page("/Shared/System/Users/VerifyEmail", null, new { token = User.EmailVerificationToken }, Request.Scheme);
 
             // Gửi email xác thực
             await _emailService.SendVerificationEmail(User.Email, verificationLink);
 
+            Console.WriteLine($"Verification link: {verificationLink}");
+
             return RedirectToPage("./Index");
         }
 
-
-        private async Task SendVerificationEmail(string email, string token)
-        {
-            var verificationLink = Url.Page("/Account/VerifyEmail", null, new { token = token }, Request.Scheme);
-            var subject = "Xác thực tài khoản của bạn";
-            var message = $"Vui lòng xác thực email của bạn bằng cách nhấp vào liên kết sau: {verificationLink}";
-
-            // Gửi email sử dụng SMTP hoặc dịch vụ email khác
-        }
     }
 }
