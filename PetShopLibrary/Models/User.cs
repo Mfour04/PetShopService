@@ -21,8 +21,8 @@ public partial class User
 
 	public string? Name { get; set; }
 
-	public virtual ICollection<ProductOrder> ProductOrders { get; set; } = new List<ProductOrder>();
     public string? EmailVerificationToken { get; set; }
+	
     public bool IsEmailVerified { get; set; } = false;
 
     public virtual ICollection<ProductOrder>? ProductOrders { get; set; } = new List<ProductOrder>();
