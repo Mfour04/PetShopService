@@ -64,6 +64,7 @@ function removeItemFromCart(ProductId) {
         console.log(updatedCart)
         sessionStorage.setItem('cart', JSON.stringify(updatedCart));
         console.log(`Product "${ProductId}" is removed.`);
+        location.reload();
     } else {
         console.log("Empty Cart");
     }
