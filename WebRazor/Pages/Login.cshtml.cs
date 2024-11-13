@@ -45,6 +45,7 @@ public class LoginModel : PageModel
 			return Page();
 		}
 
+
 		var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == Input.Email);
 
 		if (user == null || user.Password != Input.Password) // So sánh mật khẩu thô
@@ -53,8 +54,14 @@ public class LoginModel : PageModel
 			return Page();
 		}
 
-		// Tạo danh sách các claim
-		var claims = new List<Claim>
+        if (!user.IsEmailVerified)
+        {
+            ModelState.AddModelError(string.Empty, "Email chưa được xác thực. Vui lòng kiểm tra email của bạn.");
+            return Page();
+        }
+
+        // Tạo danh sách các claim
+        var claims = new List<Claim>
 		{
 			new Claim(ClaimTypes.Name, user.Email),
 			new Claim(ClaimTypes.Role, user.RoleId), // Gán role từ cơ sở dữ liệu vào claim

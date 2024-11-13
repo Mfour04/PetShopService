@@ -10,6 +10,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Configuration;
+using WebRazor.Models.Services;
+using WebRazor.Models.SystemModels;
 
 IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
@@ -19,6 +22,8 @@ PayOS payOS = new PayOS(configuration["Environment:PAYOS_CLIENT_ID"] ?? throw ne
 
 // define builder to manage service
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 // Add services to the container.
 builder.Services.AddDbContext<PetShopContext>(options =>
@@ -41,6 +46,7 @@ builder.Services.AddScoped<ProductOrderService>();
 builder.Services.AddScoped<ServiceScheduleService>();
 builder.Services.AddScoped<ShopServiceService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<EmailService>();
 builder.Services.AddRazorPages();
 
 // lấy thông tin HTTP request ở những lớp không thuộc controller
