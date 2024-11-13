@@ -39,6 +39,11 @@ namespace PetShopLibrary.Service
 
 		}
 
+		public IEnumerable<User> SearchUsers(string keyword)
+		{
+			return _userRepository.SearchUser(keyword);
+		}
+
 		public void UpdateUser(User user)
 		{
 			_userRepository.UpdateUser(user);

@@ -39,6 +39,7 @@ builder.Services.AddScoped<IServiceScheduleRepository, ServiceScheduleRepository
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IShopServiceRepository, ShopServiceRepository>();
+builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
 
 //Config Service
 builder.Services.AddScoped<ProductService>();
@@ -46,6 +47,7 @@ builder.Services.AddScoped<ProductOrderService>();
 builder.Services.AddScoped<ServiceScheduleService>();
 builder.Services.AddScoped<ShopServiceService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ProductCategoryService>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddRazorPages();
 
@@ -61,6 +63,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Thời gian tồn tại của cookie
         options.SlidingExpiration = true; // Gia hạn thời gian tồn tại của cookie khi người dùng hoạt động
     });
+
+builder.Services.AddMvc().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.IgnoreNullValues = true;
+});
 
 builder.Services.AddAuthorization(options =>
 {

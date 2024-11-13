@@ -15,5 +15,7 @@ namespace PetShopLibrary.Repository.Interfaces
 		void AddUser(User user);
 		void UpdateUser(User user);
 		void DeleteUser(long userId);
+
+		IEnumerable<User> SearchUser(string keyword);
 	}
 }

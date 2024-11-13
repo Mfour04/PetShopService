@@ -1,0 +1,236 @@
+﻿@page
+@model WebRazor.Pages.Admin.TableModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Table"] = "Table";
+}
+
+<link rel="stylesheet" href="~/css/admin/admin-table.css"/>
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h4 class="card-title">User</h4>
+                    <form method="get">
+                        <div class="input-group no-border">
+                            <input type="text" name="keyword" class="form-control" placeholder="Search...">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <i class="nc-icon nc-zoom-split"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" style="height: 500px; overflow-y: auto">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <tr>
+                                    <th>
+                                            Name
+                                    </th>
+                                    <th>
+                                            @Html.DisplayNameFor(model => model.user.Email)
+                                    </th>
+                                    <th>
+                                            @Html.DisplayNameFor(model => model.user.Address)
+                                    </th>
+                                    <th>
+                                            @Html.DisplayNameFor(model => model.user.Phone)
+                                    </th>
+                                    <th>
+                                            @Html.DisplayNameFor(model => model.user.Gender)
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                             @foreach (var item in Model.Users)
+                                {
+                                    <tr accesskey="User-@item.UserId">
+                                        <td data-name="Input-Name">
+                                            Tai
+                                        </td>
+                                        <td data-name="Input-Password" style="display: none">
+                                            @Html.DisplayFor(modelItem => item.Password)
+                                        </td>
+                                        <td data-name="Input-Email">
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td data-name="Input-Address">
+                                            @Html.DisplayFor(modelItem => item.Address)
+                                        </td>
+                                        <td data-name="Input-Phone">
+                                            @Html.DisplayFor(modelItem => item.Phone)
+                                        </td>
+                                        <td data-name="Radio-Gender">
+                                            @(item.Gender == null ? "Unknown" : (item.Gender == true ? "Male" : "Female"))
+                                        </td>
+                                        <td data-name="none" style="width: 15%">
+                                            <button style="background-color: darkblue" class="btn" onclick="openEditModal('@item.UserId', 'User')"><i class="bi bi-pencil-square"></i></button>
+                                            <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                                <input type="hidden" name="userId" value="@item.UserId" />
+                                                <button type="submit" style="background-color: red" class="btn">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h4 class="card-title">Products</h4>
+                        <form method="get">
+                            <div class="input-group no-border">
+                                <input type="text" name="keyword" class="form-control" placeholder="Search...">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <i class="nc-icon nc-zoom-split"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" style="height: 500px; overflow-y: auto">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.product.Category.CategoryName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.product.ProductName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.product.Price)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.product.Status)
+                                        </th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Products)
+                                    {
+                                        <tr accesskey="Product-@item.ProductId">
+                                            <td data-name="Select-Category">
+                                                <input type="hidden" id="category" data-category="@item.Category"/>
+                                                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                                            </td>
+                                            <td data-name="Input-ProductName">
+                                                @Html.DisplayFor(modelItem => item.ProductName)
+                                            </td>
+                                            <td data-name="Input-Price">
+                                                @Html.DisplayFor(modelItem => item.Price)
+                                            </td>
+                                            <td data-name="Input-Status">
+                                                @Html.DisplayFor(modelItem => item.Status)
+                                            </td>
+                                            <td data-name="none" style="width: 15%">
+                                                <form method="get" asp-page-handler="EditProducts" asp-route-id="@item.ProductId">
+                                                <button type="submit" style="background-color: darkblue" class="btn" onclick="editProductModal('@item.ProductId')">
+                                                    <i class="bi bi-pencil-square"></i></button>
+                                                </form>
+                                                <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                                    <input type="hidden" name="userId" value="@item.ProductId" />
+                                                    <button type="submit" style="background-color: red" class="btn">
+                                                        <i class="bi bi-trash-fill"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+</div>
+
+    <div id="editModal" class="edit-modal">
+        <div id="editModalContainer" class="edit-modal-container">
+            <h3>Edit User</h3>
+            <form id="editForm" method="post">
+                <!-- Các trường input sẽ được thêm ở đây -->
+            </form>
+            <div class="button-container">
+                <button class="edit-button" type="button" onclick="submitEditForm()">Save</button>
+                <button class="cancel-button" type="button" onclick="closeEditModal()">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="editProductModal" class="edit-modal" >
+        <div class="edit-modal-container">  
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="product.Category.CategoryName" class="control-label"></label>
+                    <select asp-for="product.Category.CategoryName" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                    <span asp-validation-for="product.CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="product.ProductName" class="control-label"></label>
+                    <input asp-for="product.ProductName" class="form-control" />
+                    <span asp-validation-for="product.ProductName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="product.Price" class="control-label"></label>
+                    <input asp-for="product.Price" class="form-control" />
+                    <span asp-validation-for="product.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="product.Status" class="control-label"></label>
+                    <input asp-for="product.Status" class="form-control" />
+                    <span asp-validation-for="product.Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" asp-page-handler="EditProduct" class="btn btn-primary" />
+                    <button class="cancel-button" type="button" onclick="closeEditModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="footer footer-black  footer-white ">
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
+                    <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
+                    <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
+                </ul>
+            </nav>
+            <div class="credits ml-auto">
+                <span class="copyright">
+                    © <script>
+                          document.write(new Date().getFullYear())
+                    </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
+                </span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script src="~/js/admin/admin-table.js"></script>
