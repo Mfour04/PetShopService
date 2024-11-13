@@ -1,0 +1,148 @@
+﻿@page
+@model WebRazor.Pages.AddBookingModel
+@{
+    ViewData["Title"] = "Add Service Schedule";
+}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PetPath HTML</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+
+    <script defer src="/js/main.js"></script>
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    @Html.Partial("PageCommon/PreLoad")
+    @Html.Partial("PageCommon/PageHeader")
+    @Html.Partial("PageCommon/PageSearchForm")
+    <main>
+        <section class="choose-us-section pt-120 pb-120" style="padding: 50px 100px 50px 100px; margin-top:30px;">
+            <div class="container" style="margin-top: 70px">
+                <h2 class="mb-4">Add Service Schedule</h2>
+                <form id="addScheduleForm" method="post" class="mb-5">
+                    <input type="hidden" id="UserId" name="NewSchedule.UserId" value="" />
+                    <input type="hidden" id="Status" name="NewSchedule.Status" value="1" />
+                    <div class="mb-3">
+                        <label asp-for="NewSchedule.ServiceId">Service</label>
+                        <select asp-for="NewSchedule.ServiceId" class="form-control">
+                            @if (Model.Services != null && Model.Services.Any())
+                            {
+                                @foreach (var service in Model.Services)
+                                {
+                                    <option value="@service.ServiceId">@service.ServiceName - $@service.Price</option>
+                                }
+                            }
+                            else
+                            {
+                                <option disabled>No services available</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NewSchedule.Date">Date</label>
+                        <input asp-for="NewSchedule.Date" type="date" class="form-control" />
+                        <span asp-validation-for="NewSchedule.Date" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" id="addScheduleButton" class="btn-secondary border-0 text-nowrap">Add Schedule</button>
+                </form>
+
+                <div id="previewForm" style="display:none;">
+                    <h3>Confirm Schedule</h3>
+                    <p><strong>Service: </strong><span id="previewServiceName"></span></p>
+                    <p><strong>Price: $</strong><span id="previewServicePrice"></span></p>
+                    <p><strong>Date: </strong><span id="previewDate"></span></p>
+                    <button type="button" id="confirmScheduleButton" class="btn-secondary border-0 text-nowrap">Confirm Schedule</button>
+                </div>
+
+                
+            </div>
+        </section>
+    </main>
+
+    @Html.Partial("PageCommon/PageFooter")
+
+
+</body>
+
+
+    <style>
+        #previewForm {
+            display: none;
+            max-width: 500px;
+            margin: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        #previewForm h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+        }
+
+        #previewForm p {
+            font-size: 1.1em;
+            color: #555;
+        }
+    </style>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Gán sự kiện submit cho form #addScheduleForm
+            $('#addScheduleForm').on('submit', function (e) {
+                e.preventDefault(); // Ngăn trang reload
+
+                $.ajax({
+                    url: '/AddBooking?handler=Preview',
+                    type: 'POST',
+                    data: $(this).serialize(), // Serialize form #addScheduleForm
+                    success: function (response) {
+                        if (response.success) {
+                            $('#previewServiceName').text(response.selectedServiceName);
+                            $('#previewServicePrice').text(response.selectedServicePrice);
+                            $('#previewDate').text(response.selectedDate);
+                            $('#previewForm').show();
+
+                            $('#UserId').val(response.selectedUserId);
+                            $('#Status').val(response.selectedStatus);
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('There was an error processing your request.');
+                    }
+                });
+            });
+
+            // Gán sự kiện click cho nút Confirm
+            $('#confirmScheduleButton').on('click', function () {
+                $.ajax({
+                    url: '/AddBooking?handler=Confirm',
+                    type: 'POST',
+                    data: $('#addScheduleForm').serialize(), // Serialize form #addScheduleForm
+                    success: function (response) {
+                        if (response.success) {
+                            alert('Schedule confirmed!');
+                            window.location.href = '@Url.Page("ViewBooking")';
+                        }
+                    },
+                    error: function () {
+                        alert('Error confirming the schedule.');
+                    }
+                });
+            });
+        });
+    </script>
+}
