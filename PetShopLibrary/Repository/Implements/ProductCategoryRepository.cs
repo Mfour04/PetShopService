@@ -24,7 +24,7 @@ namespace PetShopLibrary.Repository.Implements
             return _context.ProductCategories.ToList();
         }
 
-        public ProductCategory? GetProductCategoryById(int id)
+        public ProductCategory? GetProductCategoryById(long id)
         {
             return _context.ProductCategories.FirstOrDefault(c => c.CategoryId == id);
         }
