@@ -19,6 +19,9 @@ public partial class User
 
     public bool? Gender { get; set; }
 
+    public string? EmailVerificationToken { get; set; }
+    public bool IsEmailVerified { get; set; } = false;
+
     public virtual ICollection<ProductOrder>? ProductOrders { get; set; } = new List<ProductOrder>();
 
     public virtual ICollection<ServiceSchedule>? ServiceSchedules { get; set; } = new List<ServiceSchedule>();
