@@ -51,7 +51,7 @@ namespace WebRazor.Pages.Shared.System.Users
 
             Console.WriteLine($"Verification link: {verificationLink}");
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Shared/System/Users/AfterRegister");
         }
 
     }
