@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebRazor", "WebRazor\WebRazor.csproj", "{5A4EE147-20C4-4AB4-95F6-2E36A36D0F11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetShopLibrary", "PetShopLibrary\PetShopLibrary.csproj", "{C4302A0A-4564-467B-8E55-CD826A7DDEEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetShopLibrary", "PetShopLibrary\PetShopLibrary.csproj", "{C4302A0A-4564-467B-8E55-CD826A7DDEEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
