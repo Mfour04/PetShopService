@@ -15,6 +15,10 @@ public partial class Product
 
     public long? Status { get; set; }
 
+    public string? Description { get; set; }
+
+    public string? FilePath { get; set; }
+        
     public virtual ProductCategory? Category { get; set; }
 
     public virtual ICollection<ProductOrderDetail> ProductOrderDetails { get; set; } = new List<ProductOrderDetail>();

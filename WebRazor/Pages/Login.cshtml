@@ -43,7 +43,13 @@
 							<input asp-for="Input.Password" class="form-control"/>
 							<span asp-validation-for="Input.Password" class="text-danger"></span>
 						</div>
-						<button type="submit" class="btn btn-primary">Login</button>
+
+						<div class="d-flex justify-content-center align-items-center mt-2 text-muted">
+							<span class="me-1">You don't have an account</span>
+							<a href="/Shared/System/Users/Create" class="text-primary fw-bold text-decoration-none">Create account?</a>
+						</div>
+
+						<button type="submit" class="btn btn-primary my-4">Login</button>
 
 						@if (Model.ErrorMessage != null)
 						{

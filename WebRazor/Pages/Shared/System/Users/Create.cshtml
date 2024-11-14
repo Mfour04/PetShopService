@@ -1,0 +1,76 @@
+﻿@page
+@model CreateModel
+
+@{
+    ViewData["Title"] = "Create Account";
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Account - PetPath</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+
+    <script defer src="/js/main.js"></script>
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    @Html.Partial("PageCommon/PreLoad")
+    @Html.Partial("PageCommon/PageHeader")
+    @Html.Partial("PageCommon/PageSearchForm")
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="text-center mb-4">Create Account</h1>
+                        <h4 class="text-center mb-4">User Registration</h4>
+                        <hr />
+
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @Model.ErrorMessage
+                                </div>
+                            }
+
+                            <div class="form-group mb-3">
+                                <label asp-for="User.Email" class="control-label">Email Address</label>
+                                <input asp-for="User.Email" class="form-control" placeholder="Enter your email" />
+                                <span asp-validation-for="User.Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label asp-for="User.Password" class="control-label">Password</label>
+                                <input asp-for="User.Password" class="form-control" type="password" placeholder="Enter your password" />
+                                <span asp-validation-for="User.Password" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <input type="submit" value="Create Account" class="btn btn-primary btn-lg w-100" />
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-3">
+                            <a href="@Url.Page("Index")" class="btn btn-link">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    @Html.Partial("PageCommon/PageFooter")
+
+</body>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

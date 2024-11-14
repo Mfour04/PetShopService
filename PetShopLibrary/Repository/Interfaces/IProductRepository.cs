@@ -14,5 +14,7 @@ namespace PetShopLibrary.Repository.Interfaces
         void AddProduct(Product product);
         void UpdateProduct(Product product);
         void DeleteProduct(long productId);
+        Task<PagedResult<Product>> GetProductsPagedAsync(int pageIndex, int pageSize, string searchText, decimal minPrice, decimal maxPrice);
+        IEnumerable<Product> SearchProduct(string keyword);
     }
 }

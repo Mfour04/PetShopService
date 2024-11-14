@@ -13,138 +13,9 @@
 </head>
 
 <body>
-    <!-- preloader -->
-    <!-- preloader  -->
-    <div class="preloader">
-        <div class="loader">
-            <div class="loader-square"></div>
-            <div class="loader-square"></div>
-            <div class="loader-square"></div>
-            <div class="loader-square"></div>
-            <div class="loader-square"></div>
-            <div class="loader-square"></div>
-            <div class="loader-square"></div>
-        </div>
-    </div>
-    <!-- back to top -->
-    <button class="back-to-top position-fixed end-0 bottom-0 d-center me-5">
-        <span class="text-h4">
-            <i class="ph ph-arrow-up"></i>
-        </span>
-    </button>
-    <!-- header -->
-    <!-- header section start -->
-    <header class="header-section position-fixed top-0 start-50 translate-middle-x" style="padding: 0px 20px 0px 20px; background-color: bisque;" data-lenis-prevent>
-        <div class="container px-0" style="padding: 0px 20px 0px 20px;">
-            <!-- navbar area -->
-            <div class="d-flex align-items-center justify-content-between px-lg-0 px-4 py-lg-5 py-3">
-                <div class="logo">
-                    <a href="/Index">
-                        <img class="w-100 d-block d-sm-none" src="/images/favicon.png" alt="logo">
-                        <img class="w-100 d-none d-sm-block" src="/images/logo.png" alt="logo">
-                    </a>
-                </div>
-                <nav class="navbar-area">
-                    <ul class="nav-menu-items d-lg-flex d-grid gap-3xl-8 gap-xxl-6 gap-4">
-                        <li class="menu-link">
-                            <a href="/Index" class="slide-vertical" data-splitting>Home</a>
-                        </li>
-                        <li class="menu-link">
-                            <a href="/About-us" class="slide-vertical" data-splitting>About</a>
-                        </li>
-                        <li class="menu-item">
-                            <button class="slide-vertical" data-splitting>
-                                Pages
-                                <span class="lh-0"><i class="ph ph-plus"></i></span>
-                            </button>
-                            <ul class="sub-menu">
-                                <li class="menu-item">
-                                    <button class="slide-vertical" data-splitting>
-                                        Services
-                                        <span class="lh-0"><i class="ph ph-plus"></i></span>
-                                    </button>
-                                    <ul class="sub-menu">
-                                        <li class="menu-link">
-                                            <a href="/Services" class="slide-horizontal" data-splitting>Services</a>
-                                        </li>
-                                        <li class="menu-link">
-                                            <a href="/Service-details" class="slide-horizontal" data-splitting>
-                                                Service
-                                                Details
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item">
-                                    <button class="slide-vertical" data-splitting>
-                                        Blogs
-                                        <span class="lh-0"><i class="ph ph-plus"></i></span>
-                                    </button>
-                                    <ul class="sub-menu">
-                                        <li class="menu-link">
-                                            <a href="/Blogs" class="slide-horizontal" data-splitting>Blogs</a>
-                                        </li>
-                                        <li class="menu-link">
-                                            <a href="/Blog-details" class="slide-horizontal" data-splitting>
-                                                Blogs
-                                                Details
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-item">
-                            <button class="slide-vertical" data-splitting>
-                                Shop
-                                <span class="lh-0"><i class="ph ph-plus"></i></span>
-                            </button>
-                            <ul class="sub-menu">
-                                <li class="menu-link">
-                                    <a href="/Shop" class="slide-horizontal" data-splitting>Shop</a>
-                                </li>
-                                <li class="menu-link">
-                                    <a href="/Shop-details" class="slide-horizontal" data-splitting>
-                                        Shop
-                                        Details
-                                    </a>
-                                </li>
-                                <li class="menu-link">
-                                    <a href="/Cart" class="slide-horizontal" data-splitting>Cart</a>
-                                </li>
-                                <li class="menu-link">
-                                    <a href="/Checkout" class="slide-horizontal" data-splitting>Checkout</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-link">
-                            <a href="/Contact-us" class="slide-vertical" data-splitting>Contact</a>
-                        </li>
-                    </ul>
-                </nav>
-                <div class="nav-btns d-flex align-items-center gap-lg-5 gap-3">
-
-                    <!-- search icon -->
-                    <button class="search-btn text-2xl font-semibold text-n20">
-                        <i class="ph ph-magnifying-glass"></i>
-                    </button>
-
-                    <button class="cart-btn icon-48px position-relative border n20-border text-n20 hover-bg-primary hover-text-n0">
-                        <span id="cart-count" class="badge radius-pill text-n0 text-sm fw-medium bg-n20 position-absolute top-50 start-100 translate-middle z-1 mt-n3">0</span>
-                        <span class="text-xl font-semibold">
-                            <i class="ph-fill ph-shopping-cart"></i>
-                        </span>
-                    </button>
-
-                    <a href="#" class="btn-primary text-nowrap">Book Now</a>
-
-                    <button class="menu-toggle-btn text-2xl">
-                        <i class="ph ph-list"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+    @Html.Partial("PageCommon/PreLoad")
+    @Html.Partial("PageCommon/PageHeader")
+    @Html.Partial("PageCommon/PageSearchForm")
     <!-- header section end -->
     <!-- search form -->
     <div class="search-form-wrapper position-fixed top-0 start-0 w-100 vh-100 d-flex align-items-center justify-content-center bg-n10">
@@ -152,8 +23,8 @@
             <i class="ph ph-x"></i>
         </button>
         <div class="search-form">
-            <form class="d-flex align-items-center gap-4 border n10-border p-2">
-                <input type="text" placeholder="Search ..." class="w-100 p-2">
+            <form method="get" class="d-flex align-items-center gap-4 border n10-border p-2">
+                <input type="text" name="searchText" placeholder="Search ..." class="w-100 p-2">
                 <button type="submit" class="text-2xl text-n0">
                     <i class="ph ph-magnifying-glass"></i>
                 </button>
@@ -214,18 +85,21 @@
                         <!-- product list start -->
                         <div class="row g-6 mb-lg-10 mb-md-8 mb-6">
                             <div class="row">
-                                @foreach (var product in Model.Products)
+                                @foreach (var product in Model.PagedProducts.Items)
                                 {
                                     <div class="col-md-4 col-xs-6">
-                                        <div class="product-card border n20-1-border radius-16 overflow-hidden hover-primary-border">
-                                            <div class="product-thumb scale-animation position-relative">
-                                                <img class="w-100" src="@Url.Content("~/images/product-2.png")" alt="@product.ProductName">
+                                        <div style="width: 100%; height: 100%" class="product-card border n20-1-border radius-16 overflow-hidden hover-primary-border">
+                                            <div style="height:60%" class="product-thumb scale-animation position-relative">
+                                                <img class="w-100" src="@Url.Content(product.FilePath)" alt="@product.ProductName">
                                                 <span class="seal-tag py-1 px-lg-4 px-2 bg-primary text-n0 radius-pill position-absolute top-0 left-0 mt-lg-6 mt-4 ms-lg-6 ms-4">Sale!</span>
                                                 <div class="product-btns d-grid gap-1 position-absolute top-0 right-0 mt-xxl-6 mt-4 me-xxl-6 me-4">
-                                                    <button class="cart-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary"
-                                                            onclick="handleClickAddToCart({ ProductId: '@product.ProductId', ProductName: '@product.ProductName', Price: @product.Price, Quantity: 1 })">
-                                                        <i class="ph-fill ph-shopping-cart"></i>
-                                                    </button>
+                                                    @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        <button class="cart-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary"
+                                                                onclick="handleClickAddToCart({ ProductId: '@product.ProductId', ProductName: '@product.ProductName', Price: @product.Price, Quantity: 1 })">
+                                                            <i class="ph-fill ph-shopping-cart"></i>
+                                                        </button>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="product-info p-lg-6 p-4 text-center">
@@ -244,21 +118,35 @@
                         </div>
 
                         <!-- pagination -->
-                        <ul class="pagination justify-content-center gap-lg-5 gap-3">
-                            <li class="pagination-item">
-                                <a class="pagination-link" href="#">
-                                    <i class="ph ph-arrow-left"></i>
-                                </a>
-                            </li>
-                            <li class="pagination-item"><a class="pagination-link active" href="#">1</a></li>
-                            <li class="pagination-item"><a class="pagination-link" href="#">2</a></li>
-                            <li class="pagination-item"><a class="pagination-link" href="#">3</a></li>
-                            <li class="pagination-item">
-                                <a class="pagination-link" href="#">
-                                    <i class="ph ph-arrow-right"></i>
-                                </a>
-                            </li>
-                        </ul>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center gap-lg-5 gap-3">
+                                <!-- Previous Button -->
+                                <li class="pagination-item @(Model.PagedProducts.CurrentPage == 1 ? "disabled" : "")">
+                                    <a class="pagination-link" asp-page="./Shop" asp-route-pageIndex="@(Model.PagedProducts.CurrentPage - 1)">
+                                        <i class="ph ph-arrow-left"></i>
+                                    </a>
+                                </li>
+
+                                <!-- Page Numbers -->
+                                @for (int i = Math.Max(1, Model.PagedProducts.CurrentPage - 2);
+                                i <= Math.Min(Model.PagedProducts.TotalPages, Model.PagedProducts.CurrentPage + 2); i++)
+                                {
+                                    <li class="pagination-item">
+                                        <a class="pagination-link @(i == Model.PagedProducts.CurrentPage ? "active" : "")"
+                                           asp-page="./Shop" asp-route-pageIndex="@(i)">@i</a>
+                                    </li>
+                                }
+
+                                <!-- Next Button -->
+                                <li class="pagination-item @(Model.PagedProducts.CurrentPage == Model.PagedProducts.TotalPages ? "disabled" : "")">
+                                    <a class="pagination-link" asp-page="./Shop" asp-route-pageIndex="@(Model.PagedProducts.CurrentPage + 1)">
+                                        <i class="ph ph-arrow-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </nav>
+
                     </div>
                     <div class="col-lg-3">
                         <div class="shop-sidebar">
@@ -270,7 +158,7 @@
                                 </h5>
                                 <form action="#"
                                       class="d-flex align-items-center border n20-1-border radius-8 focus-primary overflow-hidden">
-                                    <input type="text" placeholder="Search"
+                                    <input type="text" placeholder="Search" name="searchText"
                                            class="w-100 font-instrument border-0 outline-0 p-3">
                                     <button class="btn-primary border-0 text-n0 text-2xl p-3 radius-8">
                                         <span><i class="ph ph-magnifying-glass"></i></span>
@@ -284,15 +172,15 @@
                                     <span class="text-primary"><i class="ph-fill ph-paw-print"></i></span>
                                     Filter by price
                                 </h5>
-                                <form action="#" class="d-grid gap-lg-5 gap-3">
+                                <form method="get" class="d-grid gap-lg-5 gap-3">
 
                                     <div class="range-container">
                                         <div class="range-track">
                                             <span class="slider-range"></span>
                                         </div>
                                         <div class="range-input">
-                                            <input type="range" class="min" min="0" max="500" value="10" step="10">
-                                            <input type="range" class="max" min="0" max="500" value="500" step="10">
+                                            <input type="range" asp-for="MinPrice" class="min" min="0" max="5000000" value="0" step="100000">
+                                            <input type="range" asp-for="MaxPrice" class="max" min="0" max="5000000" value="500" step="100000">
                                         </div>
                                     </div>
 
@@ -300,15 +188,14 @@
                                         <button class="btn-primary border-0 text-n0 text-xl py-3 px-lg-6 px-4 fw-normal font-instrument">
                                             Filter
                                         </button>
-                                        <span class="price-value text-n20 font-instrument fw-normal">
+                                        <span class="price-valueƯ text-n20 font-instrument fw-normal">
                                             Price: $
-                                            <span class="min-label">10</span>
+                                            <span class="min-label">@Model.MinPrice</span>
                                             - $
-                                            <span class="max-label">75</span>
+                                            <span class="max-label">@Model.MaxPrice</span>
                                         </span>
                                     </div>
                                 </form>
-
                             </div>
 
                             <!-- top products list start -->
@@ -474,154 +361,7 @@
     <!-- main end -->
     <!-- footer -->
     <!-- footer section start -->
-    <footer class="footer-section pt-120" style="padding: 10px 50px 0px 50px;">
-        <div class="bg-banner position-absolute bottom-0 start-0 w-100 h-100 z-n1 d-none d-sm-block">
-            <img class="w-100 h-100" src="/images/footer-bg.png" alt="bg banner">
-        </div>
-        <div class="position-absolute top-40 left-0 translate-middle-y z-n1 d-none d-lg-block">
-            <img class="max-w-200px w-100" src="/images/cat-vector-2.png" alt="footer vector">
-        </div>
-        <div class="position-absolute top-15 right-0 z-n1 d-none d-lg-block">
-            <img class="max-w-300px w-100" src="/images/dog-vector.png" alt="footer vector">
-        </div>
-        <div class="container" style="margin-top: 5%">
-            <div class="row justify-content-center mb-lg-20 mb-md-15 mb-10 pt-10 pt-md-0">
-                <div class="col-xl-7 col-lg-9 text-center">
-                    <div class=" mb-lg-6 mb-4">
-                        <span class="text-h1 fw-normal mb-lg-3 mb-2">Subscribe Our Newsletter</span>
-                        <span class="text-n20">Get the latest deals and offers right to your inbox.</span>
-                    </div>
-                    <form action="#" class="px-xl-15 px-lg-10 px-md-8 px-md-6">
-                        <div class="d-flex align-items-center justify-content-center gap-3 border n20-border bg-n0 radius-pill p-lg-2 p-1 ps-lg-6 ps-4">
-                            <input type="email" placeholder="Enter your email..."
-                                   class="w-100 bg-transparent border-0 outline-0">
-                            <button type="submit"
-                                    class="btn-secondary border-0 text-n20 fw-semibold text-uppercase font-instrument">
-                                Subscribe
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="row justify-content-between g-6 pb-lg-20 pb-md-15 pb-10">
-                <div class="col-xl-3 col-lg-4 col-md-6">
-                    <div class="footer-logo mb-lg-6 mb-4">
-                        <a href="index.html">
-                            <img class="w-100" src="/images/logo.png" alt="footer logo">
-                        </a>
-                    </div>
-                    <p class="text-n20 fw-normal mb-lg-6 mb-4">
-                        PetPath offers exceptional pet care services including grooming, boarding, and Our dedicated
-                        team.
-                    </p>
-                    <ul class="d-flex align-items-center gap-lg-2 gap-1">
-                        <li>
-                            <a href="#" class="icon-40px border n20-border text-xl box-style box-secondary">
-                                <i class="ph-fill ph-facebook-logo"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="icon-40px border n20-border text-xl box-style box-secondary">
-                                <i class="ph-fill ph-twitter-logo"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="icon-40px border n20-border text-xl box-style box-secondary">
-                                <i class="ph-fill ph-instagram-logo"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="icon-40px border n20-border text-xl box-style box-secondary">
-                                <i class="ph-fill ph-youtube-logo"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-auto">
-                    <div class="footer-menu">
-                        <h5 class="text-n20 fw-normal mb-lg-6 mb-4">Pages</h5>
-                        <ul class="d-grid gap-lg-4 gap-2">
-                            <li>
-                                <a href="index.html"
-                                   class="text-n20 fw-normal hover-text-secondary hover-underline">Home</a>
-                            </li>
-                            <li>
-                                <a href="about-us.html"
-                                   class="text-n20 fw-normal hover-text-secondary hover-underline">About </a>
-                            </li>
-                            <li>
-                                <a href="services.html"
-                                   class="text-n20 fw-normal hover-text-secondary hover-underline">Services</a>
-                            </li>
-                            <li>
-                                <a href="team.html" class="text-n20 fw-normal hover-text-secondary hover-underline">Team</a>
-                            </li>
-                            <li>
-                                <a href="blogs.html"
-                                   class="text-n20 fw-normal hover-text-secondary hover-underline">Blog</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="footer-menu">
-                        <h5 class="text-n20 fw-normal mb-lg-6 mb-4">Contact Info</h5>
-                        <ul class="d-grid gap-lg-4 gap-2">
-                            <li>
-                                <a href="#"
-                                   class="d-flex align-items-center gap-2 text-n20 fw-normal hover-text-secondary hover-underline">
-                                    <span class="text-xl"><i class="ph ph-map-pin"></i></span>
-                                    California L.A 57867
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                   class="d-flex align-items-center gap-2 text-n20 fw-normal hover-text-secondary hover-underline">
-                                    <span class="text-xl"><i class="ph ph-phone-call"></i></span>
-                                    (808) 555-0111
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                   class="d-flex align-items-center gap-2 text-n20 fw-normal hover-text-secondary hover-underline">
-                                    <span class="text-xl"><i class="ph ph-envelope-open"></i></span>
-                                    0Vw5f@example.com
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6">
-                    <div class="working-time-card p-xl-10 p-lg-8 p-md-6 p-4 radius-20 bg-secondary border n20-border">
-                        <h5 class="text-n20 fw-normal mb-lg-6 mb-4">Working Hours</h5>
-                        <ul class="d-grid gap-lg-4 gap-2">
-                            <li class="d-flex align-items-center justify-content-between gap-2">
-                                <span class="text-n20 fw-normal">Mon - Fri:</span>
-                                <span class="text-n20 fw-medium">7am - 6pm</span>
-                            </li>
-                            <li class="d-flex align-items-center justify-content-between gap-2">
-                                <span class="text-n20 fw-normal">Saturday:</span>
-                                <span class="text-n20 fw-medium">9am - 4pm</span>
-                            </li>
-                            <li class="d-flex align-items-center justify-content-between gap-2">
-                                <span class="text-n20 fw-normal">Sunday:</span>
-                                <span class="text-n20 fw-medium text-primary">Closed</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <span class="d-block border-bottom n100-border1"></span>
-            <div class="py-lg-6 py-4 text-center">
-                <span class="text-n20 fw-normal">
-                    © 2022 - <span class="currentYear"></span> | Allrights reserved by
-                    <a href="https://themeforest.net/user/uiaxis"
-                       class="fw-semibold text-decoration-underline hover-text-secondary">uiaxis</a>
-                </span>
-            </div>
-        </div>
-    </footer>
+    @Html.Partial("PageCommon/PageFooter")
     <!-- footer section end -->
     @section Scripts {
         <script src="~/js/add-to-cart.js" asp-append-version="true"></script>

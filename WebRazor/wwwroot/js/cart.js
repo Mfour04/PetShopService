@@ -64,6 +64,7 @@ function removeItemFromCart(ProductId) {
         console.log(updatedCart)
         sessionStorage.setItem('cart', JSON.stringify(updatedCart));
         console.log(`Product "${ProductId}" is removed.`);
+        location.reload();
     } else {
         console.log("Empty Cart");
     }
@@ -73,23 +74,24 @@ function attachQuantityHandlers(cart, cartList, newRow, quantityInput, subtotalE
     const decrementButton = newRow.querySelector('.quantityDecrement');
     const incrementButton = newRow.querySelector('.quantityIncrement');
 
-    // Hàm cập nhật subtotal
+    // update subtotal function
     const updateSubtotal = () => {
         const newQuantity = parseInt(quantityInput.value);
         if (isNaN(newQuantity) || newQuantity <= 0) {
-            quantityInput.value = 1; // Đảm bảo giá trị hợp lệ
+            quantityInput.value = 1; 
         }
         const updatedSubtotal = (cart.Price * quantityInput.value);
         subtotalElement.textContent = updatedSubtotal;
 
-        // Cập nhật lại số lượng trong sessionStorage
+        // update quantity in sessionStorage
         cart.quantity = parseInt(quantityInput.value);
         sessionStorage.setItem('cart', JSON.stringify(cartList));
+        updateTotalSubtotal(cartList);
     };
 
     let isClickEvent = false;
 
-    // Sự kiện khi giảm số lượng
+    // decrease quantity event
     decrementButton.addEventListener('click', () => {
         isClickEvent = true;
         if (quantityInput.value > 1) {
@@ -99,7 +101,7 @@ function attachQuantityHandlers(cart, cartList, newRow, quantityInput, subtotalE
         isClickEvent = false;
     });
 
-    // Sự kiện khi tăng số lượng
+    // Increase quantity event
     incrementButton.addEventListener('click', () => {
         isClickEvent = true;
         quantityInput.value = parseInt(quantityInput.value) + 1;
@@ -107,10 +109,17 @@ function attachQuantityHandlers(cart, cartList, newRow, quantityInput, subtotalE
         isClickEvent = false;
     });
 
-    quantityInput.addEventListener('input', () => {
-        if (!isClickEvent) {
-            updateSubtotal();
-        }
-    });
 }
 
+function updateTotalSubtotal(cartList) {
+    let totalSubtotal = 0;
+
+    cartList.forEach(cart => {
+        totalSubtotal += cart.Price * cart.quantity;
+    });
+
+    const totalSubtotalInput = document.getElementById('totalSubtotalInput');
+    totalSubtotalInput.value = totalSubtotal;
+
+    console.log("Total subtotal updated:", totalSubtotal);
+}

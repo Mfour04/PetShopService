@@ -5,23 +5,29 @@ namespace PetShopLibrary.Models;
 
 public partial class User
 {
-    public long UserId { get; set; }
+	public long UserId { get; set; }
 
-    public string? RoleId { get; set; }
+	public string? RoleId { get; set; }
 
-    public string? Email { get; set; }
+	public string? Email { get; set; }
 
-    public string? Password { get; set; }
+	public string? Password { get; set; }
 
-    public string? Phone { get; set; }
+	public string? Phone { get; set; }
 
-    public string? Address { get; set; }
+	public string? Address { get; set; }
 
-    public bool? Gender { get; set; }
+	public bool? Gender { get; set; }
 
-    public virtual ICollection<ProductOrder> ProductOrders { get; set; } = new List<ProductOrder>();
+	public string? Name { get; set; }
 
-    public virtual ICollection<ServiceSchedule> ServiceSchedules { get; set; } = new List<ServiceSchedule>();
+    public string? EmailVerificationToken { get; set; }
+	
+    public bool IsEmailVerified { get; set; } = false;
 
-    public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
+    public virtual ICollection<ProductOrder>? ProductOrders { get; set; } = new List<ProductOrder>();
+
+    public virtual ICollection<ServiceSchedule>? ServiceSchedules { get; set; } = new List<ServiceSchedule>();
+
+    public virtual ICollection<Transaction>? Transactions { get; set; } = new List<Transaction>();
 }
