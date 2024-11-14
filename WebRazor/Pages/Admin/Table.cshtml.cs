@@ -39,19 +39,30 @@ namespace WebRazor.Pages.Admin
         [Display(Name = "Choose file(s) to upload")]
         [BindProperty]
         public IFormFile[] FileUploads { get; set; }
-        public async Task OnGetAsync(string keyword)
+        public async Task OnGetAsync(string keyword, string searchType)
         {
+
             if (!string.IsNullOrEmpty(keyword))
             {
-                Users = _userService.SearchUsers(keyword);
-            } else
+                if (searchType == "User")
+                {
+                    Users = _userService.SearchUsers(keyword);
+                    Products = _productService.GetAllProducts();
+                }
+                else if (searchType == "Product")
+                {
+                    Products = _productService.SearchProducts(keyword);
+                    Users = _userService.GetUsers();
+                }
+            }
+            else
             {
                 Users = _userService.GetUsers();
                 Products = _productService.GetAllProducts();
                 ViewData["CategoryId"] = new SelectList(_productCategoryService.GetProductCategories(), "CategoryId", "CategoryName");
-
-            }
+            }         
         }
+
 
         public IActionResult OnGetEditProducts(long id)
         {
@@ -79,7 +90,12 @@ namespace WebRazor.Pages.Admin
                         {
                             fileName = Path.GetFileName(FileUpload.FileName);
                             var file = Path.Combine(_environment.WebRootPath, savePath, FileUpload.FileName);
-                            using (var fileStream = new FileStream(file, FileMode.Create))
+                        var directoryPath = Path.Combine(_environment.WebRootPath, savePath);
+                        if (!Directory.Exists(directoryPath))
+                        {
+                            Directory.CreateDirectory(directoryPath);
+                        }
+                        using (var fileStream = new FileStream(file, FileMode.Create))
                             {
                                 await FileUpload.CopyToAsync(fileStream);
                             }

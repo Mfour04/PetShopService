@@ -13,7 +13,7 @@ namespace WebRazor.Pages
             _productService = productService;
         }
         public PagedResult<Product> PagedProducts { get; set; }
-        public int PageSize { get; set; } = 10;
+        public int PageSize { get; set; } = 9;
         [BindProperty]
         public long MinPrice { get; set; } = 0;
         [BindProperty]
