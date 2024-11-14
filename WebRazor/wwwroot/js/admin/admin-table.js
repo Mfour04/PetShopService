@@ -204,3 +204,11 @@ function closeAddProductModal() {
     const modal = document.getElementById("addProductModal")
     modal.style.display = 'none'
 }
+
+function confirmStatus(status) {
+    if (status === 2) {
+        return confirm('Are you sure you want to uncheck this booking?');
+    } else {
+        return confirm('Are you sure you want to check this booking?');
+    }
+}

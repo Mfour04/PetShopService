@@ -9,7 +9,10 @@ namespace PetShopLibrary.Repository.Interfaces
 {
     public interface IServiceScheduleRepository
     {
+        Task<IEnumerable<ServiceSchedule>> GetAllSchedules();
         Task<IEnumerable<ServiceSchedule>> GetSchedulesByUserIdAsync(long userId);
         Task AddScheduleAsync(ServiceSchedule schedule);
+        Task UpdateScheduleStatusAsync(long scheduleId, long status);
+        Task<ServiceSchedule> GetScheduleByIdAsync(long scheduleId);
     }
 }
