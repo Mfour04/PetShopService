@@ -7,7 +7,7 @@ public class ChatHub : Hub
     {
         // Lấy UserId và UserName từ các claim
         var userId = Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        var userName = Context.User?.FindFirst(ClaimTypes.Name)?.Value ?? "Guest";
+        var userName = Context.User?.FindFirst(ClaimTypes.Role)?.Value ?? "Guest";
 
         // Gửi tin nhắn đến tất cả các client cùng với UserId và UserName
         await Clients.All.SendAsync("ReceiveMessage", userId, userName, message);
