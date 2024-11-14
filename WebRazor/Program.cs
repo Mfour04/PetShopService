@@ -54,6 +54,7 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ProductCategoryService>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 
 // lấy thông tin HTTP request ở những lớp không thuộc controller
 builder.Services.AddHttpContextAccessor();
@@ -91,7 +92,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
-}
+}   
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -100,4 +101,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 app.MapControllers(); // Thêm dòng này để map các route của API
+app.MapHub<ChatHub>("/chathub");
 app.Run();

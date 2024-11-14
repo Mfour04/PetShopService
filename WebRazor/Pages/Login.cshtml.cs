@@ -63,7 +63,7 @@ public class LoginModel : PageModel
         // Tạo danh sách các claim
         var claims = new List<Claim>
 		{
-			new Claim(ClaimTypes.Name, user.Email),
+			new Claim(ClaimTypes.Name, user.Name),
 			new Claim(ClaimTypes.Role, user.RoleId), // Gán role từ cơ sở dữ liệu vào claim
 			new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
 		};
@@ -88,7 +88,7 @@ public class LoginModel : PageModel
 
         return user.RoleId == "admin"
             ? RedirectToPage("/Admin/Dashboard")
-            : RedirectToPage("/Shared/Customer/CustomerHome");
+            : RedirectToPage("/Index");
     }
 }
 

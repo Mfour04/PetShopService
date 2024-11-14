@@ -1,0 +1,119 @@
+﻿@page
+@model WebRazor.Pages.ProfileModel
+@{
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PetPath HTML</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+
+    <script defer src="/js/main.js"></script>
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    @Html.Partial("PageCommon/PreLoad")
+    @Html.Partial("PageCommon/PageHeader")
+    @Html.Partial("PageCommon/PageSearchForm")
+
+    <!-- main start -->
+    <main>
+        <!-- inner hero section start -->
+        <section class="inner-hero-section pt-xxl-0 pt-xs-15 pt-20 pt-120 bg-primary2" style="padding: 50px 100px 0px 100px;">
+            <div class="container position-relative" style="padding: 50px 100px 0px 100px;">
+                <div class="row g-6 justify-content-between align-items-center">
+                    <div class="col-sm-6">
+                        <span class="mb-3 text-h1 text-n20">Your Profile</span>
+                        <ul class="breadcrumb d-inline-flex align-items-center justify-content-center gap-lg-2 gap-1">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active"><a href="#">About</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xl-5 col-sm-6 me-auto d-none d-sm-block">
+                        <div class="reveal-bottom inner-hero-banner">
+                            <img class="w-100" src="/images/inner-hero-banner.png" alt="inner hero banner">
+                        </div>
+                    </div>
+                </div>
+                <div class="pows position-absolute top-60 right-n10 translate-middle-y z-n1 d-none d-sm-block">
+                    <img class="w-100" src="/images/pows.png" alt="pow">
+                </div>
+            </div>
+        </section>
+        
+        <section class="contact-section pt-120 pb-120 bg-secondary2" style="padding: 50px 100px 50px 100px;">
+            <div class="container">
+                <div class="row g-6 justify-content-between">
+                    <div class="col-xxl-6 col-lg-7 px-0">
+                        <div class="contact-form p-xl-12 p-lg-10 p-md-8 p-6 bg-n0 radius-20 border n20-border">
+                            <h3 class="text-n20 fw-normal mb-lg-8 mb-6">Your profile</h3>
+                            <form class="d-grid gap-lg-6 gap-4">
+                                <div class="d-lg-flex d-grid align-items-center justify-content-lg-between gap-lg-6 gap-4">
+                                    <div class="w-100">
+                                        <input type="text" placeholder="Your Email" value="@Model.Users.Email" readonly
+                                               class="px-xl-8 px-lg-6 px-md-4 px-3 py-lg-4 py-md-3 py-2 w-100 border n20-border radius-8 focus-primary w-100">
+                                    </div>
+                                    <div class="w-100">
+                                        <input type="text" placeholder="Your Name" value="@Model.Users.Name" readonly
+                                               class="px-xl-8 px-lg-6 px-md-4 px-3 py-lg-4 py-md-3 py-2 w-100 border n20-border radius-8 focus-primary w-100">
+                                    </div>
+                                </div>
+                                <div class="d-lg-flex d-grid align-items-center justify-content-lg-between gap-lg-6 gap-4">
+                                    <div class="w-100">
+                                        <input type="email" placeholder="Your Address" value="@Model.Users.Address" readonly
+                                               class="px-xl-8 px-lg-6 px-md-4 px-3 py-lg-4 py-md-3 py-2 w-100 border n20-border radius-8 focus-primary w-100">
+                                    </div>
+                                    <div class="w-100">
+                                        <input type="tel" placeholder="Your Phone" value="@Model.Users.Phone" readonly
+                                               class="px-xl-8 px-lg-6 px-md-4 px-3 py-lg-4 py-md-3 py-2 w-100 border n20-border radius-8 focus-primary w-100">
+                                    </div>                              
+                                </div>
+                                <div class="d-flex flex-wrap flex-xs-nowrap align-items-center gap-4">
+                                    <label>
+                                        Gender:
+                                    </label>
+                                    <label>
+                                        @if (Model.Users.Gender.HasValue)
+                                        {
+                                            @((Model.Users.Gender.Value) ? "Male" : "Female")
+                                        }
+                                        else
+                                        {
+                                            <span>O</span>
+                                        }
+                                    </label>
+                                </div>
+                                <div class="d-flex flex-wrap flex-xs-nowrap align-items-center justify-content-between gap-2">
+                                    <a href="/EditProfile?userId=@Model.Users.UserId" class="btn btn-primary">Edit Profile</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="position-relative">
+                            <div class="sun-vector position-absolute top-0 start-0">
+                                <img class="w-100" src="/images/sun-vector.png" alt="vector">
+                            </div>
+                            <div class="about-us-banner position-relative">
+                                <div class="circle-stripes position-absolute top-0 end-0 mt-20 z-1">
+                                    <img class="w-100 rotate" src="/images/circle-stripes.png" alt="stripes">
+                                </div>
+                                <div class="reveal-left">
+                                    <img class="w-100 h-100" src="/images/contact-section-banner.png" alt="hero banner">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <!-- main end -->
+
+    @Html.Partial("PageCommon/PageFooter")
+
+</body>

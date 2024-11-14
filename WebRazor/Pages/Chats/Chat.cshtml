@@ -1,0 +1,84 @@
+﻿@page
+@model WebRazor.Pages.Chats.ChatModel
+@{
+    ViewData["Title"] = "Chat with Admin";
+    var isAdmin = @Model.UserId == "AdminId"; // Giả sử admin có UserId là "AdminId"
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/chat-style.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="chat-container bg-light rounded shadow-sm">
+            <div class="chat-header p-3 bg-primary text-white text-center">
+                <h2>Chat with Admin</h2>
+            </div>
+            <div class="chat-box p-3" id="chatBox">
+                <ul id="messagesList" class="list-unstyled mb-0"></ul>
+            </div>
+            <div class="chat-input p-3 bg-light">
+                <div class="input-group">
+                    <input id="messageInput" type="text" placeholder="Type your message here..." class="form-control" />
+                    <button onclick="sendMessage()" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        const currentUserId = "@Model.UserId";
+        const isAdmin = "@isAdmin" === "True";
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chathub")
+            .build();
+
+        // Xử lý tin nhắn nhận được từ người dùng hoặc admin
+        connection.on("ReceiveMessage", (userId, userName, message) => {
+            const isSender = userId === currentUserId;
+
+            const li = document.createElement("li");
+            li.className = `d-flex mb-2 ${isSender ? 'justify-content-end' : 'justify-content-start'}`;
+            li.innerHTML = `
+                        <div class="message ${isSender ? 'bg-primary text-white' : 'bg-secondary text-white'} p-2 rounded"
+                            style="max-width: 75%;">
+                            <strong>${userName}</strong>: ${message}
+                        </div>
+                    `;
+            document.getElementById("messagesList").appendChild(li);
+            document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
+        });
+
+        // Thông báo cho admin khi có tin nhắn mới
+        connection.on("NewMessageNotification", (userName, message) => {
+            if (isAdmin) {
+                alert(`New message from ${userName}: ${message}`);
+            }
+        });
+
+        connection.start().catch(err => console.error(err.toString()));
+
+        function sendMessage() {
+            const message = document.getElementById("messageInput").value;
+
+            // Nếu là admin, có thể gửi tin nhắn đến người dùng cụ thể
+            if (isAdmin) {
+                const userId = prompt("Enter the User ID to reply to:");
+                if (userId) {
+                    connection.invoke("SendMessageToUser", userId, message).catch(err => console.error(err.toString()));
+                }
+            } else {
+                connection.invoke("SendMessage", message).catch(err => console.error(err.toString()));
+            }
+            document.getElementById("messageInput").value = "";
+        }
+    </script>
+</body>
+</html>

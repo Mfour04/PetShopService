@@ -101,10 +101,12 @@
 				</button>
 
 				<button class="cart-btn icon-48px position-relative border n20-border text-n20 hover-bg-primary hover-text-n0">
-					<span class="badge radius-pill text-n0 text-sm fw-medium bg-n20 position-absolute top-50 start-100 translate-middle z-1 mt-n3">0</span>
-					<span class="text-xl font-semibold">
-						<i class="ph-fill ph-shopping-cart"></i>
-					</span>
+					<span id="cart-count" class="badge radius-pill text-n0 text-sm fw-medium bg-n20 position-absolute top-50 start-100 translate-middle z-1 mt-n3">0</span>
+					<a href="/Cart">
+						<span class="text-xl font-semibold">
+							<i class="ph-fill ph-shopping-cart"></i>
+						</span>
+					</a>
 				</button>
 				@if (isLoggedIn)
 				{
@@ -115,6 +117,7 @@
 				<div class="header-buttons">
 					@if (isLoggedIn)
 					{
+						<a href="/Profile" class="btn-primary text-nowrap">Profile</a>
 						<!-- Nút Logout khi đã đăng nhập -->
 						<a href="/Logout" class="btn-primary text-nowrap">Logout</a>
 					}
