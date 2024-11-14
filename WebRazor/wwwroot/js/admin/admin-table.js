@@ -1,9 +1,8 @@
 ﻿
-
 function openEditModal(itemId, Name) {
 
 
-    const row = document.querySelector(`tr[accesskey='${Name}-${itemId}']`)
+    const row = document.querySelector(`tr[accesskey = '${Name}-${itemId}']`)
 
     const cells = Array.from(row.getElementsByTagName('td'))
     const values = Array.from(row.getElementsByTagName('input'))
@@ -33,7 +32,7 @@ function openEditModal(itemId, Name) {
         container.classList.add('form-container')
 
         const label = document.createElement('label');
-        label.textContent = keys[1].charAt(0).toUpperCase() + keys[1].slice(1); 
+        label.textContent = keys[1].charAt(0).toUpperCase() + keys[1].slice(1);
         label.setAttribute('for', keys[1]);
         label.classList.add('edit-label')
         container.appendChild(label);
@@ -84,7 +83,7 @@ function submitEditForm() {
     const inputs = modalContent.querySelectorAll('div > label + input');
 
     let formData = Array.from(inputs).reduce((obj, input) => {
-        const name = input.getAttribute('name'); 
+        const name = input.getAttribute('name');
         if (input.type === 'radio') {
             if (input.value === 'true') {
                 const value = true;
@@ -174,7 +173,34 @@ const createRadio = (key, value) => {
     return radio;
 }
 
-function editProductModal(productId) {
+async function editProductModal(productId) {
+    console.log(productId)
     const modal = document.getElementById("editProductModal")
+
+    const data = await fetch("/Admin/Table?handler=EditProducts&id=" + productId).then(res => { return res.json() })
+
+
+    document.getElementById("productId").value = data.productId;
+    document.getElementById("productCategory").value = data.categoryId;
+    document.getElementById("productName").value = data.productName;
+    document.getElementById("productPrice").value = data.price;
+    document.getElementById("productStatus").value = data.status;
+    document.getElementById("productDes").value = data.description;
+
     modal.style.display = 'block'
+}
+
+function closeEditProductModal() {
+    const modal = document.getElementById("editProductModal")
+    modal.style.display = 'none'
+}
+
+function openAddProductModal() {
+    const modal = document.getElementById("addProductModal")
+    modal.style.display = 'block'
+}
+
+function closeAddProductModal() {
+    const modal = document.getElementById("addProductModal")
+    modal.style.display = 'none'
 }

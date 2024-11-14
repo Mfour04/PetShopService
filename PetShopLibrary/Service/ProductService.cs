@@ -41,6 +41,10 @@ namespace PetShopLibrary.Service
         {
             return await _productRepository.GetProductsPagedAsync(pageIndex, pageSize, searchText, minPrice, maxPrice);
         }
+        public IEnumerable<Product> SearchProducts(string keyword)
+        {
+            return _productRepository.SearchProduct(keyword);
+        }
 
     }
 }

@@ -74,5 +74,15 @@ namespace PetShopLibrary.Repository.Implements
 
             return new PagedResult<Product>(products, totalCount, pageIndex, pageSize);
         }
+
+        public IEnumerable<Product> SearchProduct(string keyword)
+        {
+            return _context.Products
+                .Include(p => p.Category)
+                .Where(p => p.ProductName.Contains(keyword) || 
+                p.Price.ToString().Contains(keyword)||
+                p.Category.CategoryName.Contains(keyword))
+                .ToList();
+        }
     }
 }

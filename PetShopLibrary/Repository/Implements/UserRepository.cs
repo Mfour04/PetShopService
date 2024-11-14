@@ -47,7 +47,8 @@ namespace PetShopLibrary.Repository.Implements
 			return _context.Users
 				.Where(u => u.Address.Contains(keyword) ||
 				u.Email.Contains(keyword) ||
-				u.Phone.Contains(keyword))
+				u.Phone.Contains(keyword) ||
+                u.Name.Contains(keyword))
 				.ToList();
         }
 
