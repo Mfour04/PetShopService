@@ -162,6 +162,47 @@
                     </div>
                 </div>
             </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h4 class="card-title">Service Schedules</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" style="height: 500px; overflow-y: auto">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <tr>
+                                    <th>Service Name</th>
+                                    <th>User Name</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var schedule in Model.ServiceSchedules)
+                                {
+                                    <tr>
+                                        <td>@schedule.Service?.ServiceName</td>
+                                        <td>@schedule.User?.Name</td>
+                                        <td>@schedule.Date?.ToString("yyyy-MM-dd")</td>
+                                        <td>
+                                            <form method="post" asp-page-handler="ToggleStatus" onsubmit="return confirmStatus(@schedule.Status)">
+                                                <input type="hidden" name="scheduleId" value="@schedule.ScheduleId" />
+                                                <input type="hidden" name="status" value="@(schedule.Status == 1 ? 2 : 1)" />
+                                                <button type="submit" class="btn @((schedule.Status == 2) ? "btn-success" : "btn-secondary")">
+                                                    @((schedule.Status == 2) ? "Checked" : "Unchecked")
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         
 </div>
 

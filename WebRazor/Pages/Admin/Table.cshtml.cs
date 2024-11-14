@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +8,9 @@ using PetShopLibrary.Repository.Interfaces;
 using PetShopLibrary.Service;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Net.Mail;
+using System.Net;
+using System.Security.Claims;
 
 namespace WebRazor.Pages.Admin
 {
@@ -17,12 +20,14 @@ namespace WebRazor.Pages.Admin
         private readonly ProductService _productService;
         private readonly ProductCategoryService _productCategoryService;
         private readonly IWebHostEnvironment _environment;
-        public TableModel(UserService userService, ProductService productService, ProductCategoryService productCategoryService, IWebHostEnvironment environment)
+        private readonly ServiceScheduleService _serviceScheduleService;
+        public TableModel(UserService userService, ProductService productService, ProductCategoryService productCategoryService, IWebHostEnvironment environment, ServiceScheduleService serviceScheduleService)
         {
             _userService = userService;
             _productService = productService;
             _productCategoryService = productCategoryService;
             _environment = environment;
+            _serviceScheduleService = serviceScheduleService;
         }
         [BindProperty]
         public IEnumerable<User> Users { get; set; }
@@ -32,7 +37,10 @@ namespace WebRazor.Pages.Admin
         public User user { get; set; }
         [BindProperty]
         public Product product { get; set; }
-
+        [BindProperty]
+        public IEnumerable<ServiceSchedule> ServiceSchedules { get; set; }
+        [BindProperty]
+        public ServiceSchedule serviceSchedule { get; set; }
         [Required(ErrorMessage = "Please choose at least one file.")]
         [DataType(DataType.Upload)]
         [FileExtensions(Extensions = "png,jpg,jpeg,gif")]
@@ -59,6 +67,7 @@ namespace WebRazor.Pages.Admin
             {
                 Users = _userService.GetUsers();
                 Products = _productService.GetAllProducts();
+                ServiceSchedules = await _serviceScheduleService.GetAllSchedules();
                 ViewData["CategoryId"] = new SelectList(_productCategoryService.GetProductCategories(), "CategoryId", "CategoryName");
             }         
         }
@@ -221,6 +230,67 @@ namespace WebRazor.Pages.Admin
             }
 
             return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostToggleStatusAsync(long scheduleId, long status)
+        {
+            var schedule = await _serviceScheduleService.GetScheduleByIdAsync(scheduleId);
+            if (schedule == null)
+            {
+                return NotFound();
+            }
+
+            await _serviceScheduleService.UpdateScheduleStatusAsync(scheduleId, status);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            user = _userService.GetUserById(long.Parse(userIdClaim));
+            if (!string.IsNullOrEmpty(user.Email))
+            {
+                if (status == 2)
+                {
+                    await SendEmailAsync(user.Email, schedule.Service?.ServiceName, schedule.Service?.Price, schedule.Date?.ToString("yyyy-MM-dd"));
+                }
+            }
+                
+
+            ServiceSchedules = await _serviceScheduleService.GetAllSchedules();
+
+            return RedirectToPage();
+        }
+
+        private async Task SendEmailAsync(string toEmail, string serviceName, long? price, string date)
+        {
+            try
+            {
+                using (var smtpClient = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtpClient.Credentials = new NetworkCredential("shoppetpath@gmail.com", "dqoympvraxhgjmkr");
+                    smtpClient.EnableSsl = true;
+
+                    var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress("shoppetpath@gmail.com", "PetPath Team"),
+                        Subject = "Thank You for Visiting Our Store",
+                        Body = $@"
+                    <h2>Thank You for Visiting PetPath!</h2>
+                    <p>Dear customer,</p>
+                    <p>Thank you for visiting our store! We hope you had a great experience with us.</p>
+                    <p><strong>Service:</strong> {serviceName}</p>
+                    <p><strong>Price:</strong> ${(price ?? 0):F2}</p>
+                    <p><strong>Date of Service:</strong> {date}</p>
+                    <p>We truly appreciate your support and look forward to serving you again in the future!</p>
+                    <p>Best regards,<br>PetPath Team</p>",
+                        IsBodyHtml = true
+                    };
+
+                    mailMessage.To.Add(toEmail);
+
+                    await smtpClient.SendMailAsync(mailMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending email: {ex.Message}");
+            }
         }
     }
 }

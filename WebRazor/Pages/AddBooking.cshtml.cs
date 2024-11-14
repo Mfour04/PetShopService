@@ -14,11 +14,13 @@ namespace WebRazor.Pages
     {
         private readonly ServiceScheduleService _serviceScheduleService;
         private readonly ShopServiceService _shopServiceService;
+        private readonly UserService _userService;
 
-        public AddBookingModel(ServiceScheduleService serviceScheduleService, ShopServiceService shopServiceService)
+        public AddBookingModel(ServiceScheduleService serviceScheduleService, ShopServiceService shopServiceService, UserService userService)
         {
             _serviceScheduleService = serviceScheduleService;
             _shopServiceService = shopServiceService;
+            _userService = userService;
         }
 
 
@@ -26,6 +28,8 @@ namespace WebRazor.Pages
         public ServiceSchedule NewSchedule { get; set; }
 
         public IEnumerable<ShopService> Services { get; set; }
+
+        public User Users { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -77,14 +81,22 @@ namespace WebRazor.Pages
                 await _serviceScheduleService.AddScheduleAsync(NewSchedule);
 
                 // Gửi email xác nhận
-                var userEmail = User.FindFirst(ClaimTypes.Name).Value; 
-                if (!string.IsNullOrEmpty(userEmail))
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(userIdClaim))
+                {
+                    return new JsonResult(new { success = false, message = "User ID not found. Please log in." });
+                }
+
+                Users = _userService.GetUserById(long.Parse(userIdClaim));
+
+                if (!string.IsNullOrEmpty(Users.Email))
                 {
                     var selectedService = await _shopServiceService.GetServiceByIdAsync(NewSchedule.ServiceId ?? 0);
                     if (selectedService != null)
                     {
                         await SendEmailAsync(
-                            userEmail,
+                            Users.Email,
                             selectedService.ServiceName,
                             selectedService.Price,
                             NewSchedule.Date?.ToString("yyyy-MM-dd")

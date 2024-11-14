@@ -1,4 +1,5 @@
-﻿using PetShopLibrary.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PetShopLibrary.Models;
 using PetShopLibrary.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,18 @@ namespace PetShopLibrary.Service
         public async Task AddScheduleAsync(ServiceSchedule serviceSchedule)
         {
             await _serviceScheduleRepository.AddScheduleAsync(serviceSchedule);
+        }
+        public async Task UpdateScheduleStatusAsync(long scheduleId, long status)
+        {
+            await _serviceScheduleRepository.UpdateScheduleStatusAsync(scheduleId, status);
+        }
+        public async Task<IEnumerable<ServiceSchedule>> GetAllSchedules()
+        {
+            return await _serviceScheduleRepository.GetAllSchedules();
+        }
+        public async Task<ServiceSchedule> GetScheduleByIdAsync(long scheduleId)
+        {
+            return await _serviceScheduleRepository.GetScheduleByIdAsync(scheduleId);
         }
     }
 }
