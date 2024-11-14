@@ -10,7 +10,7 @@ namespace PetShopLibrary.Repository.Interfaces
     public interface IProductCategoryRepository
     {
         IEnumerable<ProductCategory> GetProductCategories();
-        ProductCategory GetProductCategoryById(int id);
+        ProductCategory GetProductCategoryById(long id);
         void AddProductCategory(ProductCategory productCategory);
     }
 }

@@ -27,7 +27,11 @@ builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Emai
 
 // Add services to the container.
 builder.Services.AddDbContext<PetShopContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnect"))); // Thêm dòng này để đăng ký PetShopContext
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnect"));
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+}
+); // Thêm dòng này để đăng ký PetShopContext
 																						   
 // Add services to the container.
 builder.Services.AddSingleton(payOS);
@@ -54,6 +58,9 @@ builder.Services.AddSignalR();
 
 // lấy thông tin HTTP request ở những lớp không thuộc controller
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
 // Cấu hình Cookie Authentication cho Razor Pages
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

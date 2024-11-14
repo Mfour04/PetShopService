@@ -23,7 +23,7 @@ namespace PetShopLibrary.Service
             return _productCategoryRepository.GetProductCategories();
         }
 
-        public ProductCategory? GetProductCategoryById(int id)
+        public ProductCategory? GetProductCategoryById(long id)
         {
             return _productCategoryRepository.GetProductCategoryById(id);
         }
