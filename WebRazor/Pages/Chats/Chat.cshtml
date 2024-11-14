@@ -8,30 +8,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/chat-style.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+    <script defer src="/js/main.js"></script>
+    <link href="/css/style.css" rel="stylesheet">
+    <style>
+        .container.my-5 {
+            margin-top: 100px !important;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: linear-gradient(135deg, #007bff, #00d4ff);
+            color: #fff;
+            border-bottom: 3px solid #00d4ff;
+        }
+
+        .chat-box {
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #f5f7fa;
+        }
+
+        .chat-input {
+            padding: 15px;
+            background: #e9ecef;
+            border-top: 3px solid #007bff;
+        }
+
+        #messageInput {
+            border-radius: 30px;
+            padding: 10px;
+        }
+
+        .btn-primary {
+            border-radius: 30px;
+            padding: 10px 20px;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 15px;
+            word-wrap: break-word;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+            .message strong {
+                display: block;
+                font-size: 0.85rem;
+                color: #e0e0e0;
+                margin-bottom: 5px;
+            }
+
+        .bg-primary-message {
+            background: linear-gradient(135deg, #007bff, #00b4ff);
+            color: #fff;
+        }
+
+        .bg-secondary-message {
+            background: #f1f1f1;
+            color: #333;
+        }
+
+        #messagesList {
+            list-style-type: none;
+            padding-left: 0;
+        }
+    </style>
 </head>
 <body>
+    @Html.Partial("PageCommon/PreLoad")
+    @Html.Partial("PageCommon/PageHeader")
+    @Html.Partial("PageCommon/PageSearchForm")
+    
+    <main>
     <div class="container my-5">
-        <div class="chat-container bg-light rounded shadow-sm">
-            <div class="chat-header p-3 bg-primary text-white text-center">
-                <h2>Chat with Admin</h2>
-            </div>
-            <div class="chat-box p-3" id="chatBox">
-                <ul id="messagesList" class="list-unstyled mb-0"></ul>
-            </div>
-            <div class="chat-input p-3 bg-light">
-                <div class="input-group">
-                    <input id="messageInput" type="text" placeholder="Type your message here..." class="form-control" />
-                    <button onclick="sendMessage()" class="btn btn-primary">Send</button>
-                </div>
-            </div>
-        </div>
+	    <div class="chat-container bg-light rounded shadow-sm my-5">
+		    <div class="chat-header p-3">
+			    <h2 class="m-0">Chat Console</h2>
+		    </div>
+		    <div class="chat-box p-3" id="chatBox">
+			    <ul id="messagesList" class="mb-0"></ul>
+		    </div>
+		    <div class="chat-input p-3">
+			    <div class="input-group">
+				    <input id="messageInput" type="text" placeholder="Type your message here..." class="form-control" />
+				    <button onclick="sendMessage()" class="btn btn-primary">Send</button>
+			    </div>
+		    </div>
+	    </div>
     </div>
+    
+    </main>
 
     <script type="text/javascript">
         const currentUserId = "@Model.UserId";
@@ -40,23 +121,20 @@
             .withUrl("/chathub")
             .build();
 
-        // Xử lý tin nhắn nhận được từ người dùng hoặc admin
         connection.on("ReceiveMessage", (userId, userName, message) => {
             const isSender = userId === currentUserId;
 
             const li = document.createElement("li");
-            li.className = `d-flex mb-2 ${isSender ? 'justify-content-end' : 'justify-content-start'}`;
+            li.className = `d-flex mb-3 ${isSender ? 'justify-content-end' : 'justify-content-start'}`;
             li.innerHTML = `
-                        <div class="message ${isSender ? 'bg-primary text-white' : 'bg-secondary text-white'} p-2 rounded"
-                            style="max-width: 75%;">
-                            <strong>${userName}</strong>: ${message}
-                        </div>
-                    `;
+                    <div class="message ${isSender ? 'bg-primary-message' : 'bg-secondary-message'} p-3">
+                        <strong>${userName}</strong>${message}
+                    </div>
+                `;
             document.getElementById("messagesList").appendChild(li);
             document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
         });
 
-        // Thông báo cho admin khi có tin nhắn mới
         connection.on("NewMessageNotification", (userName, message) => {
             if (isAdmin) {
                 alert(`New message from ${userName}: ${message}`);
@@ -67,8 +145,8 @@
 
         function sendMessage() {
             const message = document.getElementById("messageInput").value;
+            if (message.trim() === "") return;
 
-            // Nếu là admin, có thể gửi tin nhắn đến người dùng cụ thể
             if (isAdmin) {
                 const userId = prompt("Enter the User ID to reply to:");
                 if (userId) {
@@ -80,5 +158,7 @@
             document.getElementById("messageInput").value = "";
         }
     </script>
+
+    @Html.Partial("PageCommon/PageFooter")
 </body>
 </html>

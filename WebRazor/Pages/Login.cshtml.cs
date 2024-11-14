@@ -17,14 +17,14 @@ public class LoginModel : PageModel
 {
 	private readonly PetShopContext _context;
 
-	private readonly ILogger<LoginModel> _logger; // Thêm biến logger
+	private readonly ILogger<LoginModel> _logger;
 
 	private readonly IConfiguration _configuration;
 
 	public LoginModel(PetShopContext context, ILogger<LoginModel> logger, IConfiguration configuration)
 	{
 		_context = context;
-		_logger = logger; // Gán logger
+		_logger = logger;
 		_configuration = configuration;
 	}
 
@@ -33,9 +33,12 @@ public class LoginModel : PageModel
 
 	public string ErrorMessage { get; set; }
 
+	//[BindProperty(SupportsGet = true)]
+	//public string ReturnUrl { get; set; }
+
 	public void OnGet()
 	{
-		_logger.LogInformation("OnGet method called."); // Ghi log khi OnGet được gọi
+		_logger.LogInformation("OnGet method called."); 
 	}
 
 	public async Task<IActionResult> OnPostAsync()
@@ -45,10 +48,9 @@ public class LoginModel : PageModel
 			return Page();
 		}
 
-
 		var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == Input.Email);
 
-		if (user == null || user.Password != Input.Password) // So sánh mật khẩu thô
+		if (user == null || user.Password != Input.Password)
 		{
 			ErrorMessage = "Invalid login attempt.";
 			return Page();
@@ -56,15 +58,16 @@ public class LoginModel : PageModel
 
         if (!user.IsEmailVerified)
         {
-            ModelState.AddModelError(string.Empty, "Email chưa được xác thực. Vui lòng kiểm tra email của bạn.");
-            return Page();
+	        ErrorMessage = "Email chưa được xác thực. Vui lòng kiểm tra email của bạn.";
+
+			return Page();
         }
 
         // Tạo danh sách các claim
         var claims = new List<Claim>
 		{
-			new Claim(ClaimTypes.Name, user.Name),
-			new Claim(ClaimTypes.Role, user.RoleId), // Gán role từ cơ sở dữ liệu vào claim
+			new Claim(ClaimTypes.Name, user.Email),
+			new Claim(ClaimTypes.Role, user.RoleId),
 			new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
 		};
 
@@ -86,7 +89,12 @@ public class LoginModel : PageModel
         _logger.LogInformation("Is User Authenticated After Login: " + loggedInUser.Identity.IsAuthenticated);
         _logger.LogInformation("Claims Count After Login: " + loggedInUser.Claims.Count());
 
-        return user.RoleId == "admin"
+        //if (Url.IsLocalUrl(ReturnUrl))
+        //{
+	       // return Redirect(ReturnUrl);
+        //}
+
+		return user.RoleId == "admin"
             ? RedirectToPage("/Admin/Dashboard")
             : RedirectToPage("/Index");
     }

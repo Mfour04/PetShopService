@@ -1,5 +1,40 @@
 ﻿@page
 @model WebRazor.Pages.Shared.System.Users.AfterRegisterModel
 @{
-	<h1>Please open email to confirm to continue</h1>
+
 }
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Email Confirmation - PetPath</title>
+	<link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+
+	<script defer src="/js/main.js"></script>
+	<link href="/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+@Html.Partial("PageCommon/PreLoad")
+@Html.Partial("PageCommon/PageHeader")
+@Html.Partial("PageCommon/PageSearchForm")
+
+<main class="container py-5">
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<div class="card shadow-sm text-center">
+				<div class="card-body">
+					<h1 class="mb-4">Please Confirm Your Email</h1>
+					<p class="mb-4">We have sent a confirmation link to your email address. Please open your email and click on the link to continue the registration process.</p>
+					<div class="form-group mt-3">
+						<a href="@Url.Page("Index")" class="btn btn-primary btn-lg">Back to Home</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+@Html.Partial("PageCommon/PageFooter")
+
+</body>
