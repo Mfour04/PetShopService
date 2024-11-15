@@ -46,7 +46,7 @@ namespace WebRazor.Pages.Shared.System.Users
 
                 await _context.SaveChangesAsync();
 
-                Console.WriteLine("Email đã được xác thực thành công.");
+                Console.WriteLine("Success.");
 
                 return RedirectToPage("/Login");
             }

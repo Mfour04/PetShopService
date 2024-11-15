@@ -10,10 +10,14 @@ namespace WebRazor.Pages.Chats
     {
         public string UserId { get; private set; }
 
+        public string UserRole { get; private set; }
+
         public void OnGet()
         {
             // Lấy UserId từ claim NameIdentifier
             UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            UserRole = User.FindFirst(ClaimTypes.Role)?.Value;
         }
     }
 }
