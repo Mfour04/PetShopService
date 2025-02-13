@@ -90,7 +90,7 @@
                                     <div class="col-md-4 col-xs-6">
                                         <div style="width: 100%; height: 100%" class="product-card border n20-1-border radius-16 overflow-hidden hover-primary-border">
                                             <div style="height:60%" class="product-thumb scale-animation position-relative">
-                                                <img class="w-100" src="@Url.Content(product.FilePath)" alt="@product.ProductName">
+                                                <img class="w-100" src="~/images/product-1.png" alt="@product.ProductName">
                                                 <span class="seal-tag py-1 px-lg-4 px-2 bg-primary text-n0 radius-pill position-absolute top-0 left-0 mt-lg-6 mt-4 ms-lg-6 ms-4">Sale!</span>
                                                 <div class="product-btns d-grid gap-1 position-absolute top-0 right-0 mt-xxl-6 mt-4 me-xxl-6 me-4">
                                                     @if (User.Identity.IsAuthenticated)
@@ -108,7 +108,7 @@
                                                     @product.ProductName
                                                 </a>
                                                 <span class="text-primary font-instrument fw-semibold">
-                                                    $@product.Price
+                                                    @product.Price VND
                                                 </span>
                                             </div>
                                         </div>
@@ -212,7 +212,7 @@
                                                 <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
                                                     Pet Shampoos
                                                 </span>
-                                                <span class="text-sm text-n10 font-instrument">₹36.00</span>
+                                                <span class="text-sm text-n10 font-instrument">20000 VND</span>
                                             </div>
                                             <div class="icon-48px radius-unset">
                                                 <img class="w-100 radius-4" src="/images/top-product-1.png"
@@ -220,81 +220,7 @@
                                             </div>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#"
-                                           class="d-flex align-items-center justify-content-between gap-lg-4 gap-2">
-                                            <div class="d-grid">
-                                                <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
-                                                    Tick Treatments
-                                                </span>
-                                                <span class="text-sm text-n10 font-instrument">₹42.00 – ₹45.00</span>
-                                            </div>
-                                            <div class="icon-48px radius-unset">
-                                                <img class="w-100 radius-4" src="/images/top-product-2.png"
-                                                     alt="top products">
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                           class="d-flex align-items-center justify-content-between gap-lg-4 gap-2">
-                                            <div class="d-grid">
-                                                <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
-                                                    First Aid Kits
-                                                </span>
-                                                <span class="text-sm text-n10 font-instrument">₹36.00</span>
-                                            </div>
-                                            <div class="icon-48px radius-unset">
-                                                <img class="w-100 radius-4" src="/images/top-product-3.png"
-                                                     alt="top products">
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                           class="d-flex align-items-center justify-content-between gap-lg-4 gap-2">
-                                            <div class="d-grid">
-                                                <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
-                                                    Pet Vitamins
-                                                </span>
-                                                <span class="text-sm text-n10 font-instrument">₹42.00</span>
-                                            </div>
-                                            <div class="icon-48px radius-unset">
-                                                <img class="w-100 radius-4" src="/images/top-product-4.png"
-                                                     alt="top products">
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                           class="d-flex align-items-center justify-content-between gap-lg-4 gap-2">
-                                            <div class="d-grid">
-                                                <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
-                                                    Pet Wipes
-                                                </span>
-                                                <span class="text-sm text-n10 font-instrument">₹36.00</span>
-                                            </div>
-                                            <div class="icon-48px radius-unset">
-                                                <img class="w-100 radius-4" src="/images/top-product-5.png"
-                                                     alt="top products">
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                           class="d-flex align-items-center justify-content-between gap-lg-4 gap-2">
-                                            <div class="d-grid">
-                                                <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
-                                                    Ear Cleaning
-                                                </span>
-                                                <span class="text-sm text-n10 font-instrument">$20.00</span>
-                                            </div>
-                                            <div class="icon-48px radius-unset">
-                                                <img class="w-100 radius-4" src="/images/top-product-6.png"
-                                                     alt="top products">
-                                            </div>
-                                        </a>
-                                    </li>
+                                   
                                 </ul>
                             </div>
                             <!-- top products list end -->
