@@ -25,48 +25,6 @@
 					</li>
 					<li class="menu-item">
 						<button class="slide-vertical" data-splitting>
-							Pages
-							<span class="lh-0"><i class="ph ph-plus"></i></span>
-						</button>
-						<ul class="sub-menu">
-							<li class="menu-item">
-								<button class="slide-vertical" data-splitting>
-									Services
-									<span class="lh-0"><i class="ph ph-plus"></i></span>
-								</button>
-								<ul class="sub-menu">
-									<li class="menu-link">
-										<a href="/Services" class="slide-horizontal" data-splitting>Services</a>
-									</li>
-									<li class="menu-link">
-										<a href="/Service-details" class="slide-horizontal" data-splitting>
-											Service
-											Details
-										</a>
-									</li>
-								</ul>
-							</li>
-							<li class="menu-item">
-								<button class="slide-vertical" data-splitting>
-									Blogs
-									<span class="lh-0"><i class="ph ph-plus"></i></span>
-								</button>
-								<ul class="sub-menu">
-									<li class="menu-link">
-										<a href="/Blogs" class="slide-horizontal" data-splitting>Blogs</a>
-									</li>
-									<li class="menu-link">
-										<a href="/Blog-details" class="slide-horizontal" data-splitting>
-											Blogs
-											Details
-										</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li class="menu-item">
-						<button class="slide-vertical" data-splitting>
 							Shop
 							<span class="lh-0"><i class="ph ph-plus"></i></span>
 						</button>
@@ -75,19 +33,16 @@
 								<a href="/Shop" class="slide-horizontal" data-splitting>Shop</a>
 							</li>
 							<li class="menu-link">
-								<a href="/Shop-details" class="slide-horizontal" data-splitting>
-									Shop
-									Details
-								</a>
-							</li>
-							<li class="menu-link">
 								<a href="/Cart" class="slide-horizontal" data-splitting>Cart</a>
-							</li>
-							<li class="menu-link">
-								<a href="/Checkout" class="slide-horizontal" data-splitting>Checkout</a>
 							</li>
 						</ul>
 					</li>
+					@if (isLoggedIn)
+					{
+						<li class="menu-link">
+							<a href="/ViewBooking" class="slide-vertical" data-splitting>Book</a>
+						</li>
+					}
 					<li class="menu-link">
 						<a href="/Contact-us" class="slide-vertical" data-splitting>Contact</a>
 					</li>
@@ -95,31 +50,26 @@
 			</nav>
 			<div class="nav-btns d-flex align-items-center gap-lg-5 gap-3">
 
-				<!-- search icon -->
-				<button class="search-btn text-2xl font-semibold text-n20">
-					<i class="ph ph-magnifying-glass"></i>
-				</button>
-
 				<button class="cart-btn icon-48px position-relative border n20-border text-n20 hover-bg-primary hover-text-n0">
-					<span id="cart-count" class="badge radius-pill text-n0 text-sm fw-medium bg-n20 position-absolute top-50 start-100 translate-middle z-1 mt-n3">0</span>
-					<a href="/Cart">
-						<span class="text-xl font-semibold">
-							<i class="ph-fill ph-shopping-cart"></i>
-						</span>
-					</a>
+					<i class="ph-fill ph-shopping-cart fs-4"></i>
+					<span id="cart-count" class="position-absolute top-0 start-100 mt-1 ms-n1 translate-middle badge rounded-pill bg-danger">
+						0
+					</span>
 				</button>
-				@if (isLoggedIn)
-				{
-					<a href="/ViewBooking" class="btn-primary text-nowrap">Book</a>
-				}
 
 				<!-- Nút Login/Logout -->
 				<div class="header-buttons">
 					@if (isLoggedIn)
 					{
-						<a href="/Profile" class="btn-primary text-nowrap">Profile</a>
-						<!-- Nút Logout khi đã đăng nhập -->
-						<a href="/Logout" class="btn-primary text-nowrap">Logout</a>
+						<div class="dropdown">
+							<button class="d-flex justify-content-center align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="height: 3rem; width: 3rem; overflow: hidden; border-radius: 50%; border: 2px solid white;">
+								<img src="https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/dashboard/editor_upload/hinh-nen-may-tinh-4k-17.jpg" class="w-100 h-100 object-fit-cover" />
+							</button>
+							<ul class="dropdown-menu mt-2" aria-labelledby="dropdownMenuButton">
+								<li><a class="dropdown-item" href="/Profile">Profile</a></li>
+								<li><a class="dropdown-item" href="/Logout">Logout</a></li>
+							</ul>
+						</div>
 					}
 					else
 					{
@@ -135,6 +85,8 @@
 		</div>
 	</div>
 </header>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 
 

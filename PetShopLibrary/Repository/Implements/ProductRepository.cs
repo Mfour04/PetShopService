@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetShopLibrary.Models;
 using PetShopLibrary.Repository.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetShopLibrary.Repository.Implements
 {
@@ -79,8 +74,8 @@ namespace PetShopLibrary.Repository.Implements
         {
             return _context.Products
                 .Include(p => p.Category)
-                .Where(p => p.ProductName.Contains(keyword) || 
-                p.Price.ToString().Contains(keyword)||
+                .Where(p => p.ProductName.Contains(keyword) ||
+                p.Price.ToString().Contains(keyword) ||
                 p.Category.CategoryName.Contains(keyword))
                 .ToList();
         }

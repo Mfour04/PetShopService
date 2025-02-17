@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PetShopLibrary.Models;
-using PetShopLibrary.Repository.Interfaces;
 using PetShopLibrary.Service;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Net.Mail;
 using System.Net;
 using System.Security.Claims;
+using PetShopLibrary.DTO;
 
 namespace WebRazor.Pages.Admin
 {
@@ -46,7 +45,7 @@ namespace WebRazor.Pages.Admin
         [FileExtensions(Extensions = "png,jpg,jpeg,gif")]
         [Display(Name = "Choose file(s) to upload")]
         [BindProperty]
-        public IFormFile[] FileUploads { get; set; }
+        public IFormFile FileUploads { get; set; }
         public async Task OnGetAsync(string keyword, string searchType)
         {
 
@@ -69,68 +68,68 @@ namespace WebRazor.Pages.Admin
                 Products = _productService.GetAllProducts();
                 ServiceSchedules = await _serviceScheduleService.GetAllSchedules();
                 ViewData["CategoryId"] = new SelectList(_productCategoryService.GetProductCategories(), "CategoryId", "CategoryName");
-            }         
+            }
         }
 
 
         public IActionResult OnGetEditProducts(long id)
         {
-                Users = _userService.GetUsers();
-                Products = _productService.GetAllProducts();
-                product = _productService.GetProductById(id);
-                if (product == null)
-                {
-                    return NotFound();
-                }
+            Users = _userService.GetUsers();
+            Products = _productService.GetAllProducts();
+            product = _productService.GetProductById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
 
-                return new JsonResult(product);
+            return new JsonResult(product);
 
         }
 
-            public async Task<IActionResult> OnPostEditProductAsync()
-            {
+        public async Task<IActionResult> OnPostEditProductAsync()
+        {
             string savePath = "images/product";
             try
-                {
-                    string fileName = null;
-                    if (FileUploads != null)
-                    {
-                        foreach (var FileUpload in FileUploads)
-                        {
-                            fileName = Path.GetFileName(FileUpload.FileName);
-                            var file = Path.Combine(_environment.WebRootPath, savePath, FileUpload.FileName);
-                        var directoryPath = Path.Combine(_environment.WebRootPath, savePath);
-                        if (!Directory.Exists(directoryPath))
-                        {
-                            Directory.CreateDirectory(directoryPath);
-                        }
-                        using (var fileStream = new FileStream(file, FileMode.Create))
-                            {
-                                await FileUpload.CopyToAsync(fileStream);
-                            }
-                        }
-                    }
-                    Users = _userService.GetUsers();
-                    var cateogory = _productCategoryService.GetProductCategoryById(product.Category.CategoryId);
-                    var updatedProduct = new Product
-                    {
-                        ProductId = product.ProductId,
-                        ProductName = product.ProductName,
-                        Price = product.Price,
-                        Status = product.Status,
-                        Description = product.Description,
-                        Category = cateogory,
-                        ProductOrderDetails = product.ProductOrderDetails,
-                        FilePath = "~/" + savePath + "/" + fileName
-                    };
-                    _productService.UpdateProduct(updatedProduct);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                }
-
-                return RedirectToPage();
+            {
+                //string fileName = null;
+                //if (FileUploads != null)
+                //{
+                //    foreach (var FileUpload in FileUploads)
+                //    {
+                //        fileName = Path.GetFileName(FileUpload.FileName);
+                //        var file = Path.Combine(_environment.WebRootPath, savePath, FileUpload.FileName);
+                //    var directoryPath = Path.Combine(_environment.WebRootPath, savePath);
+                //    if (!Directory.Exists(directoryPath))
+                //    {
+                //        Directory.CreateDirectory(directoryPath);
+                //    }
+                //    using (var fileStream = new FileStream(file, FileMode.Create))
+                //        {
+                //            await FileUpload.CopyToAsync(fileStream);
+                //        }
+                //    }
+                //}
+                //Users = _userService.GetUsers();
+                //var cateogory = _productCategoryService.GetProductCategoryById(product.Category.CategoryId);
+                //var updatedProduct = new Product
+                //{
+                //    ProductId = product.ProductId,
+                //    ProductName = product.ProductName,
+                //    Price = product.Price,
+                //    Status = product.Status,
+                //    Description = product.Description,
+                //    Category = cateogory,
+                //    ProductOrderDetails = product.ProductOrderDetails,
+                //    FilePath = "~/" + savePath + "/" + fileName
+                //};
+                //_productService.UpdateProduct(updatedProduct);
             }
+            catch (DbUpdateConcurrencyException)
+            {
+            }
+
+            return RedirectToPage();
+        }
 
         public async Task<IActionResult> OnPostAsync([FromBody] User user)
         {
@@ -138,16 +137,16 @@ namespace WebRazor.Pages.Admin
             {
                 _userService.UpdateUser(user);
                 var users = _userService.GetUsers();
-                return RedirectToPage(); 
+                return RedirectToPage();
             }
-            return Page(); 
+            return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int userId)
         {
             if (userId <= 0)
             {
-                return NotFound(); 
+                return NotFound();
             }
 
             var user = _userService.GetUserById(userId);
@@ -190,42 +189,22 @@ namespace WebRazor.Pages.Admin
 
         public async Task<IActionResult> OnPostAddProductAsync()
         {
-            string savePath = "images/product";
             try
             {
-                string fileName = null;
-                if (FileUploads != null)
-                {
-                    foreach (var FileUpload in FileUploads)
-                    {
-                        fileName = Path.GetFileName(FileUpload.FileName);
-                        var file = Path.Combine(_environment.WebRootPath, savePath, FileUpload.FileName);
-                        var directoryPath = Path.Combine(_environment.WebRootPath, savePath);
-                        if (!Directory.Exists(directoryPath))
-                        {
-                            Directory.CreateDirectory(directoryPath);
-                        }
-                        using (var fileStream = new FileStream(file, FileMode.Create))
-                        {
-                            await FileUpload.CopyToAsync(fileStream);
-                        }
-                    }
-                }
                 Users = _userService.GetUsers();
-                var cateogory = _productCategoryService.GetProductCategoryById(product.Category.CategoryId);
-                var updatedProduct = new Product
+                var category = _productCategoryService.GetProductCategoryById(product.Category.CategoryId);
+                var newProduct = new ProductDTO
                 {
                     ProductName = product.ProductName,
                     Price = product.Price,
                     Status = product.Status,
                     Description = product.Description,
-                    Category = cateogory,
-                    ProductOrderDetails = product.ProductOrderDetails,
-                    FilePath = "~/" + savePath + "/" + fileName
+                    CategoryId = category.CategoryId
                 };
-                _productService.UpdateProduct(updatedProduct);
+
+                await _productService.AddProduct(newProduct, FileUploads);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
             }
 
@@ -250,7 +229,7 @@ namespace WebRazor.Pages.Admin
                     await SendEmailAsync(user.Email, schedule.Service?.ServiceName, schedule.Service?.Price, schedule.Date?.ToString("yyyy-MM-dd"));
                 }
             }
-                
+
 
             ServiceSchedules = await _serviceScheduleService.GetAllSchedules();
 

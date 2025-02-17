@@ -16,21 +16,6 @@
     @Html.Partial("PageCommon/PreLoad")
     @Html.Partial("PageCommon/PageHeader")
     @Html.Partial("PageCommon/PageSearchForm")
-    <!-- header section end -->
-    <!-- search form -->
-    <div class="search-form-wrapper position-fixed top-0 start-0 w-100 vh-100 d-flex align-items-center justify-content-center bg-n10">
-        <button class="search-close-btn position-absolute top-0 end-0 text-2xl text-n0 mt-5 me-5">
-            <i class="ph ph-x"></i>
-        </button>
-        <div class="search-form">
-            <form method="get" class="d-flex align-items-center gap-4 border n10-border p-2">
-                <input type="text" name="searchText" placeholder="Search ..." class="w-100 p-2">
-                <button type="submit" class="text-2xl text-n0">
-                    <i class="ph ph-magnifying-glass"></i>
-                </button>
-            </form>
-        </div>
-    </div>
 
     <!-- main start -->
     <main>
@@ -47,8 +32,10 @@
                         </ul>
                     </div>
                     <div class="col-xl-5 col-sm-6 me-auto d-none d-sm-block">
-                        <div class="reveal-bottom inner-hero-banner">
-                            <img class="w-100" src="/images/inner-hero-banner.png" alt="inner hero banner">
+                        <div class="reveal-bottom inner-hero-banner text-center d-flex justify-content-center align-items-center"
+                             style="width: 500px; height: 300px; margin: 0 auto;">
+                            <img class="img-fluid" style="max-width: 80%; max-height: 80%; object-fit: contain;"
+                                 src="/images/inner-hero-banner.png" alt="inner hero banner">
                         </div>
                     </div>
                 </div>
@@ -114,7 +101,7 @@
                                         </div>
                                     </div>
                                 }
-                            </div>                           
+                            </div>
                         </div>
 
                         <!-- pagination -->
