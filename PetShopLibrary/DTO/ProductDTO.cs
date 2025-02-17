@@ -1,4 +1,6 @@
-﻿namespace PetShopLibrary.DTO
+﻿using PetShopLibrary.Models;
+
+namespace PetShopLibrary.DTO
 {
     public class ProductDTO
     {
@@ -17,5 +19,6 @@
         public string? FilePath { get; set; }
 
         public virtual ProductCategoryDTO? Category { get; set; }
+        public virtual ICollection<ProductOrderDetailDTO> ProductOrderDetails { get; set; } = new List<ProductOrderDetailDTO>();
     }
 }

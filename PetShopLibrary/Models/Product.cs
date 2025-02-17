@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PetShopLibrary.Models;
+﻿namespace PetShopLibrary.Models;
 
 public partial class Product
 {
