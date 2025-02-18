@@ -21,6 +21,23 @@ namespace PetShopLibrary.Repository.Implements
             _petShopContext.SaveChanges();
         }
 
+        public long CreateNewOrder(ProductOrder order)
+        {
+            _petShopContext.ProductOrders.Add(order);
+            _petShopContext.SaveChanges();
+            return order.OrderId;
+        }
+
+        public IEnumerable<ProductOrder> GetAllProductOrders()
+        {
+            return _petShopContext.ProductOrders.ToList();
+        }
+
+        public IEnumerable<ProductOrder>? GetOrderByUserId(long userId)
+        {
+            return _petShopContext.ProductOrders.ToList().Where(x => x.UserId == userId);
+        }
+
         public ProductOrder GetProductOrderByID(long orderId)
         {
             return _petShopContext.ProductOrders

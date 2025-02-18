@@ -11,6 +11,7 @@ namespace PetShopLibrary.Service
     public class ProductOrderService
     {
         private readonly IProductOrderRepository _orderRepository;
+        
 
         public ProductOrderService(IProductOrderRepository orderRepository)
         {
@@ -35,6 +36,18 @@ namespace PetShopLibrary.Service
             order.ProductOrderDetails.Add(orderDetail);
 
             _orderRepository.AddOrder(order);
+        }
+
+        // Add order by user into database
+        public long OrderProcessing(long userId)
+        {
+            var order = new ProductOrder
+            {
+                UserId = userId,
+                OrderDate = DateTime.Now
+            };
+
+           return _orderRepository.CreateNewOrder(order);
         }
     }
 }

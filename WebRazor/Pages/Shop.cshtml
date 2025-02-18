@@ -108,7 +108,7 @@
                                                     @product.ProductName
                                                 </a>
                                                 <span class="text-primary font-instrument fw-semibold">
-                                                    @product.Price VND
+                                                    @(product.Price?.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) ?? "0") VND
                                                 </span>
                                             </div>
                                         </div>

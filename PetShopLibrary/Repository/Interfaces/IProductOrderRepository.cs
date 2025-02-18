@@ -11,5 +11,9 @@ namespace PetShopLibrary.Repository.Interfaces
     {
         void AddOrder(ProductOrder order);
         ProductOrder GetProductOrderByID(long orderId);
+
+        IEnumerable<ProductOrder> GetAllProductOrders();
+        IEnumerable<ProductOrder>? GetOrderByUserId(long userId);
+        long CreateNewOrder(ProductOrder order);
     }
 }

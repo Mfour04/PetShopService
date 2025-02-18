@@ -15,10 +15,19 @@ namespace WebRazor.Pages
     {
         private readonly PayOS _payOS;
         private readonly UserService _userService;
-        public CartModel(PayOS payOS, UserService userService)
+        private readonly ProductOrderService _orderService;
+        private readonly POrderDetailsService _pOrderService;
+        private readonly ProductService _productService;
+
+
+
+        public CartModel(PayOS payOS, UserService userService, ProductService productService, ProductOrderService productOrderService, POrderDetailsService pOrderDetail)
         {
             _payOS = payOS;
             _userService = userService;
+            _productService = productService;
+            _orderService = productOrderService;
+            _pOrderService = pOrderDetail;
         }
 
         [BindProperty]
@@ -41,14 +50,35 @@ namespace WebRazor.Pages
 
             return Page();
         }
-        public async Task<IActionResult> OnPostCreatePaymentLink(CreatePaymentLinkRequest body)
+        public async Task<IActionResult> OnPostCreatePaymentLink(CreatePaymentLinkRequest body, long userId)
         {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            userId = long.Parse(userIdClaim.Value);
             try
             {
+                List<long> productId = body.ProductIds.Select(id => Convert.ToInt64(id)).ToList();
                 int orderCode = int.Parse(DateTimeOffset.Now.ToString("ffffff"));
-                ItemData item = new ItemData(body.OrderName, 1, (int)body.TotalPrice);
+                ItemData item = new ItemData(body.OrderName,productId.Count, (int)body.TotalPrice);
                 List<ItemData> items = new List<ItemData> { item };
                 PaymentData paymentData = new PaymentData(orderCode, (int)body.TotalPrice, body.Description, items, body.cancelUrl, body.returnUrl);
+
+                // add into Order , add rollback
+                var orderId = _orderService.OrderProcessing(userId);
+
+                //add into OrderLine
+                List<ProductOrderDetail> dtos = new List<ProductOrderDetail>();
+                foreach (var pid in productId)
+                {
+                    ProductOrderDetail it = new ProductOrderDetail
+                    {
+                        OrderId = orderId,
+                        ProductId = pid
+                    };
+                    dtos.Add(it);
+                }
+                _pOrderService.AddRangePOrderDetails(dtos);
+   
+
 
                 CreatePaymentResult paymentResult = await _payOS.createPaymentLink(paymentData);
 

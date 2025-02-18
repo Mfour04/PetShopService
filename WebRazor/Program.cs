@@ -44,6 +44,8 @@ builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IShopServiceRepository, ShopServiceRepository>();
 builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+builder.Services.AddScoped<IPOrderDetailsRepository, POrderDetailsRepository>();
+
 
 //Config Service
 builder.Services.AddScoped<ProductService>();
@@ -53,7 +55,9 @@ builder.Services.AddScoped<ShopServiceService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ProductCategoryService>();
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<POrderDetailsService>();
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 builder.Services.AddSignalR();
 
 // lấy thông tin HTTP request ở những lớp không thuộc controller
