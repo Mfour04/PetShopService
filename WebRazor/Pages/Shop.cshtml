@@ -10,6 +10,7 @@
 
     <script defer src="/js/main.js"></script>
     <link href="/css/style.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body>
@@ -73,34 +74,37 @@
                         <div class="row g-6 mb-lg-10 mb-md-8 mb-6">
                             <div class="row">
                                 @foreach (var product in Model.PagedProducts.Items)
-                                {
-                                    <div class="col-md-4 col-xs-6">
-                                        <div style="width: 100%; height: 100%" class="product-card border n20-1-border radius-16 overflow-hidden hover-primary-border">
-                                            <div style="height:60%" class="product-thumb scale-animation position-relative">
-                                                <img class="w-100" src="@Url.Content(product.FilePath)" alt="@product.ProductName">
-                                                <span class="seal-tag py-1 px-lg-4 px-2 bg-primary text-n0 radius-pill position-absolute top-0 left-0 mt-lg-6 mt-4 ms-lg-6 ms-4">Sale!</span>
-                                                <div class="product-btns d-grid gap-1 position-absolute top-0 right-0 mt-xxl-6 mt-4 me-xxl-6 me-4">
-                                                    @if (User.Identity.IsAuthenticated)
-                                                    {
-                                                        <button class="cart-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary"
-                                                                onclick="handleClickAddToCart({ ProductId: '@product.ProductId', ProductName: '@product.ProductName', Price: @product.Price, Quantity: 1 })">
-                                                            <i class="ph-fill ph-shopping-cart"></i>
-                                                        </button>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div class="product-info p-lg-6 p-4 text-center">
-                                                <a href="@Url.Page("/Shop-details", new { id = product.ProductId })"
-                                                   class="text-h6 text-n20 font-otomanopee fw-normal hover-text-primary hover-underline mb-2">
-                                                    @product.ProductName
-                                                </a>
-                                                <span class="text-primary font-instrument fw-semibold">
-                                                    $@product.Price
-                                                </span>
-                                            </div>
-                                        </div>
+                                 {
+                                    <div class="col-md-4 col-xs-6 mb-4">
+                                       <div class="product-card border n20-1-border radius-16 overflow-hidden hover-primary-border d-flex flex-column" style="height: 250px;">
+                                          <div class="product-thumb scale-animation position-relative" style="height: 150%">
+                                             <img class="w-100" src="@Url.Content(product.FilePath)" alt="@product.ProductName">
+                                             <span class="seal-tag py-1 px-lg-4 px-2 bg-primary text-n0 radius-pill position-absolute top-0 left-0 mt-lg-6 mt-4 ms-lg-6 ms-4">Sale!</span>
+                                             <div class="product-btns d-grid gap-1 position-absolute top-0 right-0 mt-xxl-6 mt-4 me-xxl-6 me-4">
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                   <button class="cart-btn icon-40px bg-n0 text-primary text-xl hover-text-secondary"
+                                                           onclick="handleClickAddToCart({ ProductId: '@product.ProductId', ProductName: '@product.ProductName', Price: @product.Price, Quantity: 1 })">
+                                                      <i class="ph-fill ph-shopping-cart"></i>
+                                                   </button>
+                                                }
+                                             </div>
+                                          </div>
+                                          <div class="product-info p-lg-6 p-4 text-center d-flex flex-column justify-content-between" style="flex-grow: 1; height: 100%; overflow: hidden;">
+                                             <!-- Product Name with Fixed 2 Lines -->
+                                             <a href="@Url.Page("/Shop-details", new { id = product.ProductId })"
+                                                class="text-h6 text-n20 font-otomanopee fw-normal hover-text-primary hover-underline mb-2"
+                                                style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
+                                                @product.ProductName
+                                             </a>
+                                             <!-- Price at the bottom of the card -->
+                                             <span class="text-primary font-instrument fw-semibold mt-auto" style="font-size: 1rem;">
+                                                $@product.Price
+                                             </span>
+                                          </div>
+                                       </div>
                                     </div>
-                                }
+                                 }
                             </div>
                         </div>
 
@@ -351,6 +355,34 @@
     @Html.Partial("PageCommon/PageFooter")
     <!-- footer section end -->
     @section Scripts {
-        <script src="~/js/add-to-cart.js" asp-append-version="true"></script>
+      <script src="~/js/add-to-cart.js" asp-append-version="true"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+      <script>
+         toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "preventDuplicates": false,
+            "positionClass": "toast-bottom-right",
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "3000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+         };
+      </script>
     }
+
+   <style>
+      #toast-container > .toast {
+         min-width: 350px; /* Tăng chiều dài */
+         max-width: 500px; /* Giới hạn tối đa */
+      }
+   </style>
 </body>
