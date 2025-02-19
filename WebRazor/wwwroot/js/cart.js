@@ -2,31 +2,28 @@
     const cart = sessionStorage.getItem('cart');
     if (cart) {
         const cartList = JSON.parse(cart);
-        updateTotalSubtotal(cartList); 
+        updateTotalSubtotal(cartList);
         const cartListElement = document.getElementById('cartList');
-        const totalSubtotalInput = document.getElementById('totalSubtotalInput');
-        let totalSubtotal = 0;
+        cartListElement.innerHTML = ''; 
 
         cartList.forEach(cart => {
             const newRow = createCartRow(cart);
             cartListElement.appendChild(newRow);
-            totalSubtotal += cart.Price * cart.quantity;
-            attachQuantityHandlers(cart, cartList, newRow);
         });
 
-        totalSubtotalInput.value = totalSubtotal.toFixed(2);
-        updateTotalSubtotal(cartList);
-    } else {
-        console.log("No products found in sessionStorage.");
+        sessionStorage.setItem('cart', JSON.stringify(cartList));
     }
 });
-
 function createCartRow(cart) {
     const newRow = document.createElement('tr');
     newRow.setAttribute('key', cart.ProductId);
     newRow.className = "align-items-center border-bottom n20-1-border";
 
     const subtotal = cart.Price * cart.quantity;
+
+    const formatCurrency = (value) => {
+        return value.toLocaleString('vi-VN').replaceAll(',', '.') + " VND";
+    };
 
     newRow.innerHTML = `
         <td class="p-xxl-6 p-lg-4 p-2">
@@ -35,7 +32,7 @@ function createCartRow(cart) {
                 <span class="text-n20 fw-medium font-instrument">${cart.ProductName}</span>
             </a>
         </td>
-        <td class="p-xxl-6 p-lg-4 p-2 fw-medium font-instrument text-center">${cart.Price}</td>
+        <td class="p-xxl-6 p-lg-4 p-2 fw-medium font-instrument text-center">${formatCurrency(cart.Price)}</td>
         <td class="p-xxl-6 p-lg-4 p-2 text-center">
             <div class="quantity d-inline-flex align-items-center justify-content-center gap-2 py-lg-3 py-2 px-4 border n20-1-border radius-pill">
                 <button class="quantityDecrement text-primary">
@@ -47,7 +44,7 @@ function createCartRow(cart) {
                 </button>
             </div>
         </td>
-        <td class="p-xxl-6 p-lg-4 p-2 fw-medium font-instrument text-center subtotal">${subtotal}</td>
+        <td class="p-xxl-6 p-lg-4 p-2 fw-medium font-instrument text-center subtotal">${formatCurrency(subtotal)}</td>
         <td class="p-xxl-6 p-lg-4 p-2 text-center w-100px">
             <button class="cart-prod-remove-btn fw-medium font-instrument" onclick="removeItemFromCart('${cart.ProductId}')">
                 <i class="ph ph-x"></i>
@@ -57,12 +54,12 @@ function createCartRow(cart) {
 
     return newRow;
 }
-
 function attachQuantityHandlers(cart, cartList, newRow) {
     const quantityInput = newRow.querySelector('.quantityValue');
     const subtotalElement = newRow.querySelector('.subtotal');
     const decrementButton = newRow.querySelector('.quantityDecrement');
     const incrementButton = newRow.querySelector('.quantityIncrement');
+
     const updateSubtotal = () => {
         let newQuantity = parseInt(quantityInput.value);
         if (isNaN(newQuantity) || newQuantity <= 0) {
@@ -70,13 +67,10 @@ function attachQuantityHandlers(cart, cartList, newRow) {
             quantityInput.value = 1;
         }
 
-        const updatedSubtotal = cart.Price * newQuantity;
-        subtotalElement.textContent = updatedSubtotal.toFixed(2);
-
-
         cart.quantity = newQuantity;
-
         sessionStorage.setItem('cart', JSON.stringify(cartList));
+
+        subtotalElement.textContent = formatCurrency(cart.Price * newQuantity);
 
         updateTotalSubtotal(cartList);
     };
@@ -84,38 +78,50 @@ function attachQuantityHandlers(cart, cartList, newRow) {
     decrementButton.addEventListener('click', () => {
         let currentQuantity = parseInt(quantityInput.value);
         if (currentQuantity > 1) {
-            currentQuantity -= 1;
-            quantityInput.value = currentQuantity; 
+            quantityInput.value = currentQuantity - 1;
             updateSubtotal();
         }
     });
 
     incrementButton.addEventListener('click', () => {
         let currentQuantity = parseInt(quantityInput.value);
-        currentQuantity += 1;
-        quantityInput.value = currentQuantity;
+        quantityInput.value = currentQuantity + 1;
         updateSubtotal();
     });
 }
-document.addEventListener('DOMContentLoaded', function () {
-    const cart = sessionStorage.getItem('cart');
-    if (cart) {
-        const cartList = JSON.parse(cart);
-        const productIdsContainer = document.getElementById('productIdsContainer');
 
-        cartList.forEach(cart => {
-            const productIdInput = document.createElement('input');
-            productIdInput.type = 'hidden';
-            productIdInput.name = 'ProductIds'; 
-            productIdInput.value = cart.ProductId; 
-
-            productIdsContainer.appendChild(productIdInput);
-        });
-       
+document.addEventListener('click', function (event) {
+    if (event.target.closest('.quantityIncrement')) {
+        changeQuantity(event.target.closest('.quantityIncrement'), 1);
+    } else if (event.target.closest('.quantityDecrement')) {
+        changeQuantity(event.target.closest('.quantityDecrement'), -1);
     }
 });
+function changeQuantity(button, change) {
+    const row = button.closest('tr');
+    const quantityInput = row.querySelector('.quantityValue');
+    const subtotalElement = row.querySelector('.subtotal');
+    const productId = row.getAttribute('key');
+    const formatCurrency = (value) => {
+        return value.toLocaleString('vi-VN').replaceAll(',', '.') + " VND";
+    };
+    let cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+    let cartItem = cart.find(item => item.ProductId == productId);
 
+    if (cartItem) {
+        
+        let newQuantity = cartItem.quantity + change;
+        if (newQuantity < 1) newQuantity = 1;
 
+        cartItem.quantity = newQuantity;
+        quantityInput.value = newQuantity;
+        subtotalElement.textContent = formatCurrency(cartItem.Price * newQuantity);
+
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+        updateTotalSubtotal(cart);
+
+    }
+}
 function updateTotalSubtotal(cartList) {
     let totalSubtotal = 0;
 
@@ -123,12 +129,17 @@ function updateTotalSubtotal(cartList) {
         totalSubtotal += cart.Price * cart.quantity;
     });
 
+    const formatCurrency = (value) => {
+        return value.toLocaleString('vi-VN').replaceAll(',', '.') + " VND";
+    };
+
     const totalSubtotalDisplay = document.getElementById('totalSubtotalDisplay');
     const totalSubtotalInput = document.getElementById('totalSubtotalInput');
 
-    totalSubtotalDisplay.textContent = totalSubtotal.toFixed(2);  
+    totalSubtotalDisplay.textContent = formatCurrency(totalSubtotal);
     totalSubtotalInput.value = Math.round(totalSubtotal);
 }
+
 document.addEventListener('DOMContentLoaded', function () {
     const cart = sessionStorage.getItem('cart');
     if (cart) {
@@ -136,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function () {
         updateTotalSubtotal(cartList);
     }
 });
-
 function removeItemFromCart(ProductId) {
     let cart = sessionStorage.getItem('cart');
 
