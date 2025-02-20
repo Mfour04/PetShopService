@@ -1,8 +1,8 @@
 ﻿@page
 @model WebRazor.Pages.Chats.ChatModel
 @{
-    ViewData["Title"] = "Chat with Admin";
-    var isAdmin = @Model.UserId == "AdminId"; // Giả sử admin có UserId là "AdminId"
+    ViewData["Title"] = "Chat Console";
+    // var isAdmin = @Model.UserRole == "admin";
 }
 
 <!DOCTYPE html>
@@ -21,6 +21,7 @@
         .container.my-5 {
             margin-top: 100px !important;
         }
+
         .chat-container {
             max-width: 600px;
             margin: 0 auto;
@@ -93,52 +94,44 @@
     @Html.Partial("PageCommon/PreLoad")
     @Html.Partial("PageCommon/PageHeader")
     @Html.Partial("PageCommon/PageSearchForm")
-    
+
     <main>
-    <div class="container my-5">
-	    <div class="chat-container bg-light rounded shadow-sm my-5">
-		    <div class="chat-header p-3">
-			    <h2 class="m-0">Chat Console</h2>
-		    </div>
-		    <div class="chat-box p-3" id="chatBox">
-			    <ul id="messagesList" class="mb-0"></ul>
-		    </div>
-		    <div class="chat-input p-3">
-			    <div class="input-group">
-				    <input id="messageInput" type="text" placeholder="Type your message here..." class="form-control" />
-				    <button onclick="sendMessage()" class="btn btn-primary">Send</button>
-			    </div>
-		    </div>
-	    </div>
-    </div>
-    
+        <div class="container my-5">
+            <div class="chat-container bg-light rounded shadow-sm my-5">
+                <div class="chat-header p-3">
+                    <h2 class="m-0">Chat Console</h2>
+                </div>
+                <div class="chat-box p-3" id="chatBox">
+                    <ul id="messagesList" class="mb-0"></ul>
+                </div>
+                <div class="chat-input p-3">
+                    <div class="input-group">
+                        <input id="messageInput" type="text" placeholder="Type your message here..." class="form-control" />
+                        <button onclick="sendMessage()" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <script type="text/javascript">
         const currentUserId = "@Model.UserId";
-        const isAdmin = "@isAdmin" === "True";
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/chathub")
             .build();
 
-        connection.on("ReceiveMessage", (userId, userName, message) => {
+        connection.on("ReceiveMessage", (userId, userRole, message) => {
             const isSender = userId === currentUserId;
 
             const li = document.createElement("li");
             li.className = `d-flex mb-3 ${isSender ? 'justify-content-end' : 'justify-content-start'}`;
             li.innerHTML = `
-                    <div class="message ${isSender ? 'bg-primary-message' : 'bg-secondary-message'} p-3">
-                        <strong>${userName}</strong>${message}
-                    </div>
-                `;
+                            <div class="message ${isSender ? 'bg-primary-message' : 'bg-secondary-message'} p-3">
+                                <strong>${userRole}</strong>${message}
+                            </div>
+                        `;
             document.getElementById("messagesList").appendChild(li);
             document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
-        });
-
-        connection.on("NewMessageNotification", (userName, message) => {
-            if (isAdmin) {
-                alert(`New message from ${userName}: ${message}`);
-            }
         });
 
         connection.start().catch(err => console.error(err.toString()));
@@ -147,14 +140,7 @@
             const message = document.getElementById("messageInput").value;
             if (message.trim() === "") return;
 
-            if (isAdmin) {
-                const userId = prompt("Enter the User ID to reply to:");
-                if (userId) {
-                    connection.invoke("SendMessageToUser", userId, message).catch(err => console.error(err.toString()));
-                }
-            } else {
-                connection.invoke("SendMessage", message).catch(err => console.error(err.toString()));
-            }
+            connection.invoke("SendMessage", message).catch(err => console.error(err.toString()));
             document.getElementById("messageInput").value = "";
         }
     </script>

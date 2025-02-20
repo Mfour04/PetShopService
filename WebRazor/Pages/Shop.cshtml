@@ -99,7 +99,7 @@
                                              </a>
                                              <!-- Price at the bottom of the card -->
                                              <span class="text-primary font-instrument fw-semibold mt-auto" style="font-size: 1rem;">
-                                                $@product.Price
+                                                @(product.Price?.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) ?? "0") VND
                                              </span>
                                           </div>
                                        </div>
@@ -203,7 +203,7 @@
                                                 <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
                                                     Pet Shampoos
                                                 </span>
-                                                <span class="text-sm text-n10 font-instrument">₹36.00</span>
+                                                <span class="text-sm text-n10 font-instrument">20000 VND</span>
                                             </div>
                                             <div class="icon-48px radius-unset">
                                                 <img class="w-100 radius-4" src="/images/top-product-1.png"
@@ -211,81 +211,7 @@
                                             </div>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#"
-                                           class="d-flex align-items-center justify-content-between gap-lg-4 gap-2">
-                                            <div class="d-grid">
-                                                <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
-                                                    Tick Treatments
-                                                </span>
-                                                <span class="text-sm text-n10 font-instrument">₹42.00 – ₹45.00</span>
-                                            </div>
-                                            <div class="icon-48px radius-unset">
-                                                <img class="w-100 radius-4" src="/images/top-product-2.png"
-                                                     alt="top products">
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                           class="d-flex align-items-center justify-content-between gap-lg-4 gap-2">
-                                            <div class="d-grid">
-                                                <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
-                                                    First Aid Kits
-                                                </span>
-                                                <span class="text-sm text-n10 font-instrument">₹36.00</span>
-                                            </div>
-                                            <div class="icon-48px radius-unset">
-                                                <img class="w-100 radius-4" src="/images/top-product-3.png"
-                                                     alt="top products">
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                           class="d-flex align-items-center justify-content-between gap-lg-4 gap-2">
-                                            <div class="d-grid">
-                                                <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
-                                                    Pet Vitamins
-                                                </span>
-                                                <span class="text-sm text-n10 font-instrument">₹42.00</span>
-                                            </div>
-                                            <div class="icon-48px radius-unset">
-                                                <img class="w-100 radius-4" src="/images/top-product-4.png"
-                                                     alt="top products">
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                           class="d-flex align-items-center justify-content-between gap-lg-4 gap-2">
-                                            <div class="d-grid">
-                                                <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
-                                                    Pet Wipes
-                                                </span>
-                                                <span class="text-sm text-n10 font-instrument">₹36.00</span>
-                                            </div>
-                                            <div class="icon-48px radius-unset">
-                                                <img class="w-100 radius-4" src="/images/top-product-5.png"
-                                                     alt="top products">
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                           class="d-flex align-items-center justify-content-between gap-lg-4 gap-2">
-                                            <div class="d-grid">
-                                                <span class="text-n20 fw-semibold font-instrument hover-text-primary hover-underline">
-                                                    Ear Cleaning
-                                                </span>
-                                                <span class="text-sm text-n10 font-instrument">$20.00</span>
-                                            </div>
-                                            <div class="icon-48px radius-unset">
-                                                <img class="w-100 radius-4" src="/images/top-product-6.png"
-                                                     alt="top products">
-                                            </div>
-                                        </a>
-                                    </li>
+                                   
                                 </ul>
                             </div>
                             <!-- top products list end -->
