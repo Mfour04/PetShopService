@@ -1,21 +1,20 @@
-﻿using PetShopLibrary.Models;
-using PetShopLibrary.Repository.Implements;
+﻿using Microsoft.AspNetCore.Http;
+using PetShopLibrary.DTO;
+using PetShopLibrary.Models;
 using PetShopLibrary.Repository.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PetShopLibrary.Utility;
 
 namespace PetShopLibrary.Service
 {
     public class ProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly CloudinaryService _cloudinaryService;
 
-        public ProductService(IProductRepository productRepository)
+        public ProductService(IProductRepository productRepository, CloudinaryService cloudinaryService)
         {
             _productRepository = productRepository;
+            _cloudinaryService = cloudinaryService;
         }
         public IEnumerable<Product> GetAllProducts()
         {
@@ -25,8 +24,38 @@ namespace PetShopLibrary.Service
         {
             return _productRepository.GetProductById(id);
         }
-        public void AddProduct(Product product)
+        public async Task AddProduct(ProductDTO productDTO, IFormFile? file)
         {
+            if (file != null)
+            {
+                try
+                {
+                    var fileUrl = await _cloudinaryService.UploadImageAsync(file);
+
+                    if (!string.IsNullOrEmpty(fileUrl))
+                    {
+                        productDTO.FilePath = fileUrl;
+                    }
+                    else
+                    {
+                        throw new Exception("Không thể nhận được URL ảnh từ Cloudinary.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Lỗi khi upload ảnh: " + ex.Message);
+                }
+            }
+
+            var product = new Product
+            {
+                ProductName = productDTO.ProductName,
+                Description = productDTO.Description,
+                Price = productDTO.Price,
+                CategoryId = productDTO.CategoryId,
+                FilePath = productDTO.FilePath
+            };
+
             _productRepository.AddProduct(product);
         }
         public void UpdateProduct(Product product)

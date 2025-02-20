@@ -33,20 +33,22 @@ public class LoginModel : PageModel
 
 	public string ErrorMessage { get; set; }
 
-	//[BindProperty(SupportsGet = true)]
-	//public string ReturnUrl { get; set; }
+	[BindProperty(SupportsGet = true)]
+	public string ReturnUrl { get; set; }
 
 	public void OnGet()
 	{
 		_logger.LogInformation("OnGet method called."); 
 	}
 
-	public async Task<IActionResult> OnPostAsync()
+	public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
 	{
-		if (!ModelState.IsValid)
-		{
-			return Page();
-		}
+		returnUrl ??= ReturnUrl ?? "/"; // Nếu không có returnUrl, mặc định về trang chủ
+
+		//if (!ModelState.IsValid)
+		//{
+		//	return Page();
+		//}
 
 		var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == Input.Email);
 
@@ -56,48 +58,39 @@ public class LoginModel : PageModel
 			return Page();
 		}
 
-        if (!user.IsEmailVerified)
-        {
-	        ErrorMessage = "Email chưa được xác thực. Vui lòng kiểm tra email của bạn.";
-
-			return Page();
-        }
-
-        // Tạo danh sách các claim
-        var claims = new List<Claim>
+		if (!user.IsEmailVerified)
 		{
-			new Claim(ClaimTypes.Name, user.Email),
-			new Claim(ClaimTypes.Role, user.RoleId),
-			new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
-		};
+			ErrorMessage = "Email chưa được xác thực. Vui lòng kiểm tra email của bạn.";
+			return Page();
+		}
 
-        // Tạo identity và principal từ các claim
-        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+		var claims = new List<Claim>
+	 {
+		  new Claim(ClaimTypes.Name, user.Email),
+		  new Claim(ClaimTypes.Role, user.RoleId),
+		  new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
+	 };
 
-        // Đăng nhập người dùng qua Cookie Authentication
-        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
-        {
-            IsPersistent = true, // Giữ cookie khi đóng trình duyệt nếu cần
-            ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30) // Thời gian hết hạn của cookie
-        });
+		var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+		var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-        _logger.LogInformation("User logged in with claims: " + string.Join(", ", claims.Select(c => $"{c.Type}: {c.Value}")));
+		await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
+		{
+			IsPersistent = true,
+			ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
+		});
 
-        // Log kiểm tra claims sau khi đăng nhập
-        var loggedInUser = HttpContext.User;
-        _logger.LogInformation("Is User Authenticated After Login: " + loggedInUser.Identity.IsAuthenticated);
-        _logger.LogInformation("Claims Count After Login: " + loggedInUser.Claims.Count());
+		_logger.LogInformation("User logged in successfully.");
 
-        //if (Url.IsLocalUrl(ReturnUrl))
-        //{
-	       // return Redirect(ReturnUrl);
-        //}
+		// Nếu là admin -> vào Dashboard
+		if (user.RoleId == "admin")
+		{
+			return RedirectToPage("/Admin/Dashboard");
+		}
 
-		return user.RoleId == "admin"
-            ? RedirectToPage("/Admin/Dashboard")
-            : RedirectToPage("/Index");
-    }
+		// Nếu là user -> về returnUrl
+		return LocalRedirect(returnUrl);
+	}
 }
 
 
