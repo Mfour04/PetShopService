@@ -76,9 +76,9 @@
                                 @foreach (var product in Model.PagedProducts.Items)
                                  {
                                     <div class="col-md-4 col-xs-6 mb-4">
-                                       <div class="product-card border n20-1-border radius-16 overflow-hidden hover-primary-border d-flex flex-column" style="height: 250px;">
+                                       <div class="product-card border n20-1-border radius-16 overflow-hidden hover-primary-border d-flex flex-column" style="height: 450px;">
                                           <div class="product-thumb scale-animation position-relative" style="height: 150%">
-                                             <img class="w-100" src="@Url.Content(product.FilePath)" alt="@product.ProductName">
+                                                <img class="w-100" src="@product.FilePath" alt="@product.ProductName">
                                              <span class="seal-tag py-1 px-lg-4 px-2 bg-primary text-n0 radius-pill position-absolute top-0 left-0 mt-lg-6 mt-4 ms-lg-6 ms-4">Sale!</span>
                                              <div class="product-btns d-grid gap-1 position-absolute top-0 right-0 mt-xxl-6 mt-4 me-xxl-6 me-4">
                                                 @if (User.Identity.IsAuthenticated)
@@ -90,7 +90,7 @@
                                                 }
                                              </div>
                                           </div>
-                                          <div class="product-info p-lg-6 p-4 text-center d-flex flex-column justify-content-between" style="flex-grow: 1; height: 100%; overflow: hidden;">
+                                          <div class="product-info p-lg-6 p-4 text-center d-flex flex-column justify-content-between" style="flex-grow: 1; height: 200px; overflow: hidden;">
                                              <!-- Product Name with Fixed 2 Lines -->
                                              <a href="@Url.Page("/Shop-details", new { id = product.ProductId })"
                                                 class="text-h6 text-n20 font-otomanopee fw-normal hover-text-primary hover-underline mb-2"
