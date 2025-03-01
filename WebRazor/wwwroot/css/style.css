@@ -50431,6 +50431,10 @@ input[type=number]::-webkit-outer-spin-button {
   background: #FE97C3 !important;
 }
 
+.bg-secondary5 {
+   background: #A2C8FF !important;
+}
+
 .bg-n0 {
   background: #FFFFFF;
 }
